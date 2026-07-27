@@ -567,7 +567,7 @@ const DISC_DOC    = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
    Then share that folder with all team members (Editor access).
 ────────────────────────────────────────────────────────────────────────── */
 const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL'; // FM 2026 Project Task Sheets — Shared Drive
-const SHARED_INDEX_ID   = '1D9H-TvwvHZKJtvCWlzL3heXQkNp58za1'; // FM_Projects_Index.json — fixed ID, prevents duplicates
+const SHARED_INDEX_ID   = '1-BaC6bZ0NH1ZsOO5n3sNgUbNWOU_89X7'; // FM_Projects_Index.json — fixed ID, prevents duplicates
 
 let tokenClient, gapiOk=false, gsiOk=false;
 let folderId=null, indexFileId=null;
@@ -590,8 +590,18 @@ function boot(){
     client_id:CLIENT_ID, scope:SCOPES,
     callback:async r=>{ if(r.error){toast('Sign-in failed: '+r.error);return;} sessionStorage.setItem('fm_tok',JSON.stringify(gapi.client.getToken())); await fetchUser(); await loadIndex(); }
   });
+  // Always prompt for fresh token — scope changed from drive.file to drive
+  // Clear any cached token to force re-consent
   const tok=sessionStorage.getItem('fm_tok');
-  if(tok){ gapi.client.setToken(JSON.parse(tok)); fetchUser().then(loadIndex); }
+  if(tok){
+    try{
+      gapi.client.setToken(JSON.parse(tok));
+      // Verify token still valid with a quick test
+      gapi.client.request({path:'https://www.googleapis.com/oauth2/v2/userinfo'})
+        .then(()=>fetchUser().then(loadIndex))
+        .catch(()=>{ sessionStorage.removeItem('fm_tok'); signIn(); });
+    }catch(e){ sessionStorage.removeItem('fm_tok'); }
+  }
 }
 
 function signIn(){ if(!tokenClient){toast('Still loading…');return;} tokenClient.requestAccessToken({prompt:''}); }
