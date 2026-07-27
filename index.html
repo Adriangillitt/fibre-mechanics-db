@@ -843,7 +843,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 async function saveSheet(){
   if(!v('f-docnum')&&!v('f-opdesc')){toast('Enter a document number or operation description');return;}
   if(saving) return; saving=true;
-  const btn=document.getElementById('save-btn'); btn.disabled=true; btn.textContent='Saving…';
+  const btn=document.getElementById('save-btn');
+  if(btn){ btn.disabled=true; btn.textContent='Saving…'; }
   setSyncing('syncing');
   const data={
     projNo:v('f-projno'),projName:v('f-projname'),docNum:v('f-docnum'),revision:v('f-revision'),
@@ -869,7 +870,7 @@ async function saveSheet(){
     try{ await saveProjectFile(); clearForm(); toast('Task sheet saved'); switchTab('records'); setAutoDocNum(); }
     catch(e){ records.shift(); setSyncing('error'); toast('Save failed: '+e.message); }
   }
-  saving=false; btn.disabled=false; btn.textContent=editingId?'✓ Update task sheet':'✓ Save task sheet';
+  saving=false; if(btn){ btn.disabled=false; btn.textContent=editingId?'✓ Update task sheet':'✓ Save task sheet'; }
   editingId=null;
 }
 
