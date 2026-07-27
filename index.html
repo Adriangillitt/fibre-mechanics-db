@@ -170,15 +170,15 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   body>#print-sheet{display:block!important;width:100%;margin:0;padding:0;}
 }
 .ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
-.ps-top{display:grid;grid-template-columns:170px 75px 85px 125px 75px 105px 55px;border:1.5px solid #000;border-bottom:none;}
-.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;}
+.ps-top{display:grid;grid-template-columns:170px 75px 140px 125px 75px 90px 55px;border:1.5px solid #000;border-bottom:none;}
+.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;display:flex;flex-direction:column;justify-content:flex-start;}
 .ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
 .ps-logo-sub{font-size:7.5pt;margin-top:3px;}
-.ps-hcell{border-left:1px solid #000;padding:3px 5px;}
+.ps-hcell{border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;}
 .ps-hcell-label{font-size:6.5pt;color:#444;text-transform:uppercase;}
 .ps-hcell-val{font-size:10pt;font-weight:700;color:#000;margin-top:1px;}
 .ps-hcell-val-sm{font-size:8.5pt;font-weight:700;color:#000;margin-top:1px;}
-.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;align-self:stretch;}
 .ps-sheetnum-label{font-size:6.5pt;color:#444;}
 .ps-sheetnum-val{font-size:15pt;font-weight:700;line-height:1;color:#000;}
 .ps-body{border:1.5px solid #000;border-top:none;}
@@ -194,11 +194,11 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .ps-special{min-height:28px;padding:4px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;font-style:italic;}
 .ps-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
 .ps-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
-.ps-table td{padding:3px 6px;border:1px solid #999;min-height:14px;color:#000;}
+.ps-table td{padding:0 6px;border:1px solid #999;height:28px;min-height:28px;color:#000;vertical-align:middle;}
 .ps-table .sh{background:#ddd!important;}
 .ps-ops-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
 .ps-ops-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
-.ps-ops-table td{padding:3px 6px;border:1px solid #999;min-height:16px;color:#000;}
+.ps-ops-table td{padding:0 6px;border:1px solid #999;height:24px;min-height:24px;color:#000;vertical-align:middle;}
 .ps-ops-table .sh{background:#ddd!important;}
 .ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
 .ps-weight-cell{padding:4px 7px;border-right:1px solid #999;}
@@ -206,7 +206,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .ps-weight-lbl{font-size:7.5pt;font-weight:700;color:#000;}
 .ps-weight-val{font-size:8.5pt;min-height:14px;color:#000;}
 .ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
-.ps-mat-half{padding:5px 7px;}
+.ps-mat-half{padding:5px 7px;}.ps-mat-half table td{padding:6px 6px;min-height:24px;}
 .ps-mat-half:first-child{border-right:1px solid #999;}
 .ps-feedback{min-height:40px;padding:5px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;}
 .ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid #000;}
@@ -1128,21 +1128,21 @@ function printSheet(){
   const rid = btn && btn.dataset.rid;
   const r = rid ? records.find(x=>x.id==rid) : (viewIdx!==null&&viewIdx>=0?records[viewIdx]:null);
   if(!r){ alert('No record selected for printing.'); return; }
-  const qaRows=(r.qa&&r.qa.some(q=>q.point)?r.qa.filter(q=>q.point):Array(3).fill({})).map(q=>`<tr><td style="width:40%">${esc(q.point||'')}</td><td>${esc(q.ndt||'')}</td><td>${esc(q.stage||'')}</td><td>${esc(q.date||'')}</td><td class="sh">${esc(q.results||'')}</td></tr>`).join('');
+  const qaRows=(r.qa&&r.qa.some(q=>q.point)?r.qa.filter(q=>q.point):Array(4).fill({})).map(q=>`<tr><td style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.point||'')}</td><td style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.ndt||'')}</td><td style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.stage||'')}</td><td style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.date||'')}</td><td class="sh" style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.results||'')}</td></tr>`).join('');
   const opsRows=(r.ops&&r.ops.length?r.ops:Array(10).fill({})).map(o=>`<tr><td>${esc(o&&o.desc||'')}</td><td class="sh">${esc(o&&o.opInit||'')}</td><td class="sh">${esc(o&&o.qaInit||'')}</td><td class="sh">${esc(o&&o.date||'')}</td></tr>`).join('');
   const matHalf=(data,title)=>{
-    const rows=(data&&data.length?data:Array(5).fill({})).map(m=>`<tr><td>${esc(m&&m.material||'')}</td><td>${esc(m&&m.trace||'')}</td><td>${esc(m&&m.amount||'')}</td></tr>`).join('');
-    return `<div class="ps-mat-half"><table class="ps-table" style="width:100%;"><thead><tr><th style="width:50%">Materials record</th><th>Trace #</th><th>Amount used</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    const rows=(data&&data.length?data:Array(5).fill({})).map(m=>`<tr><td style="height:26px;min-height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.material||'')}</td><td style="height:26px;min-height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.trace||'')}</td><td style="height:26px;min-height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.amount||'')}</td></tr>`).join('');
+    return `<div class="ps-mat-half"><table class="ps-table" style="width:100%;table-layout:fixed;"><thead><tr><th style="width:50%">Materials record</th><th style="width:25%">Trace #</th><th style="width:25%">Amount used</th></tr></thead><tbody>${rows}</tbody></table></div>`;
   };
   document.getElementById('print-sheet').innerHTML=`<div class="ps">
     <div class="ps-top">
-      <div class="ps-logo" style="grid-row:1/3;"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
+      <div class="ps-logo"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Project No</div><div class="ps-hcell-val">${esc(r.projNo||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Project Name</div><div class="ps-hcell-val">${esc(r.projName||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet revision</div><div class="ps-hcell-val">${esc(r.revision||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
-      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sht</div><div class="ps-sheetnum-val">${esc(r.sheetOf||'')}</div></div>
+      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">${esc(r.sheetOf||'')}</div></div>
     </div>
     <div class="ps-body">
       <div class="ps-row"><div class="ps-lbl">Cloudattend job</div><div class="ps-val">${esc(r.caJob||'')}</div></div>
@@ -1170,10 +1170,8 @@ function printSheet(){
       <div class="ps-briefing"><strong>IMPORTANT — Do not continue until you have signed the briefing log</strong><br>List all people working on the job and get them to sign back off this sheet after briefing</div>
       <div class="ps-section-hdr">Special instructions</div>
       <div class="ps-special">${esc(r.special||'')}</div>
-      <div class="ps-section-hdr">QA / sign-off points</div>
-      <table class="ps-table"><thead><tr><th style="width:40%">QA / sign-off point</th><th>NDT required</th><th>Stage</th><th>Date</th><th>Results</th></tr></thead><tbody>${qaRows}</tbody></table>
-      <div class="ps-section-hdr">Operation description</div>
-      <table class="ps-ops-table"><thead><tr><th style="width:55%">Operation description</th><th>Operator initials</th><th>QA check initials</th><th>Date</th></tr></thead><tbody>${opsRows}</tbody></table>
+      <table class="ps-table" style="width:100%;"><thead><tr><th style="width:40%">QA / sign-off point</th><th style="width:12%">NDT required</th><th style="width:13%">Stage</th><th style="width:12%">Date</th><th style="width:13%">Results</th></tr></thead><tbody>${qaRows}</tbody></table>
+      <table class="ps-ops-table"><thead><tr><th style="width:57%">Operation description</th><th style="width:14%">Op init</th><th style="width:14%">QA init</th><th style="width:15%">Date</th></tr></thead><tbody>${opsRows}</tbody></table>
       <div style="font-size:8pt;text-align:center;padding:4px;border-top:1px solid #ccc;color:#888;">See continuation sheet (delete this if not relevant)</div>
       <div class="ps-weight-row">
         <div class="ps-weight-cell"><div class="ps-weight-lbl">Target weight kg</div><div class="ps-weight-val">${esc(r.targetWt||'')}</div></div>
@@ -1205,15 +1203,15 @@ function printSheet(){
   // Open a dedicated print window — completely isolated from app DOM/CSS
   const pw = window.open('','_blank','width=900,height=700');
   const psCss = `.ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
-.ps-top{display:grid;grid-template-columns:170px 75px 85px 125px 75px 105px 55px;border:1.5px solid #000;border-bottom:none;}
-.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;}
+.ps-top{display:grid;grid-template-columns:170px 75px 140px 125px 75px 90px 55px;border:1.5px solid #000;border-bottom:none;}
+.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;display:flex;flex-direction:column;justify-content:flex-start;}
 .ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
 .ps-logo-sub{font-size:7.5pt;margin-top:3px;}
-.ps-hcell{border-left:1px solid #000;padding:3px 5px;}
+.ps-hcell{border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;}
 .ps-hcell-label{font-size:6.5pt;color:#444;text-transform:uppercase;}
 .ps-hcell-val{font-size:10pt;font-weight:700;color:#000;margin-top:1px;}
 .ps-hcell-val-sm{font-size:8.5pt;font-weight:700;color:#000;margin-top:1px;}
-.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;align-self:stretch;}
 .ps-sheetnum-label{font-size:6.5pt;color:#444;}
 .ps-sheetnum-val{font-size:15pt;font-weight:700;line-height:1;color:#000;}
 .ps-body{border:1.5px solid #000;border-top:none;}
@@ -1229,11 +1227,11 @@ function printSheet(){
 .ps-special{min-height:28px;padding:4px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;font-style:italic;}
 .ps-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
 .ps-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
-.ps-table td{padding:3px 6px;border:1px solid #999;min-height:14px;color:#000;}
+.ps-table td{padding:0 6px;border:1px solid #999;height:28px;min-height:28px;color:#000;vertical-align:middle;}
 .ps-table .sh{background:#ddd!important;}
 .ps-ops-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
 .ps-ops-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
-.ps-ops-table td{padding:3px 6px;border:1px solid #999;min-height:16px;color:#000;}
+.ps-ops-table td{padding:0 6px;border:1px solid #999;height:24px;min-height:24px;color:#000;vertical-align:middle;}
 .ps-ops-table .sh{background:#ddd!important;}
 .ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
 .ps-weight-cell{padding:4px 7px;border-right:1px solid #999;}
@@ -1241,7 +1239,7 @@ function printSheet(){
 .ps-weight-lbl{font-size:7.5pt;font-weight:700;color:#000;}
 .ps-weight-val{font-size:8.5pt;min-height:14px;color:#000;}
 .ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
-.ps-mat-half{padding:5px 7px;}
+.ps-mat-half{padding:5px 7px;}.ps-mat-half table td{padding:6px 6px;min-height:24px;}
 .ps-mat-half:first-child{border-right:1px solid #999;}
 .ps-feedback{min-height:40px;padding:5px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;}
 .ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid #000;}
