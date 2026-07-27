@@ -239,7 +239,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   </div>
   <div style="flex:1;"></div>
   <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;">
-    <div>v1.0.1</div>
+    <div>v1.0.3</div>
     <div>28 Jul 2026</div>
   </div>
   <div class="header-right">
@@ -545,7 +545,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
       <button class="btn" id="print-btn" onclick="printSheet()">&#x1F5A8; Print</button>
       <button class="btn" onclick="duplicateSheetFromModal()">&#x2398; Duplicate</button>
       <button class="btn btn-primary" onclick="editSheetFromModal()">&#9998; Edit</button>
-      <label class="btn" style="cursor:pointer;" title="Upload scanned returned copy">&#x1F4CE; Scan<input type="file" id="modal-scan-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="uploadModalScan(this)"></label>
+      <label class="btn" style="cursor:pointer;" title="Upload scanned returned copy">&#x1F4CE; Scan<input type="file" id="modal-scan-input" accept=".pdf,.jpg,.jpeg,.png" multiple style="display:none;" onchange="uploadModalScan(this)"></label>
       <button class="btn" onclick="closeModal('modal-detail')">Close</button>
     </div>
   </div>
@@ -555,7 +555,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 <div id="print-sheet"></div>
 
 <script>
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.0.3';
 const BUILD_DATE = '28 Jul 2026';
 
 const CLIENT_ID = '532958625397-kdr26ksrjc4vdditqolv65p41i91lftk.apps.googleusercontent.com';
@@ -624,7 +624,33 @@ function handleAuthExpiry(){
   setTimeout(()=>{ show('screen-auth'); document.getElementById('screen-project').style.display='none'; document.getElementById('screen-picker').style.display='none'; },1500);
 }
 
-function signIn(){ if(!tokenClient){toast('Still loading…');return;} tokenClient.requestAccessToken({prompt:''}); }
+function signIn(){ if(!tokenClient){toast('Still loading…');return;} tokenClient.requestAccessToken({prompt:'consent'}); }
+
+function silentRefresh(){
+  return new Promise((resolve,reject)=>{
+    if(!tokenClient){ reject(new Error('No token client')); return; }
+    const origCallback=tokenClient.callback;
+    tokenClient.callback=async r=>{
+      tokenClient.callback=origCallback;
+      if(r.error){ reject(new Error(r.error)); return; }
+      sessionStorage.setItem('fm_tok',JSON.stringify(gapi.client.getToken()));
+      resolve();
+    };
+    tokenClient.requestAccessToken({prompt:''});
+  });
+}
+
+async function ensureAuth(){
+  // Try a lightweight auth check and silently refresh if expired
+  try{
+    await gapi.client.request({path:'https://www.googleapis.com/oauth2/v2/userinfo'});
+  } catch(e){
+    if(e.status===401||e.result&&e.result.error&&e.result.error.code===401){
+      try{ await silentRefresh(); }
+      catch(e2){ handleAuthExpiry(); throw new Error('Session expired — please sign in again'); }
+    }
+  }
+}
 
 async function fetchUser(){
   try{
@@ -730,6 +756,7 @@ async function loadProject(proj,showSpinner){
 }
 
 async function saveProjectFile(){
+  await ensureAuth();
   let merged=records;
   try{
     const res=await driveGet(currentProject.fileId); const remote=typeof res.result==='string'?JSON.parse(res.result):res.result;
@@ -786,25 +813,32 @@ function v(id){ return document.getElementById(id).value.trim(); }
 
 /* ── Save / Edit ── */
 async function uploadModalScan(input){
-  const file=input.files[0]; if(!file) return;
+  const files=Array.from(input.files); if(!files.length) return;
   const btn=document.getElementById('print-btn');
   const rid=btn&&btn.dataset.rid;
   const r=rid?records.find(x=>x.id==rid):null;
   if(!r){ toast('No record selected'); return; }
+  if(!r.scans) r.scans=[];
   const statusEl=document.getElementById('modal-scan-status');
   statusEl.style.display='block';
   statusEl.style.color='#888';
-  statusEl.textContent='Uploading scan…';
-  const fileId=await uploadScan(file, r.docNum, statusEl);
-  if(fileId){
-    r.scanFileId=fileId; r.scanFileName=file.name;
+  statusEl.textContent='Uploading '+files.length+' file'+(files.length>1?'s':'')+'…';
+  let uploaded=0;
+  for(const file of files){
+    const fileId=await uploadScan(file, r.docNum, null);
+    if(fileId){
+      r.scans.push({fileId,fileName:file.name,uploadedAt:new Date().toISOString()});
+      // Keep legacy fields pointing to latest scan
+      r.scanFileId=fileId; r.scanFileName=file.name;
+      uploaded++;
+    }
+  }
+  if(uploaded>0){
     r.updatedAt=new Date().toISOString(); r.updatedBy=currentUser.email||'unknown';
     setSyncing('syncing');
     try{
       await saveProjectFile();
-      statusEl.style.color='#2e7d32';
-      statusEl.innerHTML='✓ Scan saved — <a href="https://drive.google.com/file/d/'+fileId+'/view" target="_blank" style="color:#f07020;">View ↗</a>';
-      // Refresh detail view to show scan link
+      toast(uploaded+' scan'+(uploaded>1?'s':'')+' uploaded');
       viewSheet(r.id);
     } catch(e){ statusEl.style.color='#c00'; statusEl.textContent='Save failed: '+e.message; }
   } else {
@@ -1139,9 +1173,20 @@ function renderRecords(){
       <td style="white-space:nowrap;">${fmtDate(r.finishDate)}</td>
       <td>${statusBadge(r.status)}</td>
       <td>${ib}</td>
-      <td style="white-space:nowrap;">${r.scanFileId?'<span title="Scanned copy attached" style="color:#2e7d32;font-size:11px;">📎</span> ':''} ${issueBtn} &nbsp; <button class="link-btn" style="color:#666;" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#999;" onclick="editSheet('${r.id}')">Edit</button> &nbsp; <button class="link-btn" style="color:#aaa;" onclick="duplicateSheet('${r.id}')">Duplicate</button></td>
+      <td style="white-space:nowrap;">${(r.scans&&r.scans.length||r.scanFileId)?'<span title="'+(r.scans&&r.scans.length?r.scans.length:1)+' scan(s) attached" style="color:#2e7d32;font-size:11px;">📎'+(r.scans&&r.scans.length>1?'<sup>'+r.scans.length+'</sup>':'')+' </span>':''} ${issueBtn} &nbsp; <button class="link-btn" style="color:#666;" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#999;" onclick="editSheet('${r.id}')">Edit</button> &nbsp; <button class="link-btn" style="color:#aaa;" onclick="duplicateSheet('${r.id}')">Duplicate</button></td>
     </tr>`;
   }).join('');
+}
+
+function renderScanList(r){
+  const sl=r.scans&&r.scans.length?r.scans:r.scanFileId?[{fileId:r.scanFileId,fileName:r.scanFileName||'scan',uploadedAt:null}]:[];
+  if(!sl.length) return '';
+  const links=sl.map(function(s,i){
+    const name=s.fileName||('Scan '+(i+1));
+    const date=s.uploadedAt?' &middot; '+fmtDate(s.uploadedAt.split('T')[0]):'';
+    return '<a href="https://drive.google.com/file/d/'+s.fileId+'/view" target="_blank" style="color:#f07020;font-size:13px;">&#x1F4C4; '+esc(name)+date+' &#x2197;</a>';
+  }).join('');
+  return '<div class="sub-h">Scanned copies ('+sl.length+')</div><div style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px;">'+links+'</div>';
 }
 
 function viewSheet(id){
@@ -1189,11 +1234,13 @@ function viewSheet(id){
     <div class="sub-h">Materials — right</div>
     <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Material','Trace #','Amount used'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #555555;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${matRightRows}</tbody></table>
     ${r.feedback?`<div class="sub-h">Feedback</div><div style="font-size:13px;">${esc(r.feedback)}</div>`:''}
+    ${renderScanList(r)}
     <div class="sub-h">Sign-off</div>
     <div class="dr"><span class="dk">Operator</span><span>${esc(r.opName||'—')}${r.opDate?' · '+fmtDate(r.opDate):''}</span></div>
     <div class="dr"><span class="dk">Task leader</span><span>${esc(r.tlName||'—')}${r.tlDate?' · '+fmtDate(r.tlDate):''}</span></div>`;
   document.getElementById('print-btn').dataset.rid = r.id;
-  const ss=document.getElementById('modal-scan-status'); if(ss){ ss.style.display=r.scanFileId?'block':'none'; ss.style.color='#2e7d32'; ss.innerHTML=r.scanFileId?'✓ Scan attached — <a href="https://drive.google.com/file/d/'+r.scanFileId+'/view" target="_blank" style="color:#f07020;">View scan ↗</a>':''; }
+  const ss=document.getElementById('modal-scan-status'); if(ss){ ss.style.display=r.scanFileId?'block':'none'; ss.style.color='#2e7d32'; const scanList=r.scans&&r.scans.length?r.scans:r.scanFileId?[{fileId:r.scanFileId,fileName:r.scanFileName||'scan'}]:[];
+    ss.innerHTML=scanList.length?scanList.map(s=>'<a href="https://drive.google.com/file/d/'+s.fileId+'/view" target="_blank" style="color:#f07020;margin-right:10px;">✓ '+s.fileName+' ↗</a>').join(''):''; }
   openModal('modal-detail');
 }
 
