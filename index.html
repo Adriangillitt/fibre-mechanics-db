@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="%23f07020"/><text x="16" y="22" font-family="Arial" font-weight="bold" font-size="18" fill="white" text-anchor="middle">F</text></svg>'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FIBRE Mechanics — Task Record Database</title>
 <style>
@@ -44,7 +45,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;padding:16px 22px 22px;}
 .proj-card{border:1px solid #e0e0e0;border-radius:8px;padding:16px;cursor:pointer;background:#fff;text-align:left;}
 .proj-card:hover{border-color:#f07020;background:#fff8f3;}
-.proj-card-code{font-size:22px;font-weight:700;color:#f07020;line-height:1;}
+.proj-card-code{font-size:18px;font-weight:700;color:#f07020;line-height:1;}
 .proj-card-name{font-size:12px;color:#666;margin-top:3px;margin-bottom:10px;line-height:1.4;}
 .proj-card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .proj-card-count{font-size:12px;font-weight:500;color:#333;}
@@ -163,22 +164,23 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 /* ── PRINT STYLES ── */
 #print-sheet{display:none;}
 @media print{
-  @page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} @page:bottom{content:counter(page) \' of \' counter(pages);}
+  @page{size:A4 portrait;margin:8mm 10mm 8mm 10mm;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
-  html,body{margin:0;padding:0;background:#fff!important;}
-  body>*{display:none!important;}
-  body>#print-sheet{display:block!important;width:100%;margin:0;padding:0;}
+  body,html{margin:0;padding:0;background:#fff!important;}
+  body>.app,#modal-new-proj,#modal-issue,#modal-return,.toast{display:none!important;}
+  .detail-modal-bg{display:none!important;}
+  #print-sheet{display:block!important;width:100%;margin:0;padding:0;}
 }
 .ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
 .ps-top{display:grid;grid-template-columns:170px 75px 165px 145px 90px 55px;border:1.5px solid #000;border-bottom:none;}
-.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;display:flex;flex-direction:column;justify-content:flex-start;}
+.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;}
 .ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
 .ps-logo-sub{font-size:7.5pt;margin-top:3px;}
 .ps-hcell{border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;}
 .ps-hcell-label{font-size:6.5pt;color:#444;text-transform:uppercase;}
 .ps-hcell-val{font-size:10pt;font-weight:700;color:#000;margin-top:1px;}
 .ps-hcell-val-sm{font-size:8.5pt;font-weight:700;color:#000;margin-top:1px;}
-.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;align-self:stretch;}
+.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;}
 .ps-sheetnum-label{font-size:6.5pt;color:#444;}
 .ps-sheetnum-val{font-size:15pt;font-weight:700;line-height:1;color:#000;}
 .ps-body{border:1.5px solid #000;border-top:none;}
@@ -206,7 +208,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .ps-weight-lbl{font-size:7.5pt;font-weight:700;color:#000;}
 .ps-weight-val{font-size:8.5pt;min-height:14px;color:#000;}
 .ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
-.ps-mat-half{padding:5px 7px;}.ps-mat-half table td{padding:6px 6px;min-height:24px;}
+.ps-mat-half{padding:5px 7px;}
 .ps-mat-half:first-child{border-right:1px solid #999;}
 .ps-feedback{min-height:40px;padding:5px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;}
 .ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid #000;}
@@ -238,10 +240,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="header-sub" id="header-sub">Task Record Database</div>
   </div>
   <div style="flex:1;"></div>
-  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;">
-    <div>v1.0.4</div>
-    <div>28 Jul 2026</div>
-  </div>
+  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.0.5</div><div>28 Jul 2026</div></div>
   <div class="header-right">
     <div class="sync-wrap" id="sync-wrap"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Synced</span></div>
     <button class="project-crumb" id="project-crumb" onclick="goHome()">&#8592; All projects</button>
@@ -287,7 +286,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 
         <div class="sh">Sheet reference</div>
         <div class="fg4">
-          <div class="field"><label>Project No</label><input id="f-projno" type="text" placeholder="0183" maxlength="4"></div>
+          <div class="field"><label>Project No</label><input id="f-projno" type="text" placeholder="177"></div>
           <div class="field"><label>Project Name</label><input id="f-projname" type="text" placeholder="MM62"></div>
           <div class="field"><label>Task sheet document number <button id="docnum-override-btn" onclick="toggleDocNumOverride()" style="background:none;border:none;cursor:pointer;font-size:10px;color:#f07020;text-decoration:underline;font-family:inherit;font-weight:400;letter-spacing:0;text-transform:none;margin-left:6px;">override</button></label><input id="f-docnum" type="text" placeholder="Auto-generated" readonly style="background:#f5f5f5;color:#555;cursor:default;"></div>
         </div>
@@ -543,9 +542,9 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="modal-foot">
       <button class="btn btn-danger" onclick="deleteSheet()">Delete</button>
       <button class="btn" id="print-btn" onclick="printSheet()">&#x1F5A8; Print</button>
+      <label class="btn" style="cursor:pointer;" title="Upload scanned copy">&#x1F4CE; Scan<input type="file" id="modal-scan-input" accept=".pdf,.jpg,.jpeg,.png" multiple style="display:none;" onchange="uploadModalScan(this)"></label>
       <button class="btn" onclick="duplicateSheetFromModal()">&#x2398; Duplicate</button>
       <button class="btn btn-primary" onclick="editSheetFromModal()">&#9998; Edit</button>
-      <label class="btn" style="cursor:pointer;" title="Upload scanned returned copy">&#x1F4CE; Scan<input type="file" id="modal-scan-input" accept=".pdf,.jpg,.jpeg,.png" multiple style="display:none;" onchange="uploadModalScan(this)"></label>
       <button class="btn" onclick="closeModal('modal-detail')">Close</button>
     </div>
   </div>
@@ -555,7 +554,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 <div id="print-sheet"></div>
 
 <script>
-const APP_VERSION = '1.0.4';
+const APP_VERSION = '1.0.5';
 const BUILD_DATE = '28 Jul 2026';
 
 const CLIENT_ID = '532958625397-kdr26ksrjc4vdditqolv65p41i91lftk.apps.googleusercontent.com';
@@ -563,19 +562,6 @@ const SCOPES    = 'https://www.googleapis.com/auth/drive';
 const FOLDER_NAME = 'FM_TaskSheets';
 const INDEX_FILE  = 'FM_Projects_Index.json';
 const DISC_DOC    = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
-
-/* ── SHARED DATABASE FOLDER ─────────────────────────────────────────────
-   This folder ID points to the single shared FM_TaskSheets folder in Drive.
-   All users read and write to this same folder regardless of their account.
-
-   HOW TO FIND THE ID:
-   Open Drive → navigate to FM_TaskSheets folder → copy the long ID from the URL:
-   https://drive.google.com/drive/folders/THIS_PART_IS_THE_ID
-
-   Then share that folder with all team members (Editor access).
-────────────────────────────────────────────────────────────────────────── */
-const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL'; // FM 2026 Project Task Sheets — Shared Drive
-const SHARED_INDEX_ID   = '1-nGeWUk-9fCqiujDwx56t1ODAk6vmRgD'; // FM_Projects_Index.json — fixed ID, prevents duplicates
 
 let tokenClient, gapiOk=false, gsiOk=false;
 let folderId=null, indexFileId=null;
@@ -598,76 +584,63 @@ function boot(){
     client_id:CLIENT_ID, scope:SCOPES,
     callback:async r=>{
       if(r.error){toast('Sign-in failed: '+r.error);return;}
-      const tok=gapi.client.getToken();
-      sessionStorage.setItem('fm_tok',JSON.stringify(tok));
-      // Store expiry time (tokens last 3600s, refresh at 50 min)
+      sessionStorage.setItem('fm_tok',JSON.stringify(gapi.client.getToken()));
       window._tokenExpiry=Date.now()+(50*60*1000);
-      // Start proactive refresh timer
       if(window._refreshTimer) clearTimeout(window._refreshTimer);
-      window._refreshTimer=setTimeout(proactiveRefresh, 50*60*1000);
+      window._refreshTimer=setTimeout(proactiveRefresh,50*60*1000);
       await fetchUser(); await loadIndex();
     }
   });
-  // Always prompt for fresh token — scope changed from drive.file to drive
-  // Clear any cached token to force re-consent
   const tok=sessionStorage.getItem('fm_tok');
   if(tok){
     try{
       gapi.client.setToken(JSON.parse(tok));
-      // Verify token still valid with a quick test
-      gapi.client.request({path:'https://www.googleapis.com/oauth2/v2/userinfo'})
-        .then(()=>fetchUser().then(loadIndex))
-        .catch(()=>{ sessionStorage.removeItem('fm_tok'); signIn(); });
-    }catch(e){ sessionStorage.removeItem('fm_tok'); }
+      window._tokenExpiry=Date.now()+(50*60*1000);
+      window._refreshTimer=setTimeout(proactiveRefresh,50*60*1000);
+      fetchUser().then(loadIndex).catch(()=>{ sessionStorage.removeItem('fm_tok'); show('screen-auth'); });
+    }catch(e){ sessionStorage.removeItem('fm_tok'); show('screen-auth'); }
   }
-}
-
-function openScanPreview(fileId){
-  // Open directly in new tab — Drive preview URL works without embedding
-  window.open('https://drive.google.com/file/d/'+fileId+'/view','_blank');
 }
 
 function handleAuthExpiry(){
   sessionStorage.removeItem('fm_tok');
   gapi.client.setToken(null);
-  toast('Session expired — refreshing sign-in…');
-  setTimeout(()=>{ show('screen-auth'); document.getElementById('screen-project').style.display='none'; document.getElementById('screen-picker').style.display='none'; },1500);
+  if(window._refreshTimer){ clearTimeout(window._refreshTimer); window._refreshTimer=null; }
+  toast('Session expired — please sign in again');
+  setTimeout(()=>{ show('screen-auth'); },1500);
 }
 
-function signIn(){ if(!tokenClient){toast('Still loading…');return;} tokenClient.requestAccessToken({prompt:'consent'}); }
-
 function proactiveRefresh(){
-  // Silently refresh token before it expires — no popup, no disruption
   if(!tokenClient) return;
-  const origCallback=tokenClient.callback;
+  const orig=tokenClient.callback;
   tokenClient.callback=async r=>{
-    tokenClient.callback=origCallback;
+    tokenClient.callback=orig;
     if(!r.error){
-      const tok=gapi.client.getToken();
-      sessionStorage.setItem('fm_tok',JSON.stringify(tok));
+      sessionStorage.setItem('fm_tok',JSON.stringify(gapi.client.getToken()));
       window._tokenExpiry=Date.now()+(50*60*1000);
       window._refreshTimer=setTimeout(proactiveRefresh,50*60*1000);
     }
-    // If it fails silently, user will get prompted on next save
   };
   tokenClient.requestAccessToken({prompt:''});
 }
 
 async function ensureAuth(){
-  // Check if token is close to expiry and refresh proactively
-  if(window._tokenExpiry && Date.now()>window._tokenExpiry){
-    await new Promise((resolve)=>{
-      if(!tokenClient){ resolve(); return; }
-      const origCallback=tokenClient.callback;
+  if(window._tokenExpiry&&Date.now()>window._tokenExpiry){
+    await new Promise(resolve=>{
+      if(!tokenClient){resolve();return;}
+      const orig=tokenClient.callback;
       tokenClient.callback=async r=>{
-        tokenClient.callback=origCallback;
-        if(!r.error){ const tok=gapi.client.getToken(); sessionStorage.setItem('fm_tok',JSON.stringify(tok)); window._tokenExpiry=Date.now()+(50*60*1000); }
+        tokenClient.callback=orig;
+        if(!r.error){sessionStorage.setItem('fm_tok',JSON.stringify(gapi.client.getToken()));window._tokenExpiry=Date.now()+(50*60*1000);}
         resolve();
       };
       tokenClient.requestAccessToken({prompt:''});
     });
   }
 }
+
+
+function signIn(){ if(!tokenClient){toast('Still loading…');return;} tokenClient.requestAccessToken({prompt:''}); }
 
 async function fetchUser(){
   try{
@@ -682,16 +655,8 @@ async function fetchUser(){
 
 /* ── Drive helpers ── */
 function setSyncing(s){ const w=document.getElementById('sync-wrap'),d=document.getElementById('sync-dot'),t=document.getElementById('sync-txt'); w.style.display='flex'; d.className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':''); t.textContent=s==='syncing'?'Saving…':s==='error'?'Error':'Synced'; }
-async function driveGet(fid){
-  const res=await gapi.client.request({path:`https://www.googleapis.com/drive/v3/files/${fid}`,params:{alt:'media',supportsAllDrives:true}});
-  if(res.status===401){ handleAuthExpiry(); throw new Error('Session expired — please sign in again'); }
-  return res;
-}
-async function drivePatch(fid,json){
-  const res=await gapi.client.request({path:`https://www.googleapis.com/upload/drive/v3/files/${fid}`,method:'PATCH',params:{uploadType:'media',fields:'id',supportsAllDrives:true},headers:{'Content-Type':'application/json'},body:JSON.stringify(json)});
-  if(res.status===401){ handleAuthExpiry(); throw new Error('Session expired — please sign in again'); }
-  return res;
-}
+async function driveGet(fid){ const res=await gapi.client.request({path:`https://www.googleapis.com/drive/v3/files/${fid}`,params:{alt:'media',supportsAllDrives:true}}); if(res.status===401){handleAuthExpiry();throw new Error('Session expired');} return res; }
+async function drivePatch(fid,json){ const res=await gapi.client.request({path:`https://www.googleapis.com/upload/drive/v3/files/${fid}`,method:'PATCH',params:{uploadType:'media',fields:'id',supportsAllDrives:true},headers:{'Content-Type':'application/json'},body:JSON.stringify(json)}); if(res.status===401){handleAuthExpiry();throw new Error('Session expired');} return res; }
 async function driveCreate(name,json,parentId){ const b='fmbnd123',meta=JSON.stringify({name,mimeType:'application/json',...(parentId?{parents:[parentId]}:{})}),body=JSON.stringify(json),mp=`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: application/json\r\n\r\n${body}\r\n--${b}--`; const r=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',params:{uploadType:'multipart',fields:'id',supportsAllDrives:true},headers:{'Content-Type':`multipart/related; boundary=${b}`},body:mp}); return r.result.id; }
 async function driveFind(name,parentId,mimeType){ let q=`name='${name}' and trashed=false`; if(parentId) q+=` and '${parentId}' in parents`; if(mimeType) q+=` and mimeType='${mimeType}'`; const r=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',params:{q,fields:'files(id,name)',supportsAllDrives:true,includeItemsFromAllDrives:true,corpora:'allDrives'}}); return r.result.files||[]; }
 
@@ -700,13 +665,13 @@ async function loadIndex(){
   show('screen-picker'); document.getElementById('picker-loading').style.display=''; document.getElementById('picker-grid').style.display='none';
   setSyncing('syncing');
   try{
-    if(SHARED_FOLDER_ID){
+    if(typeof SHARED_FOLDER_ID!=='undefined'&&SHARED_FOLDER_ID){
       folderId=SHARED_FOLDER_ID;
     } else {
       const folders=await driveFind(FOLDER_NAME,null,'application/vnd.google-apps.folder');
       if(folders.length){ folderId=folders[0].id; } else { folderId=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',method:'POST',params:{fields:'id'},headers:{'Content-Type':'application/json'},body:JSON.stringify({name:FOLDER_NAME,mimeType:'application/vnd.google-apps.folder'})}).then(r=>r.result.id); }
     }
-    if(SHARED_INDEX_ID){
+    if(typeof SHARED_INDEX_ID!=='undefined'&&SHARED_INDEX_ID){
       indexFileId=SHARED_INDEX_ID;
       const res=await driveGet(indexFileId); const data=typeof res.result==='string'?JSON.parse(res.result):res.result; projects=Array.isArray(data.projects)?data.projects:[];
     } else {
@@ -740,7 +705,7 @@ function renderPicker(){
 async function openNewProject(){ openModal('modal-new-proj'); document.getElementById('np-num').focus(); }
 async function createProject(){
   const num=document.getElementById('np-num').value.trim(), name=document.getElementById('np-name').value.trim(), desc=document.getElementById('np-desc').value.trim();
-  if(!num||num.length!==4||!/^\d{4}$/.test(num)){toast('Enter a 4-digit project number (e.g. 0183)');return;}
+  if(!num||!/^\d{4}$/.test(num)){toast('Enter a 4-digit project number');return;}
   if(!name){toast('Enter a project name');return;}
   const code=num;
   setSyncing('syncing');
@@ -799,7 +764,7 @@ function generateDocNum(){
   return projRef+'-TS-'+String(nextNum).padStart(3,'0');
 }
 function setAutoDocNum(){
-  if(editingId) return; // Don't overwrite doc number when editing existing record
+  if(editingId) return;
   const el=document.getElementById('f-docnum');
   if(!el||!el.readOnly) return;
   const num=generateDocNum();
@@ -829,6 +794,17 @@ function getMat(bodyId){ const rows=[]; document.querySelectorAll(`#${bodyId} tr
 function v(id){ return document.getElementById(id).value.trim(); }
 
 /* ── Save / Edit ── */
+function renderScanList(r){
+  const sl=r.scans&&r.scans.length?r.scans:r.scanFileId?[{fileId:r.scanFileId,fileName:r.scanFileName||'scan',uploadedAt:null}]:[];
+  if(!sl.length) return '';
+  const links=sl.map(function(s,i){
+    const name=s.fileName||('Scan '+(i+1));
+    const date=s.uploadedAt?' &middot; '+fmtDate(s.uploadedAt.split('T')[0]):'';
+    return '<a href="https://drive.google.com/file/d/'+s.fileId+'/view" target="_blank" style="color:#f07020;font-size:13px;">&#x1F4C4; '+esc(name)+date+' &#x2197;</a>';
+  }).join('');
+  return '<div class="sub-h">Scanned copies ('+sl.length+')</div><div style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px;">'+links+'</div>';
+}
+
 async function uploadModalScan(input){
   const files=Array.from(input.files); if(!files.length) return;
   const btn=document.getElementById('print-btn');
@@ -837,36 +813,23 @@ async function uploadModalScan(input){
   if(!r){ toast('No record selected'); return; }
   if(!r.scans) r.scans=[];
   const statusEl=document.getElementById('modal-scan-status');
-  statusEl.style.display='block';
-  statusEl.style.color='#888';
+  statusEl.style.display='block'; statusEl.style.color='#888';
   statusEl.textContent='Uploading '+files.length+' file'+(files.length>1?'s':'')+'…';
   let uploaded=0;
   for(const file of files){
     const fileId=await uploadScan(file, r.docNum, null);
-    if(fileId){
-      r.scans.push({fileId,fileName:file.name,uploadedAt:new Date().toISOString()});
-      // Keep legacy fields pointing to latest scan
-      r.scanFileId=fileId; r.scanFileName=file.name;
-      uploaded++;
-    }
+    if(fileId){ r.scans.push({fileId,fileName:file.name,uploadedAt:new Date().toISOString()}); r.scanFileId=fileId; r.scanFileName=file.name; uploaded++; }
   }
   if(uploaded>0){
     r.updatedAt=new Date().toISOString(); r.updatedBy=currentUser.email||'unknown';
     setSyncing('syncing');
-    try{
-      await saveProjectFile();
-      toast(uploaded+' scan'+(uploaded>1?'s':'')+' uploaded');
-      viewSheet(r.id);
-    } catch(e){ statusEl.style.color='#c00'; statusEl.textContent='Save failed: '+e.message; }
-  } else {
-    statusEl.style.color='#c00';
-    statusEl.textContent='Upload failed — check console';
-  }
+    try{ await saveProjectFile(); toast(uploaded+' scan'+(uploaded>1?'s':'')+' uploaded'); viewSheet(r.id); }
+    catch(e){ statusEl.style.color='#c00'; statusEl.textContent='Save failed: '+e.message; }
+  } else { statusEl.style.color='#c00'; statusEl.textContent='Upload failed'; }
   input.value='';
 }
 
 async function uploadScan(file, docNum, statusEl){
-  // statusEl is optional — caller passes their own status element
   if(!file) return null;
   setSyncing('syncing');
   if(statusEl){ statusEl.style.display='block'; statusEl.style.color='#888'; statusEl.textContent='Uploading…'; }
@@ -878,10 +841,7 @@ async function uploadScan(file, docNum, statusEl){
     const existing=await driveFind(subfolderName,folderId,'application/vnd.google-apps.folder');
     if(existing.length){ subfolderId=existing[0].id; }
     else {
-      const r=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',method:'POST',
-        params:{fields:'id',supportsAllDrives:true},
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({name:subfolderName,mimeType:'application/vnd.google-apps.folder',parents:[folderId]})});
+      const r=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',method:'POST',params:{fields:'id',supportsAllDrives:true},headers:{'Content-Type':'application/json'},body:JSON.stringify({name:subfolderName,mimeType:'application/vnd.google-apps.folder',parents:[folderId]})});
       subfolderId=r.result.id;
     }
     const reader=new FileReader();
@@ -891,14 +851,10 @@ async function uploadScan(file, docNum, statusEl){
     const b='scanbnd456';
     const meta=JSON.stringify({name:fname,parents:[subfolderId]});
     const mp='--'+b+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+meta+'\r\n--'+b+'\r\nContent-Type: '+(file.type||'application/octet-stream')+'\r\nContent-Transfer-Encoding: base64\r\n\r\n'+base64+'\r\n--'+b+'--';
-    const res=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',
-      params:{uploadType:'multipart',fields:'id,name',supportsAllDrives:true},
-      headers:{'Content-Type':'multipart/related; boundary='+b},body:mp});
+    const res=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',params:{uploadType:'multipart',fields:'id,name',supportsAllDrives:true},headers:{'Content-Type':'multipart/related; boundary='+b},body:mp});
     if(res.status===401){ handleAuthExpiry(); throw new Error('Session expired'); }
     const fileId=res.result.id;
-    window._pendingScanId=fileId;
-    window._pendingScanName=fname;
-    if(statusEl){ statusEl.style.color='#2e7d32'; statusEl.innerHTML='✓ Uploaded: '+fname+' — <a href="https://drive.google.com/file/d/'+fileId+'/view" target="_blank" style="color:#f07020;">View ↗</a>'; }
+    if(statusEl){ statusEl.style.color='#2e7d32'; statusEl.innerHTML='✓ '+fname+' <a href="https://drive.google.com/file/d/'+fileId+'/view" target="_blank" style="color:#f07020;">View ↗</a>'; }
     setSyncing('ok');
     return fileId;
   } catch(e){
@@ -908,16 +864,11 @@ async function uploadScan(file, docNum, statusEl){
   }
 }
 
-// Auto-upload scan when file selected
-document.addEventListener('DOMContentLoaded',()=>{
-
-});
 
 async function saveSheet(){
   if(!v('f-docnum')&&!v('f-opdesc')){toast('Enter a document number or operation description');return;}
   if(saving) return; saving=true;
-  const btn=document.getElementById('save-btn');
-  if(btn){ btn.disabled=true; btn.textContent='Saving…'; }
+  const btn=document.getElementById('save-btn'); if(btn){ btn.disabled=true; btn.textContent='Saving…'; }
   setSyncing('syncing');
   const data={
     projNo:v('f-projno'),projName:v('f-projname'),docNum:v('f-docnum'),
@@ -929,9 +880,7 @@ async function saveSheet(){
     targetWt:v('f-targetwt'),measuredWt:v('f-measuredwt'),resinTrace:v('f-resintrace'),hardTrace:v('f-hardtrace'),
     matLeft:getMat('mat-left-body'),matRight:getMat('mat-right-body'),
     feedback:v('f-feedback'),opName:v('f-opname'),opDate:v('f-opdate'),tlName:v('f-tlname'),tlDate:v('f-tldate'),
-    scanFileId:window._pendingScanId||null,scanFileName:window._pendingScanName||null,
   };
-  window._pendingScanId=null; window._pendingScanName=null;
   if(editingId){
     const idx=records.findIndex(r=>r.id===editingId);
     if(idx>=0){ records[idx]={...records[idx],...data,updatedAt:new Date().toISOString(),updatedBy:currentUser.email||'unknown'}; }
@@ -951,7 +900,7 @@ function editSheet(id){
   const r=records.find(x=>x.id==id); if(!r) return;
   editingId=r.id;
   const set=(fid,val)=>{ const el=document.getElementById(fid); if(el) el.value=val||''; };
-  set('f-projno',r.projNo); set('f-projname',r.projName); set('f-docnum',r.docNum);
+  set('f-projno',r.projNo); set('f-projname',r.projName); set('f-docnum',r.docNum); set(r.revision);
   set('f-issuedate',r.issueDate); set('f-sheetof',r.sheetOf); set('f-cajob',r.caJob); set('f-caop',r.caOp);
   set('f-opdesc',r.opDesc); set('f-drawings',r.drawings); set('f-addsheets',r.addSheets);
   set('f-hours',r.hours); set('f-finishdate',r.finishDate); set('f-author',r.author); set('f-approver',r.approver);
@@ -977,7 +926,6 @@ function editSheet(id){
   if(!banner){ banner=document.createElement('div'); banner.id='edit-banner'; banner.style.cssText='background:#fff3e8;border:1px solid #f0b070;border-radius:6px;padding:9px 14px;font-size:13px;color:#c85810;margin:10px 22px;display:flex;align-items:center;justify-content:space-between;'; document.getElementById('pane-new').querySelector('.section').prepend(banner); }
   banner.innerHTML=`<span>&#9998; Editing: ${esc(r.docNum||r.id)} — ${esc(r.opDesc||'')}</span><button onclick="cancelEdit()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#c85810;text-decoration:underline;font-family:inherit;">Cancel</button>`;
   banner.style.display='flex';
-  window._pendingScanId=r.scanFileId||null; window._pendingScanName=r.scanFileName||null;
   switchTab('new'); window.scrollTo(0,0);
 }
 
@@ -994,7 +942,6 @@ function clearForm(){
   editingId=null;
   ['f-projno','f-projname','f-docnum','f-issuedate','f-sheetof','f-cajob','f-caop','f-opdesc','f-drawings','f-addsheets','f-hours','f-finishdate','f-author','f-approver','f-ra','f-coshh','f-sop','f-prereq','f-cure','f-special','f-targetwt','f-measuredwt','f-resintrace','f-hardtrace','f-feedback','f-opname','f-opdate','f-tlname','f-tldate'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   document.getElementById('f-status').value='open';
-
   document.getElementById('qa-body').innerHTML=''; [{},{},{}].forEach(()=>addQARow());
   initOpsTable();
   ['mat-left-body','mat-right-body'].forEach(id=>{ const b=document.getElementById(id); b.innerHTML=''; for(let i=0;i<5;i++){ const tr=document.createElement('tr'); tr.innerHTML='<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>'; b.appendChild(tr); } });
@@ -1004,7 +951,6 @@ function clearForm(){
   // Reset to auto mode on clear
   const dnel=document.getElementById('f-docnum'); if(dnel){ dnel.readOnly=true; dnel.style.background='#f5f5f5'; dnel.style.color='#555'; dnel.style.cursor='default'; } const dnbtn=document.getElementById('docnum-override-btn'); if(dnbtn) dnbtn.textContent='override';
   setAutoDocNum();
-  window._pendingScanId=null; window._pendingScanName=null;
 }
 
 /* ── Records ── */
@@ -1190,20 +1136,9 @@ function renderRecords(){
       <td style="white-space:nowrap;">${fmtDate(r.finishDate)}</td>
       <td>${statusBadge(r.status)}</td>
       <td>${ib}</td>
-      <td style="white-space:nowrap;">${(r.scans&&r.scans.length||r.scanFileId)?'<span title="'+(r.scans&&r.scans.length?r.scans.length:1)+' scan(s) attached" style="color:#2e7d32;font-size:11px;">📎'+(r.scans&&r.scans.length>1?'<sup>'+r.scans.length+'</sup>':'')+' </span>':''} ${issueBtn} &nbsp; <button class="link-btn" style="color:#666;" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#999;" onclick="editSheet('${r.id}')">Edit</button> &nbsp; <button class="link-btn" style="color:#aaa;" onclick="duplicateSheet('${r.id}')">Duplicate</button></td>
+      <td style="white-space:nowrap;">${issueBtn} &nbsp; <button class="link-btn" style="color:#666;" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#999;" onclick="editSheet('${r.id}')">Edit</button> &nbsp; <button class="link-btn" style="color:#aaa;" onclick="duplicateSheet('${r.id}')">Duplicate</button></td>
     </tr>`;
   }).join('');
-}
-
-function renderScanList(r){
-  const sl=r.scans&&r.scans.length?r.scans:r.scanFileId?[{fileId:r.scanFileId,fileName:r.scanFileName||'scan',uploadedAt:null}]:[];
-  if(!sl.length) return '';
-  const links=sl.map(function(s,i){
-    const name=s.fileName||('Scan '+(i+1));
-    const date=s.uploadedAt?' &middot; '+fmtDate(s.uploadedAt.split('T')[0]):'';
-    return '<a href="https://drive.google.com/file/d/'+s.fileId+'/view" target="_blank" style="color:#f07020;font-size:13px;">&#x1F4C4; '+esc(name)+date+' &#x2197;</a>';
-  }).join('');
-  return '<div class="sub-h">Scanned copies ('+sl.length+')</div><div style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px;">'+links+'</div>';
 }
 
 function viewSheet(id){
@@ -1218,7 +1153,7 @@ function viewSheet(id){
   document.getElementById('detail-body').innerHTML=`
     <div class="dr"><span class="dk">Document number</span><span>${esc(r.docNum||'—')}</span></div>
     <div class="dr"><span class="dk">Project</span><span>${esc(r.projNo||'')} ${esc(r.projName||'')}</span></div>
-    
+    <div class="dr"><span class="dk">Revision</span><span>${esc(r.revision||'—')}</span></div>
     <div class="dr"><span class="dk">Issue date</span><span>${fmtDate(r.issueDate)}</span></div>
     <div class="dr"><span class="dk">Sheet</span><span>${esc(r.sheetOf||'—')}</span></div>
     <div class="dr"><span class="dk">Cloudattend job</span><span>${esc(r.caJob||'—')}</span></div>
@@ -1255,9 +1190,15 @@ function viewSheet(id){
     <div class="sub-h">Sign-off</div>
     <div class="dr"><span class="dk">Operator</span><span>${esc(r.opName||'—')}${r.opDate?' · '+fmtDate(r.opDate):''}</span></div>
     <div class="dr"><span class="dk">Task leader</span><span>${esc(r.tlName||'—')}${r.tlDate?' · '+fmtDate(r.tlDate):''}</span></div>`;
-  document.getElementById('print-btn').dataset.rid = r.id;
-  const ss=document.getElementById('modal-scan-status'); if(ss){ ss.style.display=r.scanFileId?'block':'none'; ss.style.color='#2e7d32'; const scanList=r.scans&&r.scans.length?r.scans:r.scanFileId?[{fileId:r.scanFileId,fileName:r.scanFileName||'scan'}]:[];
-    ss.innerHTML=scanList.length?scanList.map(s=>'<a href="https://drive.google.com/file/d/'+s.fileId+'/view" target="_blank" style="color:#f07020;margin-right:10px;">✓ '+s.fileName+' ↗</a>').join(''):''; }
+  const pb=document.getElementById('print-btn'); if(pb) pb.dataset.rid=r.id;
+  const ss=document.getElementById('modal-scan-status');
+  if(ss){
+    const sl=r.scans&&r.scans.length?r.scans:r.scanFileId?[{fileId:r.scanFileId,fileName:r.scanFileName||'scan'}]:[];
+    if(sl.length){
+      ss.style.display='block'; ss.style.color='#2e7d32';
+      ss.innerHTML=sl.map(s=>'<a href="https://drive.google.com/file/d/'+s.fileId+'/view" target="_blank" style="color:#f07020;margin-right:10px;">✓ '+s.fileName+' ↗</a>').join('');
+    } else { ss.style.display='none'; ss.innerHTML=''; }
+  }
   openModal('modal-detail');
 }
 
@@ -1269,7 +1210,7 @@ async function deleteSheet(){
   if(!confirm('Delete this record for all users?')) return;
   records.splice(idx,1); closeModal('modal-detail'); setSyncing('syncing');
   try{ await saveProjectFile(); renderRecords(); toast('Record deleted'); }
-  catch(e){ records.splice(idx,0,...[]); setSyncing('error'); toast('Delete failed: '+e.message); }
+  catch(e){ setSyncing('error'); toast('Delete failed: '+e.message); }
 }
 
 
@@ -1306,24 +1247,24 @@ function duplicateSheetFromModal(){
 
 /* ── Print ── */
 function printSheet(){
-  const btn = document.getElementById('print-btn');
-  const rid = btn && btn.dataset.rid;
-  const r = rid ? records.find(x=>x.id==rid) : (viewIdx!==null&&viewIdx>=0?records[viewIdx]:null);
+  const pb=document.getElementById('print-btn');
+  const rid=pb&&pb.dataset.rid;
+  const r=rid?records.find(x=>x.id==rid):(viewIdx!==null&&viewIdx>=0?records[viewIdx]:null);
   if(!r){ alert('No record selected for printing.'); return; }
-  const qaRows=(r.qa&&r.qa.some(q=>q.point)?r.qa.filter(q=>q.point):Array(4).fill({})).map(q=>`<tr><td style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.point||'')}</td><td style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.ndt||'')}</td><td style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.stage||'')}</td><td style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.date||'')}</td><td class="sh" style="height:28px;min-height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.results||'')}</td></tr>`).join('');
+  const qaRows=(r.qa&&r.qa.some(q=>q.point)?r.qa.filter(q=>q.point):Array(4).fill({})).map(q=>`<tr><td style="height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.point||'')}</td><td style="height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.ndt||'')}</td><td style="height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.stage||'')}</td><td style="height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.date||'')}</td><td class="sh" style="height:28px;padding:0 6px;vertical-align:middle;">${esc(q&&q.results||'')}</td></tr>`).join('');
   const opsRows=(r.ops&&r.ops.length?r.ops:Array(10).fill({})).map(o=>`<tr><td>${esc(o&&o.desc||'')}</td><td class="sh">${esc(o&&o.opInit||'')}</td><td class="sh">${esc(o&&o.qaInit||'')}</td><td class="sh">${esc(o&&o.date||'')}</td></tr>`).join('');
   const matHalf=(data,title)=>{
-    const rows=(data&&data.length?data:Array(5).fill({})).map(m=>`<tr><td style="height:26px;min-height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.material||'')}</td><td style="height:26px;min-height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.trace||'')}</td><td style="height:26px;min-height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.amount||'')}</td></tr>`).join('');
+    const rows=(data&&data.length?data:Array(5).fill({})).map(m=>`<tr><td style="height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.material||'')}</td><td style="height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.trace||'')}</td><td style="height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.amount||'')}</td></tr>`).join('');
     return `<div class="ps-mat-half"><table class="ps-table" style="width:100%;table-layout:fixed;"><thead><tr><th style="width:50%">Materials record</th><th style="width:25%">Trace #</th><th style="width:25%">Amount used</th></tr></thead><tbody>${rows}</tbody></table></div>`;
   };
   document.getElementById('print-sheet').innerHTML=`<div class="ps">
     <div class="ps-top">
-      <div class="ps-logo"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
+      <div class="ps-logo" style="grid-row:1/3;"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Project No</div><div class="ps-hcell-val">${esc(r.projNo||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Project Name</div><div class="ps-hcell-val">${esc(r.projName||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
-      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">1</div><div style="font-size:6pt;color:#444;">of 2</div></div>
+      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sht</div><div class="ps-sheetnum-val">${esc(r.sheetOf||'')}</div></div>
     </div>
     <div class="ps-body">
       <div class="ps-row"><div class="ps-lbl">Cloudattend job</div><div class="ps-val">${esc(r.caJob||'')}</div></div>
@@ -1351,7 +1292,7 @@ function printSheet(){
       <div class="ps-briefing"><strong>IMPORTANT — Do not continue until you have signed the briefing log</strong><br>List all people working on the job and get them to sign back off this sheet after briefing</div>
       <div class="ps-section-hdr">Special instructions</div>
       <div class="ps-special">${esc(r.special||'')}</div>
-      <table class="ps-table" style="width:100%;"><thead><tr><th style="width:40%">QA / sign-off point</th><th style="width:12%">NDT required</th><th style="width:13%">Stage</th><th style="width:12%">Date</th><th style="width:13%">Results</th></tr></thead><tbody>${qaRows}</tbody></table>
+      <table class="ps-table"><thead><tr><th style="width:40%">QA / sign-off point</th><th>NDT required</th><th>Stage</th><th>Date</th><th>Results</th></tr></thead><tbody>${qaRows}</tbody></table>
       <table class="ps-ops-table"><thead><tr><th style="width:57%">Operation description</th><th style="width:14%">Op init</th><th style="width:14%">QA init</th><th style="width:15%">Date</th></tr></thead><tbody>${opsRows}</tbody></table>
       <div style="font-size:8pt;text-align:center;padding:4px;border-top:1px solid #ccc;color:#888;">See continuation sheet (delete this if not relevant)</div>
       <div class="ps-weight-row">
@@ -1378,115 +1319,16 @@ function printSheet(){
         <div style="margin-top:6px;font-size:8pt;color:#555;">Date: ${r.tlDate?fmtDate(r.tlDate):''}</div>
       </div>
     </div>
-  </div>
-
-  <div style="page-break-before:always;"></div>
-  <div class="ps" style="margin-top:0;">
-    <div class="ps-top">
-      <div class="ps-logo"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Project No</div><div class="ps-hcell-val">${esc(r.projNo||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Project Name</div><div class="ps-hcell-val">${esc(r.projName||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Task sheet document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
-
-      <div class="ps-hcell"><div class="ps-hcell-label">Issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
-      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">2</div></div>
-    </div>
-    <div class="ps-body">
-      <div class="ps-section-hdr">Briefing sign-off log — Page 2 of 2</div>
-      <div style="padding:5px 7px;font-size:7.5pt;color:#000;border-bottom:1px solid #999;">
-        All personnel working on this task must confirm they have read the task sheet, attended the briefing and are aware of all relevant Risk Assessments, COSHH documents and Standard Operating Procedures listed on page 1.
-      </div>
-      <table class="ps-table" style="width:100%;">
-        <thead>
-          <tr>
-            <th style="width:25%">Name (print)</th>
-            <th style="width:20%">Signature</th>
-            <th style="width:15%">Date</th>
-            <th style="width:20%">Role / trade</th>
-            <th style="width:10%">RA read</th>
-            <th style="width:10%">Briefed</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${Array(14).fill('').map(()=>'<tr><td style="height:26px;"></td><td></td><td></td><td></td><td></td><td></td></tr>').join('')}
-        </tbody>
-      </table>
-      <div style="padding:5px 7px;font-size:7pt;color:#555;border-top:1px solid #999;">
-        Task leader confirms briefing was conducted and all personnel have signed above:
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;">
-        <div style="padding:8px 10px;border-right:1px solid #999;">
-          <div style="border-bottom:1px solid #000;margin:20px 0 3px;"></div>
-          <div style="font-size:7.5pt;color:#333;">Task leader signature</div>
-          <div style="margin-top:6px;font-size:7.5pt;color:#555;">Name: ${esc(r.tlName||'')}</div>
-          <div style="margin-top:4px;font-size:7.5pt;color:#555;">Date: ${r.tlDate?fmtDate(r.tlDate):''}</div>
-        </div>
-        <div style="padding:8px 10px;">
-          <div style="font-size:7.5pt;font-weight:700;color:#000;margin-bottom:5px;">Documents confirmed in briefing:</div>
-          <div style="font-size:7.5pt;color:#000;">Risk assessments: ${esc(r.ra||'—')}</div>
-          <div style="font-size:7.5pt;color:#000;margin-top:3px;">COSHH: ${esc(r.coshh||'—')}</div>
-          <div style="font-size:7.5pt;color:#000;margin-top:3px;">SOPs: ${esc(r.sop||'—')}</div>
-        </div>
-      </div>
-    </div>
   </div>`;
   // Don't close modal before print — @media print hides it automatically.
   // Close it after the print dialog is dismissed.
-  // Open a dedicated print window — completely isolated from app DOM/CSS
-  const pw = window.open('','_blank','width=900,height=700');
-  const psCss = `.ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
-.ps-top{display:grid;grid-template-columns:170px 75px 165px 145px 90px 55px;border:1.5px solid #000;border-bottom:none;}
-.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;display:flex;flex-direction:column;justify-content:flex-start;}
-.ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
-.ps-logo-sub{font-size:7.5pt;margin-top:3px;}
-.ps-hcell{border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;}
-.ps-hcell-label{font-size:6.5pt;color:#444;text-transform:uppercase;}
-.ps-hcell-val{font-size:10pt;font-weight:700;color:#000;margin-top:1px;}
-.ps-hcell-val-sm{font-size:8.5pt;font-weight:700;color:#000;margin-top:1px;}
-.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;align-self:stretch;}
-.ps-sheetnum-label{font-size:6.5pt;color:#444;}
-.ps-sheetnum-val{font-size:15pt;font-weight:700;line-height:1;color:#000;}
-.ps-body{border:1.5px solid #000;border-top:none;}
-.ps-row{display:grid;grid-template-columns:155px 1fr;border-top:1px solid #999;}
-.ps-row-split{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;}
-.ps-row-4{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;}
-.ps-lbl{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-right:1px solid #444;}
-.ps-val{padding:3px 6px;font-size:8.5pt;color:#000;}
-.ps-lbl2{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-left:1px solid #444;border-right:1px solid #444;}
-.ps-briefing{background:#eee!important;border-top:1.5px solid #000;border-bottom:1.5px solid #000;padding:5px;text-align:center;font-size:8.5pt;}
-.ps-briefing strong{font-size:9pt;}
-.ps-section-hdr{background:#555!important;color:#fff!important;padding:3px 7px;font-size:7.5pt;font-weight:700;border-top:1px solid #000;}
-.ps-special{min-height:28px;padding:4px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;font-style:italic;}
-.ps-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
-.ps-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
-.ps-table td{padding:0 6px;border:1px solid #999;height:28px;min-height:28px;color:#000;vertical-align:middle;}
-.ps-table .sh{background:#ddd!important;}
-.ps-ops-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
-.ps-ops-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
-.ps-ops-table td{padding:0 6px;border:1px solid #999;height:24px;min-height:24px;color:#000;vertical-align:middle;}
-.ps-ops-table .sh{background:#ddd!important;}
-.ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
-.ps-weight-cell{padding:4px 7px;border-right:1px solid #999;}
-.ps-weight-cell:last-child{border-right:none;}
-.ps-weight-lbl{font-size:7.5pt;font-weight:700;color:#000;}
-.ps-weight-val{font-size:8.5pt;min-height:14px;color:#000;}
-.ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
-.ps-mat-half{padding:5px 7px;}.ps-mat-half table td{padding:6px 6px;min-height:24px;}
-.ps-mat-half:first-child{border-right:1px solid #999;}
-.ps-feedback{min-height:40px;padding:5px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;}
-.ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid #000;}
-.ps-so-cell{padding:8px 10px;border-right:1px solid #999;}
-.ps-so-cell:last-child{border-right:none;}
-.ps-so-line{border-bottom:1px solid #000;margin:14px 0 3px;}
-.ps-so-lbl{font-size:7.5pt;color:#333;}`;
-  pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Print — '+esc(r.docNum||'Task sheet')+'</title><style>*{box-sizing:border-box;margin:0;padding:0;}@page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} @page:bottom{content:counter(page) \' of \' counter(pages);}body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'+psCss+'</style></head><body>'+document.getElementById('print-sheet').innerHTML+'<scr'+'ipt>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<'+'/scr'+'ipt></body></html>');
-  pw.document.close();
-  closeModal('modal-detail');
+  window.onafterprint = function(){ closeModal('modal-detail'); window.onafterprint = null; };
+  setTimeout(function(){ window.print(); }, 150);
 }
 
 /* ── Export ── */
 function sheetToText(r){
-  const L=['========================================','FIBRE Mechanics — Task Record Sheet',`Doc: ${r.docNum||'—'}  Issued: ${fmtDate(r.issueDate)}`,'========================================',
+  const L=['========================================','FIBRE Mechanics — Task Record Sheet',`Doc: ${r.docNum||'—'}  Rev: ${r.revision||'—'}  Issued: ${fmtDate(r.issueDate)}`,'========================================',
     `Project:     ${r.projNo||''} ${r.projName||''}`,`Operation:   ${r.opDesc||'—'}`,`CA Job:      ${r.caJob||'—'}`,`CA Op:       ${r.caOp||'—'}`,
     `Drawings:    ${r.drawings||'—'}`,`Hours est:   ${r.hours||'—'}`,`Finish:      ${fmtDate(r.finishDate)}`,
     `Author:      ${r.author||'—'}`,`Approver:    ${r.approver||'—'}`,`RA:          ${r.ra||'—'}`,
