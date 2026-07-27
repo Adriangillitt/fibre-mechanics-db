@@ -605,10 +605,8 @@ function boot(){
 }
 
 function openScanPreview(fileId){
-  const url='https://drive.google.com/file/d/'+fileId+'/preview';
-  const w=window.open('','scan_preview','width=900,height=700,resizable=yes,scrollbars=yes');
-  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Scan Preview</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#222;display:flex;flex-direction:column;height:100vh;}iframe{flex:1;border:none;width:100%;}</style></head><body><iframe src="'+url+'" allowfullscreen></iframe></body></html>');
-  w.document.close();
+  // Open directly in new tab — Drive preview URL works without embedding
+  window.open('https://drive.google.com/file/d/'+fileId+'/view','_blank');
 }
 
 function handleAuthExpiry(){
