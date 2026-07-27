@@ -158,6 +158,44 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .toast.show{display:block;}
 
 .conflict{background:#fff8e1;border:1px solid #ffc107;border-radius:6px;padding:9px 14px;font-size:13px;color:#7a5800;margin:10px 22px;display:none;}
+
+/* ── Print sheet ── */
+#print-sheet{display:none;}
+@media print{
+  body > .app, #modal-new-proj, #modal-detail, .toast { display:none !important; }
+  #print-sheet { display:block !important; }
+}
+.ps{font-family:Arial,sans-serif;font-size:10pt;color:#000;max-width:210mm;margin:0 auto;}
+.ps-header{display:grid;grid-template-columns:1fr auto auto;border:2px solid #000;}
+.ps-logo{background:#5a6e3a;color:#fff;padding:8px 12px;font-size:14pt;font-weight:700;line-height:1.2;}
+.ps-logo span{display:block;font-size:10pt;font-weight:400;}
+.ps-project{border-left:2px solid #000;padding:6px 10px;min-width:160px;}
+.ps-project-label{font-size:8pt;color:#555;text-transform:uppercase;letter-spacing:.05em;}
+.ps-project-val{font-size:11pt;font-weight:700;color:#5a6e3a;}
+.ps-sheetnum{border-left:2px solid #000;padding:6px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:60px;background:#f5f5dc;}
+.ps-sheetnum-label{font-size:7pt;color:#777;text-transform:uppercase;}
+.ps-sheetnum-val{font-size:22pt;font-weight:700;line-height:1;}
+.ps-body{border:2px solid #000;border-top:none;}
+.ps-row{display:grid;grid-template-columns:110px 1fr;border-bottom:1px solid #ccc;}
+.ps-row:last-child{border-bottom:none;}
+.ps-row-split{display:grid;grid-template-columns:110px 1fr 110px 1fr;border-bottom:1px solid #ccc;}
+.ps-label{background:#f0f0f0;padding:5px 8px;font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:#444;border-right:1px solid #ccc;display:flex;align-items:flex-start;}
+.ps-val{padding:5px 8px;font-size:9.5pt;}
+.ps-section-header{background:#5a6e3a;color:#fff;padding:4px 8px;font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #000;}
+.ps-notes-row{display:grid;grid-template-columns:22px 1fr;gap:0;border-bottom:1px solid #eee;min-height:22px;}
+.ps-notes-row:last-child{border-bottom:none;}
+.ps-note-num{background:#f0f0f0;padding:4px 6px;font-size:8pt;color:#666;text-align:center;border-right:1px solid #ccc;display:flex;align-items:flex-start;justify-content:center;}
+.ps-note-val{padding:4px 8px;font-size:9pt;}
+.ps-mat-table{width:100%;border-collapse:collapse;font-size:9pt;}
+.ps-mat-table th{background:#f0f0f0;padding:4px 8px;text-align:left;border:1px solid #ccc;font-size:8pt;font-weight:700;text-transform:uppercase;}
+.ps-mat-table td{padding:5px 8px;border:1px solid #ccc;min-height:20px;}
+.ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid #000;}
+.ps-signoff-cell{padding:10px 12px;border-right:1px solid #ccc;}
+.ps-signoff-cell:last-child{border-right:none;}
+.ps-signoff-line{border-bottom:1px solid #000;margin-top:20px;margin-bottom:4px;}
+.ps-signoff-label{font-size:8pt;color:#555;}
+.ps-ra{font-size:9pt;line-height:1.6;}
+.ps-feedback-box{min-height:60px;padding:6px 8px;font-size:9pt;border-top:1px solid #eee;}
 </style>
 </head>
 <body>
@@ -348,12 +386,16 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="modal-body" id="detail-body" style="max-height:65vh;overflow-y:auto;"></div>
     <div class="modal-foot">
       <button class="btn btn-danger" onclick="deleteSheet()">Delete</button>
+      <button class="btn" onclick="printSheet()">&#x1F5A8; Print</button>
       <button class="btn" onclick="closeModal('modal-detail')">Close</button>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- PRINT SHEET (hidden on screen, shown when printing) -->
+<div id="print-sheet"></div>
 
 <script>
 /* ════════════════════════════════════════════════════════════════
@@ -716,6 +758,78 @@ async function deleteSheet(){
   setSyncing('syncing');
   try{ await saveProjectFile(); renderRecords(); toast('Record deleted'); }
   catch(e){ toast('Delete failed: '+e.message); setSyncing('error'); }
+}
+
+/* ── Print ── */
+function printSheet(){
+  if(viewIdx===null||viewIdx<0) return;
+  const r=records[viewIdx];
+  const projectLine=[r.projectCode,r.projectName].filter(Boolean).join(' — ')||'—';
+  const notesRows=(r.notes&&r.notes.length?r.notes:Array(8).fill('')).map((n,i)=>`<div class="ps-notes-row"><div class="ps-note-num">${i+1}</div><div class="ps-note-val">${esc(n)}</div></div>`).join('');
+  const matRows=(r.materials&&r.materials.length?r.materials:[{material:'',b1:'',b2:'',b3:'',b4:''},{material:'',b1:'',b2:'',b3:'',b4:''},{material:'',b1:'',b2:'',b3:'',b4:''},{material:'',b1:'',b2:'',b3:'',b4:''},{material:'',b1:'',b2:'',b3:'',b4:''}]).map(m=>`<tr><td>${esc(m.material)}</td><td>${esc(m.b1)}</td><td>${esc(m.b2)}</td><td>${esc(m.b3)}</td><td>${esc(m.b4)}</td></tr>`).join('');
+  document.getElementById('print-sheet').innerHTML=`<div class="ps">
+    <div class="ps-header">
+      <div class="ps-logo">FIBRE Mechanics<span>Task Record Sheet</span></div>
+      <div class="ps-project"><div class="ps-project-label">Project</div><div class="ps-project-val">${esc(projectLine)}</div></div>
+      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">${esc(r.sheetNum||'—')}</div></div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-row-split">
+        <div class="ps-label">Operation</div><div class="ps-val" style="grid-column:2/5;font-weight:600;">${esc(r.operation||'—')}</div>
+      </div>
+      <div class="ps-row-split">
+        <div class="ps-label">Task description</div><div class="ps-val" style="grid-column:2/5;font-weight:600;">${esc(r.taskDesc||'—')}</div>
+      </div>
+      <div class="ps-row-split">
+        <div class="ps-label">TaskMaster</div><div class="ps-val">${esc(r.taskMaster||'')}</div>
+        <div class="ps-label" style="border-left:1px solid #ccc;">Questions to</div><div class="ps-val">${esc(r.questionsTo||'')}</div>
+      </div>
+      <div class="ps-row-split">
+        <div class="ps-label">Drawings</div><div class="ps-val" style="grid-column:2/5;">${esc(r.drawings||'')}</div>
+      </div>
+      <div class="ps-row-split">
+        <div class="ps-label">Sketches</div><div class="ps-val">${esc(r.sketches||'')}</div>
+        <div class="ps-label" style="border-left:1px solid #ccc;">Cure programme</div><div class="ps-val">${esc(r.cure||'')}</div>
+      </div>
+      <div class="ps-row-split">
+        <div class="ps-label">Issued by</div><div class="ps-val">${esc(r.issuedBy||'')}${r.createdAt?'&nbsp;&nbsp;'+fmtDate(r.createdAt.split('T')[0]):''}</div>
+        <div class="ps-label" style="border-left:1px solid #ccc;">Planned finish</div><div class="ps-val">${fmtDate(r.plannedFinish)}</div>
+      </div>
+      <div class="ps-row">
+        <div class="ps-label">Safety &amp; Risk assessment</div>
+        <div class="ps-val ps-ra">${esc(r.ra||'—')}</div>
+      </div>
+      <div class="ps-section-header">Notes and instructions</div>
+      ${notesRows}
+      <div class="ps-section-header">Materials record</div>
+      <div style="padding:8px;">
+        <table class="ps-mat-table">
+          <thead><tr><th style="width:28%">Material</th><th>Batch 1</th><th>Batch 2</th><th>Batch 3</th><th>Batch 4</th></tr></thead>
+          <tbody>${matRows}</tbody>
+        </table>
+      </div>
+      <div class="ps-section-header">Feedback, notes &amp; comments</div>
+      <div class="ps-feedback-box">${esc(r.feedback||'')}<br><br><br></div>
+    </div>
+    <div class="ps-signoff">
+      <div class="ps-signoff-cell">
+        <div style="font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">FIBRE Mechanics &nbsp;|&nbsp; Part No: ${esc(r.partNo||'')}</div>
+        <div class="ps-signoff-line"></div>
+        <div class="ps-signoff-label">Operator sign-off: ${esc(r.operatorName||'')}</div>
+        <div style="margin-top:12px;" class="ps-signoff-line"></div>
+        <div class="ps-signoff-label">Inspected by: ${esc(r.inspector||'')}</div>
+      </div>
+      <div class="ps-signoff-cell">
+        <div style="font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Dates</div>
+        <div class="ps-signoff-line"></div>
+        <div class="ps-signoff-label">Date: ${r.operatorDate?fmtDate(r.operatorDate):''}</div>
+        <div style="margin-top:12px;" class="ps-signoff-line"></div>
+        <div class="ps-signoff-label">Date: ${r.inspectorDate?fmtDate(r.inspectorDate):''}</div>
+      </div>
+    </div>
+  </div>`;
+  closeModal('modal-detail');
+  window.print();
 }
 
 /* ── Export ── */
