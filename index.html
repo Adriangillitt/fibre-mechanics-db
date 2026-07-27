@@ -566,7 +566,8 @@ const DISC_DOC    = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
 
    Then share that folder with all team members (Editor access).
 ────────────────────────────────────────────────────────────────────────── */
-const SHARED_FOLDER_ID = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL'; // FM 2026 Project Task Sheets — Shared Drive
+const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL'; // FM 2026 Project Task Sheets — Shared Drive
+const SHARED_INDEX_ID   = '1D9H-TvwvHZKJtvCWlzL3heXQkNp58za1'; // FM_Projects_Index.json — fixed ID, prevents duplicates
 
 let tokenClient, gapiOk=false, gsiOk=false;
 let folderId=null, indexFileId=null;
@@ -624,9 +625,14 @@ async function loadIndex(){
       const folders=await driveFind(FOLDER_NAME,null,'application/vnd.google-apps.folder');
       if(folders.length){ folderId=folders[0].id; } else { folderId=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',method:'POST',params:{fields:'id'},headers:{'Content-Type':'application/json'},body:JSON.stringify({name:FOLDER_NAME,mimeType:'application/vnd.google-apps.folder'})}).then(r=>r.result.id); }
     }
-    const indices=await driveFind(INDEX_FILE,folderId);
-    if(indices.length){ indexFileId=indices[0].id; const res=await driveGet(indexFileId); const data=typeof res.result==='string'?JSON.parse(res.result):res.result; projects=Array.isArray(data.projects)?data.projects:[]; }
-    else { projects=[]; indexFileId=await driveCreate(INDEX_FILE,{projects:[],createdAt:new Date().toISOString()},folderId); }
+    if(SHARED_INDEX_ID){
+      indexFileId=SHARED_INDEX_ID;
+      const res=await driveGet(indexFileId); const data=typeof res.result==='string'?JSON.parse(res.result):res.result; projects=Array.isArray(data.projects)?data.projects:[];
+    } else {
+      const indices=await driveFind(INDEX_FILE,folderId);
+      if(indices.length){ indexFileId=indices[0].id; const res=await driveGet(indexFileId); const data=typeof res.result==='string'?JSON.parse(res.result):res.result; projects=Array.isArray(data.projects)?data.projects:[]; }
+      else { projects=[]; indexFileId=await driveCreate(INDEX_FILE,{projects:[],createdAt:new Date().toISOString()},folderId); }
+    }
     setSyncing('synced'); renderPicker();
   }catch(e){ setSyncing('error'); if(e.status===401){sessionStorage.removeItem('fm_tok');signIn();} else toast('Error: '+e.message); }
   finally{ document.getElementById('picker-loading').style.display='none'; document.getElementById('picker-grid').style.display=''; }
