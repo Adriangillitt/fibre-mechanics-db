@@ -387,6 +387,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="modal-foot">
       <button class="btn btn-danger" onclick="deleteSheet()">Delete</button>
       <button class="btn" onclick="printSheet()">&#x1F5A8; Print</button>
+      <button class="btn btn-primary" onclick="editSheet(records[viewIdx].id)">&#9998; Edit</button>
       <button class="btn" onclick="closeModal('modal-detail')">Close</button>
     </div>
   </div>
@@ -421,7 +422,7 @@ let projects=[];          // [{id,code,num,name,desc,fileId,sheetCount,updatedAt
 let records=[];           // sheets in current project
 let currentProject=null;  // project object
 let currentUser={};
-let viewIdx=null, noteCount=8, saving=false;
+let viewIdx=null, noteCount=8, saving=false, editingId=null;
 
 /* ── Google API boot ── */
 window.addEventListener('load',()=>{
@@ -641,34 +642,136 @@ async function saveSheet(){
   if(saving) return; saving=true;
   const btn=document.getElementById('save-btn'); btn.disabled=true; btn.textContent='Saving…';
   setSyncing('syncing');
-  const rec={
-    id:Date.now()+'_'+Math.random().toString(36).slice(2),
-    projectCode:v('f-code'),projectNum:v('f-num'),sheetNum:v('f-sheet'),
-    projectName:v('f-pname'),operation:v('f-op'),taskDesc:v('f-tdesc'),
-    taskMaster:v('f-tm'),questionsTo:v('f-qt'),drawings:v('f-draw'),
-    sketches:v('f-sketch'),cure:v('f-cure'),issuedBy:v('f-issued'),
-    plannedFinish:v('f-finish'),status:document.getElementById('f-status').value,
-    ra:v('f-ra'),notes:getNotes(),materials:getMats(),
-    feedback:v('f-feedback'),operatorName:v('f-opname'),operatorDate:v('f-opdate'),
-    inspector:v('f-insp'),inspectorDate:v('f-inspdate'),partNo:v('f-partno'),
-    createdAt:new Date().toISOString(),
-    createdBy:currentUser.email||'unknown',createdByName:currentUser.name||currentUser.email||'Unknown'
-  };
-  records.unshift(rec);
-  try{
-    await saveProjectFile();
-    clearForm(); toast('Task sheet saved'); switchTab('records');
-  }catch(e){
-    records.shift(); setSyncing('error'); toast('Save failed: '+e.message);
-  }finally{ saving=false; btn.disabled=false; btn.textContent='✓ Save task sheet'; }
+
+  if(editingId){
+    // UPDATE existing record
+    const idx=records.findIndex(r=>r.id===editingId);
+    if(idx<0){ toast('Record not found'); saving=false; btn.disabled=false; btn.textContent='✓ Save task sheet'; return; }
+    const original=records[idx];
+    records[idx]={
+      ...original,
+      projectCode:v('f-code'),projectNum:v('f-num'),sheetNum:v('f-sheet'),
+      projectName:v('f-pname'),operation:v('f-op'),taskDesc:v('f-tdesc'),
+      taskMaster:v('f-tm'),questionsTo:v('f-qt'),drawings:v('f-draw'),
+      sketches:v('f-sketch'),cure:v('f-cure'),issuedBy:v('f-issued'),
+      plannedFinish:v('f-finish'),status:document.getElementById('f-status').value,
+      ra:v('f-ra'),notes:getNotes(),materials:getMats(),
+      feedback:v('f-feedback'),operatorName:v('f-opname'),operatorDate:v('f-opdate'),
+      inspector:v('f-insp'),inspectorDate:v('f-inspdate'),partNo:v('f-partno'),
+      updatedAt:new Date().toISOString(),
+      updatedBy:currentUser.email||'unknown',updatedByName:currentUser.name||currentUser.email||'Unknown'
+    };
+    try{
+      await saveProjectFile();
+      clearForm(); toast('Record updated'); switchTab('records');
+    }catch(e){
+      records[idx]=original; setSyncing('error'); toast('Update failed: '+e.message);
+    }finally{ saving=false; btn.disabled=false; btn.textContent='✓ Save task sheet'; }
+  } else {
+    // NEW record
+    const rec={
+      id:Date.now()+'_'+Math.random().toString(36).slice(2),
+      projectCode:v('f-code'),projectNum:v('f-num'),sheetNum:v('f-sheet'),
+      projectName:v('f-pname'),operation:v('f-op'),taskDesc:v('f-tdesc'),
+      taskMaster:v('f-tm'),questionsTo:v('f-qt'),drawings:v('f-draw'),
+      sketches:v('f-sketch'),cure:v('f-cure'),issuedBy:v('f-issued'),
+      plannedFinish:v('f-finish'),status:document.getElementById('f-status').value,
+      ra:v('f-ra'),notes:getNotes(),materials:getMats(),
+      feedback:v('f-feedback'),operatorName:v('f-opname'),operatorDate:v('f-opdate'),
+      inspector:v('f-insp'),inspectorDate:v('f-inspdate'),partNo:v('f-partno'),
+      createdAt:new Date().toISOString(),
+      createdBy:currentUser.email||'unknown',createdByName:currentUser.name||currentUser.email||'Unknown'
+    };
+    records.unshift(rec);
+    try{
+      await saveProjectFile();
+      clearForm(); toast('Task sheet saved'); switchTab('records');
+    }catch(e){
+      records.shift(); setSyncing('error'); toast('Save failed: '+e.message);
+    }finally{ saving=false; btn.disabled=false; btn.textContent='✓ Save task sheet'; }
+  }
+}
+
+function editSheet(id){
+  const r=records.find(rec=>rec.id==id); if(!r) return;
+  closeModal('modal-detail');
+  editingId=r.id;
+  // Populate all form fields
+  const set=(fid,val)=>{ const el=document.getElementById(fid); if(el) el.value=val||''; };
+  set('f-code',r.projectCode); set('f-num',r.projectNum); set('f-sheet',r.sheetNum);
+  set('f-pname',r.projectName); set('f-op',r.operation); set('f-tdesc',r.taskDesc);
+  set('f-tm',r.taskMaster); set('f-qt',r.questionsTo); set('f-draw',r.drawings);
+  set('f-sketch',r.sketches); set('f-cure',r.cure); set('f-issued',r.issuedBy);
+  set('f-finish',r.plannedFinish); set('f-ra',r.ra);
+  set('f-feedback',r.feedback); set('f-opname',r.operatorName); set('f-opdate',r.operatorDate);
+  set('f-insp',r.inspector); set('f-inspdate',r.inspectorDate); set('f-partno',r.partNo);
+  document.getElementById('f-status').value=r.status||'open';
+  // Notes
+  const noteInputs=document.querySelectorAll('.ni');
+  noteInputs.forEach((inp,i)=>{ inp.value=(r.notes&&r.notes[i])||''; });
+  // Extra notes beyond the default 8
+  if(r.notes&&r.notes.length>noteInputs.length){
+    r.notes.slice(noteInputs.length).forEach((n,i)=>{
+      noteCount++; const g=document.getElementById('notes-grid');
+      const s=document.createElement('span'); s.className='num'; s.textContent=noteCount;
+      const inp=document.createElement('input'); inp.className='ni'; inp.type='text'; inp.value=n;
+      g.appendChild(s); g.appendChild(inp);
+    });
+  }
+  // Materials
+  const matRows=document.querySelectorAll('#mat-body tr');
+  matRows.forEach((row,i)=>{
+    const cells=row.querySelectorAll('input');
+    const m=r.materials&&r.materials[i];
+    cells[0].value=m?m.material||'':'';
+    cells[1].value=m?m.b1||'':'';
+    cells[2].value=m?m.b2||'':'';
+    cells[3].value=m?m.b3||'':'';
+    cells[4].value=m?m.b4||'':'';
+  });
+  // Extra material rows
+  if(r.materials&&r.materials.length>matRows.length){
+    r.materials.slice(matRows.length).forEach(m=>{
+      const b=document.getElementById('mat-body');
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td><input type="text" value="${esc(m.material||'')}"></td><td><input type="text" value="${esc(m.b1||'')}"></td><td><input type="text" value="${esc(m.b2||'')}"></td><td><input type="text" value="${esc(m.b3||'')}"></td><td><input type="text" value="${esc(m.b4||'')}"></td>`;
+      b.appendChild(tr);
+    });
+  }
+  // Update UI to show edit mode
+  document.getElementById('save-btn').textContent='✓ Update task sheet';
+  document.getElementById('save-btn').style.background='#2a5e8a';
+  document.getElementById('save-btn').style.borderColor='#2a5e8a';
+  // Show edit banner
+  let banner=document.getElementById('edit-banner');
+  if(!banner){ banner=document.createElement('div'); banner.id='edit-banner'; banner.style.cssText='background:#e3f0ff;border:1px solid #90c0e8;border-radius:6px;padding:9px 14px;font-size:13px;color:#1a4d8a;margin:10px 22px;display:flex;align-items:center;justify-content:space-between;'; document.getElementById('pane-new').querySelector('.section').prepend(banner); }
+  banner.innerHTML=`<span>&#9998; Editing sheet ${esc(r.sheetNum||r.id)} — ${esc(r.operation||'')}</span><button onclick="cancelEdit()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#1a4d8a;text-decoration:underline;font-family:inherit;">Cancel edit</button>`;
+  banner.style.display='flex';
+  switchTab('new');
+  window.scrollTo(0,0);
+}
+
+function cancelEdit(){
+  editingId=null;
+  document.getElementById('save-btn').textContent='✓ Save task sheet';
+  document.getElementById('save-btn').style.background='';
+  document.getElementById('save-btn').style.borderColor='';
+  const banner=document.getElementById('edit-banner');
+  if(banner) banner.style.display='none';
+  clearForm();
 }
 
 function clearForm(){
+  editingId=null;
   ['f-code','f-num','f-sheet','f-pname','f-op','f-tdesc','f-tm','f-qt','f-draw','f-sketch','f-cure','f-issued','f-finish','f-ra','f-feedback','f-opname','f-opdate','f-insp','f-inspdate','f-partno'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   document.getElementById('f-status').value='open';
   document.querySelectorAll('.ni').forEach(i=>i.value='');
   document.querySelectorAll('#mat-body input').forEach(i=>i.value='');
-  // Re-fill project fields
+  document.getElementById('save-btn').textContent='✓ Save task sheet';
+  document.getElementById('save-btn').style.background='';
+  document.getElementById('save-btn').style.borderColor='';
+  const banner=document.getElementById('edit-banner');
+  if(banner) banner.style.display='none';
   if(currentProject){
     document.getElementById('f-code').value=currentProject.code||'';
     document.getElementById('f-num').value=currentProject.num||'';
@@ -712,7 +815,7 @@ function renderRecords(){
       <td style="font-size:12px;color:#888;">${esc(r.createdByName||r.createdBy||'—')}</td>
       <td style="white-space:nowrap;">${fmtDate(r.plannedFinish)}</td>
       <td>${statusBadge(r.status)}</td>
-      <td><button class="link-btn" onclick="viewSheet('${r.id}')">View</button></td>
+      <td style="white-space:nowrap;"><button class="link-btn" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#666;" onclick="editSheet('${r.id}')">Edit</button></td>
     </tr>`;
   }).join('');
 }
