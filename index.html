@@ -551,10 +551,22 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 
 <script>
 const CLIENT_ID = '532958625397-kdr26ksrjc4vdditqolv65p41i91lftk.apps.googleusercontent.com';
-const SCOPES    = 'https://www.googleapis.com/auth/drive.file';
+const SCOPES    = 'https://www.googleapis.com/auth/drive';
 const FOLDER_NAME = 'FM_TaskSheets';
 const INDEX_FILE  = 'FM_Projects_Index.json';
 const DISC_DOC    = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+
+/* ── SHARED DATABASE FOLDER ─────────────────────────────────────────────
+   This folder ID points to the single shared FM_TaskSheets folder in Drive.
+   All users read and write to this same folder regardless of their account.
+
+   HOW TO FIND THE ID:
+   Open Drive → navigate to FM_TaskSheets folder → copy the long ID from the URL:
+   https://drive.google.com/drive/folders/THIS_PART_IS_THE_ID
+
+   Then share that folder with all team members (Editor access).
+────────────────────────────────────────────────────────────────────────── */
+const SHARED_FOLDER_ID = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL'; // FM 2026 Project Task Sheets — Shared Drive
 
 let tokenClient, gapiOk=false, gsiOk=false;
 let folderId=null, indexFileId=null;
@@ -596,18 +608,22 @@ async function fetchUser(){
 
 /* ── Drive helpers ── */
 function setSyncing(s){ const w=document.getElementById('sync-wrap'),d=document.getElementById('sync-dot'),t=document.getElementById('sync-txt'); w.style.display='flex'; d.className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':''); t.textContent=s==='syncing'?'Saving…':s==='error'?'Error':'Synced'; }
-async function driveGet(fid){ return gapi.client.request({path:`https://www.googleapis.com/drive/v3/files/${fid}`,params:{alt:'media'}}); }
-async function drivePatch(fid,json){ return gapi.client.request({path:`https://www.googleapis.com/upload/drive/v3/files/${fid}`,method:'PATCH',params:{uploadType:'media',fields:'id'},headers:{'Content-Type':'application/json'},body:JSON.stringify(json)}); }
-async function driveCreate(name,json,parentId){ const b='fmbnd123',meta=JSON.stringify({name,mimeType:'application/json',...(parentId?{parents:[parentId]}:{})}),body=JSON.stringify(json),mp=`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: application/json\r\n\r\n${body}\r\n--${b}--`; const r=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',params:{uploadType:'multipart',fields:'id'},headers:{'Content-Type':`multipart/related; boundary=${b}`},body:mp}); return r.result.id; }
-async function driveFind(name,parentId,mimeType){ let q=`name='${name}' and trashed=false`; if(parentId) q+=` and '${parentId}' in parents`; if(mimeType) q+=` and mimeType='${mimeType}'`; const r=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',params:{q,fields:'files(id,name)'}}); return r.result.files||[]; }
+async function driveGet(fid){ return gapi.client.request({path:`https://www.googleapis.com/drive/v3/files/${fid}`,params:{alt:'media',supportsAllDrives:true}}); }
+async function drivePatch(fid,json){ return gapi.client.request({path:`https://www.googleapis.com/upload/drive/v3/files/${fid}`,method:'PATCH',params:{uploadType:'media',fields:'id',supportsAllDrives:true},headers:{'Content-Type':'application/json'},body:JSON.stringify(json)}); }
+async function driveCreate(name,json,parentId){ const b='fmbnd123',meta=JSON.stringify({name,mimeType:'application/json',...(parentId?{parents:[parentId]}:{})}),body=JSON.stringify(json),mp=`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: application/json\r\n\r\n${body}\r\n--${b}--`; const r=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',params:{uploadType:'multipart',fields:'id',supportsAllDrives:true},headers:{'Content-Type':`multipart/related; boundary=${b}`},body:mp}); return r.result.id; }
+async function driveFind(name,parentId,mimeType){ let q=`name='${name}' and trashed=false`; if(parentId) q+=` and '${parentId}' in parents`; if(mimeType) q+=` and mimeType='${mimeType}'`; const r=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',params:{q,fields:'files(id,name)',supportsAllDrives:true,includeItemsFromAllDrives:true,corpora:'allDrives'}}); return r.result.files||[]; }
 
 /* ── Index ── */
 async function loadIndex(){
   show('screen-picker'); document.getElementById('picker-loading').style.display=''; document.getElementById('picker-grid').style.display='none';
   setSyncing('syncing');
   try{
-    const folders=await driveFind(FOLDER_NAME,null,'application/vnd.google-apps.folder');
-    if(folders.length){ folderId=folders[0].id; } else { folderId=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',method:'POST',params:{fields:'id'},headers:{'Content-Type':'application/json'},body:JSON.stringify({name:FOLDER_NAME,mimeType:'application/vnd.google-apps.folder'})}).then(r=>r.result.id); }
+    if(SHARED_FOLDER_ID){
+      folderId=SHARED_FOLDER_ID;
+    } else {
+      const folders=await driveFind(FOLDER_NAME,null,'application/vnd.google-apps.folder');
+      if(folders.length){ folderId=folders[0].id; } else { folderId=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',method:'POST',params:{fields:'id'},headers:{'Content-Type':'application/json'},body:JSON.stringify({name:FOLDER_NAME,mimeType:'application/vnd.google-apps.folder'})}).then(r=>r.result.id); }
+    }
     const indices=await driveFind(INDEX_FILE,folderId);
     if(indices.length){ indexFileId=indices[0].id; const res=await driveGet(indexFileId); const data=typeof res.result==='string'?JSON.parse(res.result):res.result; projects=Array.isArray(data.projects)?data.projects:[]; }
     else { projects=[]; indexFileId=await driveCreate(INDEX_FILE,{projects:[],createdAt:new Date().toISOString()},folderId); }
@@ -1170,13 +1186,56 @@ function printSheet(){
   </div>`;
   // Don't close modal before print — @media print hides it automatically.
   // Close it after the print dialog is dismissed.
-  // Give browser two animation frames to render the content before printing
-  requestAnimationFrame(function(){
-    requestAnimationFrame(function(){
-      window.onafterprint = function(){ closeModal('modal-detail'); window.onafterprint = null; };
-      window.print();
-    });
-  });
+  // Open a dedicated print window — completely isolated from app DOM/CSS
+  const pw = window.open('','_blank','width=900,height=700');
+  const psCss = `.ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
+.ps-top{display:grid;grid-template-columns:170px 75px 85px 125px 75px 105px 55px;border:1.5px solid #000;border-bottom:none;}
+.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;}
+.ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
+.ps-logo-sub{font-size:7.5pt;margin-top:3px;}
+.ps-hcell{border-left:1px solid #000;padding:3px 5px;}
+.ps-hcell-label{font-size:6.5pt;color:#444;text-transform:uppercase;}
+.ps-hcell-val{font-size:10pt;font-weight:700;color:#000;margin-top:1px;}
+.ps-hcell-val-sm{font-size:8.5pt;font-weight:700;color:#000;margin-top:1px;}
+.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.ps-sheetnum-label{font-size:6.5pt;color:#444;}
+.ps-sheetnum-val{font-size:15pt;font-weight:700;line-height:1;color:#000;}
+.ps-body{border:1.5px solid #000;border-top:none;}
+.ps-row{display:grid;grid-template-columns:155px 1fr;border-top:1px solid #999;}
+.ps-row-split{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;}
+.ps-row-4{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;}
+.ps-lbl{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-right:1px solid #444;}
+.ps-val{padding:3px 6px;font-size:8.5pt;color:#000;}
+.ps-lbl2{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-left:1px solid #444;border-right:1px solid #444;}
+.ps-briefing{background:#eee!important;border-top:1.5px solid #000;border-bottom:1.5px solid #000;padding:5px;text-align:center;font-size:8.5pt;}
+.ps-briefing strong{font-size:9pt;}
+.ps-section-hdr{background:#555!important;color:#fff!important;padding:3px 7px;font-size:7.5pt;font-weight:700;border-top:1px solid #000;}
+.ps-special{min-height:28px;padding:4px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;font-style:italic;}
+.ps-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
+.ps-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
+.ps-table td{padding:3px 6px;border:1px solid #999;min-height:14px;color:#000;}
+.ps-table .sh{background:#ddd!important;}
+.ps-ops-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
+.ps-ops-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
+.ps-ops-table td{padding:3px 6px;border:1px solid #999;min-height:16px;color:#000;}
+.ps-ops-table .sh{background:#ddd!important;}
+.ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
+.ps-weight-cell{padding:4px 7px;border-right:1px solid #999;}
+.ps-weight-cell:last-child{border-right:none;}
+.ps-weight-lbl{font-size:7.5pt;font-weight:700;color:#000;}
+.ps-weight-val{font-size:8.5pt;min-height:14px;color:#000;}
+.ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
+.ps-mat-half{padding:5px 7px;}
+.ps-mat-half:first-child{border-right:1px solid #999;}
+.ps-feedback{min-height:40px;padding:5px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;}
+.ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid #000;}
+.ps-so-cell{padding:8px 10px;border-right:1px solid #999;}
+.ps-so-cell:last-child{border-right:none;}
+.ps-so-line{border-bottom:1px solid #000;margin:14px 0 3px;}
+.ps-so-lbl{font-size:7.5pt;color:#333;}`;
+  pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Print — '+esc(r.docNum||'Task sheet')+'</title><style>*{box-sizing:border-box;margin:0;padding:0;}@page{size:A4 portrait;margin:8mm 10mm 8mm 10mm;}body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'+psCss+'</style></head><body>'+document.getElementById('print-sheet').innerHTML+'<scr'+'ipt>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<'+'/scr'+'ipt></body></html>');
+  pw.document.close();
+  closeModal('modal-detail');
 }
 
 /* ── Export ── */
