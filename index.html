@@ -566,7 +566,7 @@ const DISC_DOC    = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
    Then share that folder with all team members (Editor access).
 ────────────────────────────────────────────────────────────────────────── */
 const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL'; // FM 2026 Project Task Sheets — Shared Drive
-const SHARED_INDEX_ID   = '1-BaC6bZ0NH1ZsOO5n3sNgUbNWOU_89X7'; // FM_Projects_Index.json — fixed ID, prevents duplicates
+const SHARED_INDEX_ID   = '1c5-oQXUyd8H8IN_t3OiWuTs3QFTPs5Ui'; // FM_Projects_Index.json — fixed ID, prevents duplicates
 
 let tokenClient, gapiOk=false, gsiOk=false;
 let folderId=null, indexFileId=null;
@@ -720,7 +720,8 @@ function generateDocNum(){
   // Only called for NEW records — editing keeps the existing docNum
   if(!currentProject) return '';
   const projRef=(currentProject.num||'0000').replace(/^P/i,'').replace(/\s+/g,'');
-  const rev=document.getElementById('f-revision')?document.getElementById('f-revision').value.trim()||'A':'A';
+  const revEl=document.getElementById('f-revision');
+  const rev=(revEl&&revEl.value.trim())||'A';
   const existingNums=records
     .filter(r=>!editingId||r.id!==editingId)
     .map(r=>{ const m=r.docNum&&r.docNum.match(/(?:^|-)TS-(\d+)/); return m?parseInt(m[1],10):0; });
@@ -816,6 +817,8 @@ ${base64}
 
 // Auto-upload scan when file selected
 document.addEventListener('DOMContentLoaded',()=>{
+  const revInput=document.getElementById('f-revision');
+  if(revInput) revInput.addEventListener('change',()=>setAutoDocNum());
   const scanInput=document.getElementById('f-scan');
   if(scanInput) scanInput.addEventListener('change',async function(){
     if(this.files[0]){ await uploadScan(this.files[0], document.getElementById('f-docnum').value); }
@@ -896,7 +899,7 @@ function editSheet(id){
   switchTab('new'); window.scrollTo(0,0);
 }
 
-function editSheetFromModal(){ if(viewIdx===null||viewIdx<0) return; const id=records[viewIdx].id; closeModal('modal-detail'); editSheet(id); }
+function editSheetFromModal(){ const btn=document.getElementById('print-btn'); const rid=btn&&btn.dataset.rid; const id=rid||(viewIdx>=0?records[viewIdx].id:null); if(!id){toast('No record selected');return;} closeModal('modal-detail'); editSheet(id); }
 
 function cancelEdit(){
   editingId=null;
@@ -909,6 +912,7 @@ function clearForm(){
   editingId=null;
   ['f-projno','f-projname','f-docnum','f-revision','f-issuedate','f-sheetof','f-cajob','f-caop','f-opdesc','f-drawings','f-addsheets','f-hours','f-finishdate','f-author','f-approver','f-ra','f-coshh','f-sop','f-prereq','f-cure','f-special','f-targetwt','f-measuredwt','f-resintrace','f-hardtrace','f-feedback','f-opname','f-opdate','f-tlname','f-tldate'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   document.getElementById('f-status').value='open';
+  const revEl=document.getElementById('f-revision'); if(revEl&&!revEl.value) revEl.value='A';
   document.getElementById('qa-body').innerHTML=''; [{},{},{}].forEach(()=>addQARow());
   initOpsTable();
   ['mat-left-body','mat-right-body'].forEach(id=>{ const b=document.getElementById(id); b.innerHTML=''; for(let i=0;i<5;i++){ const tr=document.createElement('tr'); tr.innerHTML='<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>'; b.appendChild(tr); } });
@@ -1165,11 +1169,14 @@ function viewSheet(id){
 }
 
 async function deleteSheet(){
-  if(viewIdx===null||viewIdx<0) return;
+  const btn=document.getElementById('print-btn');
+  const rid=btn&&btn.dataset.rid;
+  const idx=rid?records.findIndex(r=>r.id==rid):(viewIdx!==null?viewIdx:-1);
+  if(idx<0){ toast('No record selected'); return; }
   if(!confirm('Delete this record for all users?')) return;
-  records.splice(viewIdx,1); closeModal('modal-detail'); setSyncing('syncing');
+  records.splice(idx,1); closeModal('modal-detail'); setSyncing('syncing');
   try{ await saveProjectFile(); renderRecords(); toast('Record deleted'); }
-  catch(e){ toast('Delete failed: '+e.message); setSyncing('error'); }
+  catch(e){ records.splice(idx,0,...[]); setSyncing('error'); toast('Delete failed: '+e.message); }
 }
 
 
