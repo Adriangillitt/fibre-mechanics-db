@@ -534,11 +534,13 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   <div class="detail-modal">
     <div class="modal-head"><h3 id="detail-title">Task sheet</h3><button class="modal-close" onclick="closeModal('modal-detail')">&times;</button></div>
     <div class="modal-body" id="detail-body" style="max-height:65vh;overflow-y:auto;"></div>
+    <div id="modal-scan-status" style="padding:4px 16px;font-size:12px;color:#888;display:none;"></div>
     <div class="modal-foot">
       <button class="btn btn-danger" onclick="deleteSheet()">Delete</button>
       <button class="btn" id="print-btn" onclick="printSheet()">&#x1F5A8; Print</button>
       <button class="btn" onclick="duplicateSheetFromModal()">&#x2398; Duplicate</button>
       <button class="btn btn-primary" onclick="editSheetFromModal()">&#9998; Edit</button>
+      <label class="btn" style="cursor:pointer;" title="Upload scanned returned copy">&#x1F4CE; Scan<input type="file" id="modal-scan-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="uploadModalScan(this)"></label>
       <button class="btn" onclick="closeModal('modal-detail')">Close</button>
     </div>
   </div>
@@ -770,6 +772,35 @@ function getMat(bodyId){ const rows=[]; document.querySelectorAll(`#${bodyId} tr
 function v(id){ return document.getElementById(id).value.trim(); }
 
 /* ── Save / Edit ── */
+async function uploadModalScan(input){
+  const file=input.files[0]; if(!file) return;
+  const btn=document.getElementById('print-btn');
+  const rid=btn&&btn.dataset.rid;
+  const r=rid?records.find(x=>x.id==rid):null;
+  if(!r){ toast('No record selected'); return; }
+  const statusEl=document.getElementById('modal-scan-status');
+  statusEl.style.display='block';
+  statusEl.style.color='#888';
+  statusEl.textContent='Uploading scan…';
+  const fileId=await uploadScan(file, r.docNum);
+  if(fileId){
+    r.scanFileId=fileId; r.scanFileName=file.name;
+    r.updatedAt=new Date().toISOString(); r.updatedBy=currentUser.email||'unknown';
+    setSyncing('syncing');
+    try{
+      await saveProjectFile();
+      statusEl.style.color='#2e7d32';
+      statusEl.innerHTML='✓ Scan saved — <a href="https://drive.google.com/file/d/'+fileId+'/view" target="_blank" style="color:#f07020;">View in Drive ↗</a>';
+      // Refresh detail view to show scan link
+      viewSheet(r.id);
+    } catch(e){ statusEl.style.color='#c00'; statusEl.textContent='Save failed: '+e.message; }
+  } else {
+    statusEl.style.color='#c00';
+    statusEl.textContent='Upload failed — check console';
+  }
+  input.value='';
+}
+
 async function uploadScan(file, docNum){
   if(!file) return null;
   setSyncing('syncing');
@@ -828,10 +859,7 @@ ${base64}
 
 // Auto-upload scan when file selected
 document.addEventListener('DOMContentLoaded',()=>{
-  const scanInput=document.getElementById('f-scan');
-  if(scanInput) scanInput.addEventListener('change',async function(){
-    if(this.files[0]){ await uploadScan(this.files[0], document.getElementById('f-docnum').value); }
-  });
+
 });
 
 async function saveSheet(){
@@ -898,14 +926,7 @@ function editSheet(id){
   if(!banner){ banner=document.createElement('div'); banner.id='edit-banner'; banner.style.cssText='background:#fff3e8;border:1px solid #f0b070;border-radius:6px;padding:9px 14px;font-size:13px;color:#c85810;margin:10px 22px;display:flex;align-items:center;justify-content:space-between;'; document.getElementById('pane-new').querySelector('.section').prepend(banner); }
   banner.innerHTML=`<span>&#9998; Editing: ${esc(r.docNum||r.id)} — ${esc(r.opDesc||'')}</span><button onclick="cancelEdit()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#c85810;text-decoration:underline;font-family:inherit;">Cancel</button>`;
   banner.style.display='flex';
-  // Show existing scan link if present
-  const scanLink=document.getElementById('f-scan-link');
-  const scanStatus=document.getElementById('f-scan-status');
-  if(r.scanFileId && scanLink){
-    scanLink.innerHTML=`<a href="https://drive.google.com/file/d/${r.scanFileId}/view" target="_blank" style="color:#f07020;">Current scan: ${esc(r.scanFileName||'view')} ↗</a>`;
-    if(scanStatus) scanStatus.textContent='';
-    window._pendingScanId=r.scanFileId; window._pendingScanName=r.scanFileName;
-  }
+  window._pendingScanId=r.scanFileId||null; window._pendingScanName=r.scanFileName||null;
   switchTab('new'); window.scrollTo(0,0);
 }
 
@@ -933,9 +954,6 @@ function clearForm(){
   const dnel=document.getElementById('f-docnum'); if(dnel){ dnel.readOnly=true; dnel.style.background='#f5f5f5'; dnel.style.color='#555'; dnel.style.cursor='default'; } const dnbtn=document.getElementById('docnum-override-btn'); if(dnbtn) dnbtn.textContent='override';
   setAutoDocNum();
   window._pendingScanId=null; window._pendingScanName=null;
-  document.getElementById('f-scan-status').textContent='';
-  document.getElementById('f-scan-link').innerHTML='';
-  const scanInput=document.getElementById('f-scan'); if(scanInput) scanInput.value='';
 }
 
 /* ── Records ── */
@@ -1100,7 +1118,7 @@ function renderIssueLog(){
 function renderRecords(){
   const q=(document.getElementById('search').value||'').toLowerCase();
   const sf=document.getElementById('filter-status').value;
-  const f=records.filter(r=>{ const txt=[r.docNum,r.projNo,r.projName,r.opDesc,r.author,r.caJob].join(' ').toLowerCase(); return (!q||txt.includes(q))&&(!sf||r.status===sf); });
+  const f=records.filter(r=>{ const txt=[r.docNum,r.projNo,r.projName,r.opDesc,r.author,r.caJob].join(' ').toLowerCase(); return (!q||txt.includes(q))&&(!sf||r.status===sf); }).sort((a,b)=>(a.docNum||'').localeCompare(b.docNum||'',undefined,{numeric:true}));
   document.getElementById('s-total').textContent=records.length;
   document.getElementById('s-open').textContent=records.filter(r=>r.status==='open').length;
   document.getElementById('s-prov').textContent=records.filter(r=>r.status==='provisional').length;
@@ -1175,6 +1193,7 @@ function viewSheet(id){
     <div class="dr"><span class="dk">Operator</span><span>${esc(r.opName||'—')}${r.opDate?' · '+fmtDate(r.opDate):''}</span></div>
     <div class="dr"><span class="dk">Task leader</span><span>${esc(r.tlName||'—')}${r.tlDate?' · '+fmtDate(r.tlDate):''}</span></div>`;
   document.getElementById('print-btn').dataset.rid = r.id;
+  const ss=document.getElementById('modal-scan-status'); if(ss){ ss.style.display=r.scanFileId?'block':'none'; ss.style.color='#2e7d32'; ss.innerHTML=r.scanFileId?'✓ Scan attached — <a href="https://drive.google.com/file/d/'+r.scanFileId+'/view" target="_blank" style="color:#f07020;">View in Drive ↗</a>':''; }
   openModal('modal-detail');
 }
 
