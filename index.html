@@ -604,6 +604,13 @@ function boot(){
   }
 }
 
+function openScanPreview(fileId){
+  const url='https://drive.google.com/file/d/'+fileId+'/preview';
+  const w=window.open('','scan_preview','width=900,height=700,resizable=yes,scrollbars=yes');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Scan Preview</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#222;display:flex;flex-direction:column;height:100vh;}iframe{flex:1;border:none;width:100%;}</style></head><body><iframe src="'+url+'" allowfullscreen></iframe></body></html>');
+  w.document.close();
+}
+
 function handleAuthExpiry(){
   sessionStorage.removeItem('fm_tok');
   gapi.client.setToken(null);
@@ -782,7 +789,7 @@ async function uploadModalScan(input){
   statusEl.style.display='block';
   statusEl.style.color='#888';
   statusEl.textContent='Uploading scan…';
-  const fileId=await uploadScan(file, r.docNum);
+  const fileId=await uploadScan(file, r.docNum, statusEl);
   if(fileId){
     r.scanFileId=fileId; r.scanFileName=file.name;
     r.updatedAt=new Date().toISOString(); r.updatedBy=currentUser.email||'unknown';
@@ -790,7 +797,7 @@ async function uploadModalScan(input){
     try{
       await saveProjectFile();
       statusEl.style.color='#2e7d32';
-      statusEl.innerHTML='✓ Scan saved — <a href="https://drive.google.com/file/d/'+fileId+'/view" target="_blank" style="color:#f07020;">View in Drive ↗</a>';
+      statusEl.innerHTML='✓ Scan saved — <a href="#" onclick="openScanPreview(\"'+fileId+'\");return false;" style="color:#f07020;">View ↗</a>';
       // Refresh detail view to show scan link
       viewSheet(r.id);
     } catch(e){ statusEl.style.color='#c00'; statusEl.textContent='Save failed: '+e.message; }
@@ -801,16 +808,15 @@ async function uploadModalScan(input){
   input.value='';
 }
 
-async function uploadScan(file, docNum){
+async function uploadScan(file, docNum, statusEl){
+  // statusEl is optional — caller passes their own status element
   if(!file) return null;
   setSyncing('syncing');
-  document.getElementById('f-scan-status').textContent='Uploading…';
+  if(statusEl){ statusEl.style.display='block'; statusEl.style.color='#888'; statusEl.textContent='Uploading…'; }
   try{
-    // Create subfolder name: num-ProjectName
-    const projNum=(currentProject.num||currentProject.code||'0000').replace(/^P/i,'');
+    const projNum=(currentProject.num||'0000').replace(/^P/i,'');
     const projName=(currentProject.name||'Project').replace(/[^a-zA-Z0-9]/g,'-');
     const subfolderName=projNum+'-'+projName;
-    // Find or create subfolder
     let subfolderId;
     const existing=await driveFind(subfolderName,folderId,'application/vnd.google-apps.folder');
     if(existing.length){ subfolderId=existing[0].id; }
@@ -821,37 +827,25 @@ async function uploadScan(file, docNum){
         body:JSON.stringify({name:subfolderName,mimeType:'application/vnd.google-apps.folder',parents:[folderId]})});
       subfolderId=r.result.id;
     }
-    // Upload file via multipart
     const reader=new FileReader();
     const base64=await new Promise((res,rej)=>{ reader.onload=e=>res(e.target.result.split(',')[1]); reader.onerror=rej; reader.readAsDataURL(file); });
     const ext=file.name.split('.').pop();
     const fname=(docNum||'scan').replace(/[^a-zA-Z0-9\-_]/g,'-')+'_scan.'+ext;
     const b='scanbnd456';
     const meta=JSON.stringify({name:fname,parents:[subfolderId]});
-    const mp=`--${b}
-Content-Type: application/json; charset=UTF-8
-
-${meta}
---${b}
-Content-Type: ${file.type||'application/octet-stream'}
-Content-Transfer-Encoding: base64
-
-${base64}
---${b}--`;
+    const mp='--'+b+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+meta+'\r\n--'+b+'\r\nContent-Type: '+(file.type||'application/octet-stream')+'\r\nContent-Transfer-Encoding: base64\r\n\r\n'+base64+'\r\n--'+b+'--';
     const res=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',
       params:{uploadType:'multipart',fields:'id,name',supportsAllDrives:true},
-      headers:{'Content-Type':`multipart/related; boundary=${b}`},body:mp});
+      headers:{'Content-Type':'multipart/related; boundary='+b},body:mp});
+    if(res.status===401){ handleAuthExpiry(); throw new Error('Session expired'); }
     const fileId=res.result.id;
     window._pendingScanId=fileId;
     window._pendingScanName=fname;
-    document.getElementById('f-scan-status').textContent='✓ Uploaded: '+fname;
-    document.getElementById('f-scan-status').style.color='#2e7d32';
-    document.getElementById('f-scan-link').innerHTML=`<a href="https://drive.google.com/file/d/${fileId}/view" target="_blank" style="color:#f07020;">View in Drive ↗</a>`;
+    if(statusEl){ statusEl.style.color='#2e7d32'; statusEl.innerHTML='✓ Uploaded: '+fname+' — <a href="#" onclick="openScanPreview(\"'+fileId+'\");return false;" style="color:#f07020;">View ↗</a>'; }
     setSyncing('ok');
     return fileId;
   } catch(e){
-    document.getElementById('f-scan-status').textContent='Upload failed: '+e.message;
-    document.getElementById('f-scan-status').style.color='#c00';
+    if(statusEl){ statusEl.style.color='#c00'; statusEl.textContent='Upload failed: '+e.message; }
     setSyncing('error');
     return null;
   }
@@ -1193,7 +1187,7 @@ function viewSheet(id){
     <div class="dr"><span class="dk">Operator</span><span>${esc(r.opName||'—')}${r.opDate?' · '+fmtDate(r.opDate):''}</span></div>
     <div class="dr"><span class="dk">Task leader</span><span>${esc(r.tlName||'—')}${r.tlDate?' · '+fmtDate(r.tlDate):''}</span></div>`;
   document.getElementById('print-btn').dataset.rid = r.id;
-  const ss=document.getElementById('modal-scan-status'); if(ss){ ss.style.display=r.scanFileId?'block':'none'; ss.style.color='#2e7d32'; ss.innerHTML=r.scanFileId?'✓ Scan attached — <a href="https://drive.google.com/file/d/'+r.scanFileId+'/view" target="_blank" style="color:#f07020;">View in Drive ↗</a>':''; }
+  const ss=document.getElementById('modal-scan-status'); if(ss){ ss.style.display=r.scanFileId?'block':'none'; ss.style.color='#2e7d32'; ss.innerHTML=r.scanFileId?'✓ Scan attached — <a href="#" onclick="openScanPreview(\"'+r.scanFileId+'\");return false;" style="color:#f07020;">View scan ↗</a>':''; }
   openModal('modal-detail');
 }
 
