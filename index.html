@@ -603,6 +603,13 @@ function boot(){
   }
 }
 
+function handleAuthExpiry(){
+  sessionStorage.removeItem('fm_tok');
+  gapi.client.setToken(null);
+  toast('Session expired — refreshing sign-in…');
+  setTimeout(()=>{ show('screen-auth'); document.getElementById('screen-project').style.display='none'; document.getElementById('screen-picker').style.display='none'; },1500);
+}
+
 function signIn(){ if(!tokenClient){toast('Still loading…');return;} tokenClient.requestAccessToken({prompt:''}); }
 
 async function fetchUser(){
@@ -618,8 +625,16 @@ async function fetchUser(){
 
 /* ── Drive helpers ── */
 function setSyncing(s){ const w=document.getElementById('sync-wrap'),d=document.getElementById('sync-dot'),t=document.getElementById('sync-txt'); w.style.display='flex'; d.className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':''); t.textContent=s==='syncing'?'Saving…':s==='error'?'Error':'Synced'; }
-async function driveGet(fid){ return gapi.client.request({path:`https://www.googleapis.com/drive/v3/files/${fid}`,params:{alt:'media',supportsAllDrives:true}}); }
-async function drivePatch(fid,json){ return gapi.client.request({path:`https://www.googleapis.com/upload/drive/v3/files/${fid}`,method:'PATCH',params:{uploadType:'media',fields:'id',supportsAllDrives:true},headers:{'Content-Type':'application/json'},body:JSON.stringify(json)}); }
+async function driveGet(fid){
+  const res=await gapi.client.request({path:`https://www.googleapis.com/drive/v3/files/${fid}`,params:{alt:'media',supportsAllDrives:true}});
+  if(res.status===401){ handleAuthExpiry(); throw new Error('Session expired — please sign in again'); }
+  return res;
+}
+async function drivePatch(fid,json){
+  const res=await gapi.client.request({path:`https://www.googleapis.com/upload/drive/v3/files/${fid}`,method:'PATCH',params:{uploadType:'media',fields:'id',supportsAllDrives:true},headers:{'Content-Type':'application/json'},body:JSON.stringify(json)});
+  if(res.status===401){ handleAuthExpiry(); throw new Error('Session expired — please sign in again'); }
+  return res;
+}
 async function driveCreate(name,json,parentId){ const b='fmbnd123',meta=JSON.stringify({name,mimeType:'application/json',...(parentId?{parents:[parentId]}:{})}),body=JSON.stringify(json),mp=`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: application/json\r\n\r\n${body}\r\n--${b}--`; const r=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',params:{uploadType:'multipart',fields:'id',supportsAllDrives:true},headers:{'Content-Type':`multipart/related; boundary=${b}`},body:mp}); return r.result.id; }
 async function driveFind(name,parentId,mimeType){ let q=`name='${name}' and trashed=false`; if(parentId) q+=` and '${parentId}' in parents`; if(mimeType) q+=` and mimeType='${mimeType}'`; const r=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',params:{q,fields:'files(id,name)',supportsAllDrives:true,includeItemsFromAllDrives:true,corpora:'allDrives'}}); return r.result.files||[]; }
 
