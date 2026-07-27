@@ -163,7 +163,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 /* ── PRINT STYLES ── */
 #print-sheet{display:none;}
 @media print{
-  @page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} @page:bottom{content:counter(page) ' of ' counter(pages);}
+  @page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} @page:bottom{content:counter(page) \' of \' counter(pages);}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
   html,body{margin:0;padding:0;background:#fff!important;}
   body>*{display:none!important;}
@@ -676,7 +676,7 @@ async function createProject(){
   const fileId=await driveCreate(filename,{records:[],projectId:id,createdAt:new Date().toISOString(),createdBy:currentUser.email||'unknown'},folderId);
   const proj={id,code,num,name,desc,fileId,filename,sheetCount:0,openCount:0,provCount:0,doneCount:0,createdAt:new Date().toISOString(),createdBy:currentUser.name||currentUser.email||'unknown',updatedAt:new Date().toISOString()};
   projects.push(proj); await saveIndex(); setSyncing('synced'); closeModal('modal-new-proj');
-  ['np-num','np-name','np-desc'].forEach(i=>{ const el=document.getElementById(i); if(el) el.value='');
+  ['np-num','np-name','np-desc'].forEach(i=>{ const el=document.getElementById(i); if(el) el.value=''; });
   toast('Project created'); loadProject(proj);
 }
 
@@ -1379,7 +1379,7 @@ function printSheet(){
 .ps-so-cell:last-child{border-right:none;}
 .ps-so-line{border-bottom:1px solid #000;margin:14px 0 3px;}
 .ps-so-lbl{font-size:7.5pt;color:#333;}`;
-  pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Print — '+esc(r.docNum||'Task sheet')+'</title><style>*{box-sizing:border-box;margin:0;padding:0;}@page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} @page:bottom{content:counter(page) ' of ' counter(pages);}body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'+psCss+'</style></head><body>'+document.getElementById('print-sheet').innerHTML+'<scr'+'ipt>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<'+'/scr'+'ipt></body></html>');
+  pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Print — '+esc(r.docNum||'Task sheet')+'</title><style>*{box-sizing:border-box;margin:0;padding:0;}@page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} @page:bottom{content:counter(page) \' of \' counter(pages);}body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'+psCss+'</style></head><body>'+document.getElementById('print-sheet').innerHTML+'<scr'+'ipt>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<'+'/scr'+'ipt></body></html>');
   pw.document.close();
   closeModal('modal-detail');
 }
