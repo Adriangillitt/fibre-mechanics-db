@@ -239,7 +239,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   </div>
   <div style="flex:1;"></div>
   <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;">
-    <div>v1.0.3</div>
+    <div>v1.0.4</div>
     <div>28 Jul 2026</div>
   </div>
   <div class="header-right">
@@ -555,7 +555,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 <div id="print-sheet"></div>
 
 <script>
-const APP_VERSION = '1.0.3';
+const APP_VERSION = '1.0.4';
 const BUILD_DATE = '28 Jul 2026';
 
 const CLIENT_ID = '532958625397-kdr26ksrjc4vdditqolv65p41i91lftk.apps.googleusercontent.com';
@@ -596,7 +596,17 @@ function boot(){
   if(!gapiOk||!gsiOk) return;
   tokenClient=google.accounts.oauth2.initTokenClient({
     client_id:CLIENT_ID, scope:SCOPES,
-    callback:async r=>{ if(r.error){toast('Sign-in failed: '+r.error);return;} sessionStorage.setItem('fm_tok',JSON.stringify(gapi.client.getToken())); await fetchUser(); await loadIndex(); }
+    callback:async r=>{
+      if(r.error){toast('Sign-in failed: '+r.error);return;}
+      const tok=gapi.client.getToken();
+      sessionStorage.setItem('fm_tok',JSON.stringify(tok));
+      // Store expiry time (tokens last 3600s, refresh at 50 min)
+      window._tokenExpiry=Date.now()+(50*60*1000);
+      // Start proactive refresh timer
+      if(window._refreshTimer) clearTimeout(window._refreshTimer);
+      window._refreshTimer=setTimeout(proactiveRefresh, 50*60*1000);
+      await fetchUser(); await loadIndex();
+    }
   });
   // Always prompt for fresh token — scope changed from drive.file to drive
   // Clear any cached token to force re-consent
@@ -626,29 +636,36 @@ function handleAuthExpiry(){
 
 function signIn(){ if(!tokenClient){toast('Still loading…');return;} tokenClient.requestAccessToken({prompt:'consent'}); }
 
-function silentRefresh(){
-  return new Promise((resolve,reject)=>{
-    if(!tokenClient){ reject(new Error('No token client')); return; }
-    const origCallback=tokenClient.callback;
-    tokenClient.callback=async r=>{
-      tokenClient.callback=origCallback;
-      if(r.error){ reject(new Error(r.error)); return; }
-      sessionStorage.setItem('fm_tok',JSON.stringify(gapi.client.getToken()));
-      resolve();
-    };
-    tokenClient.requestAccessToken({prompt:''});
-  });
+function proactiveRefresh(){
+  // Silently refresh token before it expires — no popup, no disruption
+  if(!tokenClient) return;
+  const origCallback=tokenClient.callback;
+  tokenClient.callback=async r=>{
+    tokenClient.callback=origCallback;
+    if(!r.error){
+      const tok=gapi.client.getToken();
+      sessionStorage.setItem('fm_tok',JSON.stringify(tok));
+      window._tokenExpiry=Date.now()+(50*60*1000);
+      window._refreshTimer=setTimeout(proactiveRefresh,50*60*1000);
+    }
+    // If it fails silently, user will get prompted on next save
+  };
+  tokenClient.requestAccessToken({prompt:''});
 }
 
 async function ensureAuth(){
-  // Try a lightweight auth check and silently refresh if expired
-  try{
-    await gapi.client.request({path:'https://www.googleapis.com/oauth2/v2/userinfo'});
-  } catch(e){
-    if(e.status===401||e.result&&e.result.error&&e.result.error.code===401){
-      try{ await silentRefresh(); }
-      catch(e2){ handleAuthExpiry(); throw new Error('Session expired — please sign in again'); }
-    }
+  // Check if token is close to expiry and refresh proactively
+  if(window._tokenExpiry && Date.now()>window._tokenExpiry){
+    await new Promise((resolve)=>{
+      if(!tokenClient){ resolve(); return; }
+      const origCallback=tokenClient.callback;
+      tokenClient.callback=async r=>{
+        tokenClient.callback=origCallback;
+        if(!r.error){ const tok=gapi.client.getToken(); sessionStorage.setItem('fm_tok',JSON.stringify(tok)); window._tokenExpiry=Date.now()+(50*60*1000); }
+        resolve();
+      };
+      tokenClient.requestAccessToken({prompt:''});
+    });
   }
 }
 
