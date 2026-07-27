@@ -7,9 +7,9 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f4f4f0;min-height:100vh;}
-.app{max-width:980px;margin:0 auto;padding:16px;}
+.app{max-width:1020px;margin:0 auto;padding:16px;}
 
-/* ── Header ── */
+/* Header */
 .header{background:#4a5e2a;color:#fff;padding:14px 22px;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
 .header-title{font-size:19px;font-weight:600;letter-spacing:-.3px;}
 .header-sub{font-size:12px;opacity:.7;margin-top:2px;}
@@ -25,10 +25,10 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .project-crumb{display:none;align-items:center;gap:6px;background:rgba(255,255,255,.12);border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;border:none;color:#fff;font-family:inherit;}
 .project-crumb:hover{background:rgba(255,255,255,.2);}
 
-/* ── Shell ── */
+/* Shell */
 .wrap{background:#fff;border:1px solid #ddd;border-top:none;border-radius:0 0 10px 10px;min-height:400px;}
 
-/* ── Auth ── */
+/* Auth */
 .screen{padding:60px 40px;text-align:center;}
 .screen-icon{width:60px;height:60px;background:#4a5e2a;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:26px;color:#fff;}
 .screen-title{font-size:21px;font-weight:600;margin-bottom:8px;}
@@ -38,11 +38,11 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .g-btn svg{width:18px;height:18px;flex-shrink:0;}
 .auth-note{font-size:12px;color:#999;margin-top:14px;}
 
-/* ── Project picker ── */
+/* Project picker */
 .picker-header{padding:18px 22px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 .picker-header h2{font-size:16px;font-weight:600;}
 .picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;padding:16px 22px 22px;}
-.proj-card{border:1px solid #e0e0e0;border-radius:8px;padding:16px;cursor:pointer;transition:border-color .15s,background .15s;background:#fff;text-align:left;}
+.proj-card{border:1px solid #e0e0e0;border-radius:8px;padding:16px;cursor:pointer;background:#fff;text-align:left;}
 .proj-card:hover{border-color:#4a5e2a;background:#f9fdf5;}
 .proj-card-code{font-size:18px;font-weight:700;color:#4a5e2a;line-height:1;}
 .proj-card-name{font-size:12px;color:#666;margin-top:3px;margin-bottom:10px;line-height:1.4;}
@@ -55,7 +55,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .spinner{width:26px;height:26px;border:2px solid #e0e0e0;border-top-color:#4a5e2a;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* ── New project modal ── */
+/* Modals */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;align-items:center;justify-content:center;padding:20px;}
 .modal-bg.open{display:flex;}
 .modal{background:#fff;border-radius:10px;width:100%;max-width:480px;}
@@ -65,40 +65,40 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .modal-close:hover{color:#333;}
 .modal-body{padding:18px 20px;}
 .modal-foot{padding:12px 20px;border-top:1px solid #eee;display:flex;gap:8px;justify-content:flex-end;background:#fafafa;border-radius:0 0 10px 10px;}
-
-/* ── Detail modal (taller, scrollable) ── */
 .detail-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;align-items:flex-start;justify-content:center;padding:30px 16px;overflow-y:auto;}
 .detail-modal-bg.open{display:flex;}
-.detail-modal{background:#fff;border-radius:10px;width:100%;max-width:640px;margin:auto;}
+.detail-modal{background:#fff;border-radius:10px;width:100%;max-width:700px;margin:auto;}
 
-/* ── Tabs ── */
+/* Tabs */
 .tabs{display:flex;border-bottom:1px solid #e0e0e0;background:#fafafa;}
 .tab{padding:10px 18px;cursor:pointer;font-size:13px;color:#666;border-bottom:2px solid transparent;user-select:none;white-space:nowrap;}
 .tab.active{color:#4a5e2a;border-bottom-color:#4a5e2a;font-weight:500;}
 .tab:hover:not(.active){background:#f0f0f0;}
 
-/* ── Form ── */
+/* Form */
 .section{padding:18px 22px;}
 .sh{font-size:11px;font-weight:600;color:#4a5e2a;text-transform:uppercase;letter-spacing:.07em;margin:18px 0 9px;border-bottom:1px solid #e8f0de;padding-bottom:5px;}
 .sh:first-child{margin-top:0;}
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
 .fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;}
+.fg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:11px;}
 .full{grid-column:1/-1;}
 .field label{display:block;font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
 .field input,.field select,.field textarea{width:100%;padding:7px 10px;border:1px solid #d0d0d0;border-radius:6px;font-size:13px;font-family:inherit;background:#fff;color:#1a1a1a;}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#4a5e2a;box-shadow:0 0 0 2px #e8f0de;}
 .field textarea{resize:vertical;min-height:60px;}
-.notes-grid{display:grid;grid-template-columns:22px 1fr;gap:5px 8px;align-items:center;}
-.notes-grid .num{font-size:12px;color:#aaa;text-align:right;}
-.notes-grid input{padding:5px 8px;border:1px solid #d0d0d0;border-radius:5px;font-size:13px;font-family:inherit;background:#fff;}
-.notes-grid input:focus{outline:none;border-color:#4a5e2a;}
-.mat-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;}
-.mat-table th{background:#f2f6eb;color:#4a5e2a;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:6px 8px;text-align:left;border:1px solid #dde8cc;}
-.mat-table td{border:1px solid #e0e0e0;padding:0;}
-.mat-table td input{border:none;width:100%;padding:6px 8px;font-size:13px;font-family:inherit;background:transparent;}
-.mat-table td input:focus{outline:none;background:#f8fff0;}
 
-/* ── Buttons ── */
+/* Inline editable tables */
+.itable{width:100%;border-collapse:collapse;font-size:13px;}
+.itable th{background:#4a5e2a;color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:6px 8px;text-align:left;border:1px solid #3a4e1e;}
+.itable td{border:1px solid #d8d8d8;padding:0;vertical-align:middle;}
+.itable td input,.itable td textarea{border:none;width:100%;padding:6px 8px;font-size:12px;font-family:inherit;background:transparent;resize:none;}
+.itable td input:focus,.itable td textarea:focus{outline:none;background:#f8fff0;}
+.itable .shaded{background:#e8edf8;}
+.itable .shaded input{background:#e8edf8;}
+.itable .shaded input:focus{background:#dce4f5;}
+
+/* Buttons */
 .btn-row{display:flex;gap:8px;justify-content:flex-end;padding:13px 22px;border-top:1px solid #eee;background:#fafafa;border-radius:0 0 10px 10px;}
 .btn{padding:7px 15px;border-radius:6px;font-size:13px;font-family:inherit;cursor:pointer;border:1px solid #ccc;background:#fff;color:#333;}
 .btn:hover{background:#f5f5f5;}
@@ -109,20 +109,20 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .btn:disabled{opacity:.45;cursor:not-allowed;}
 .link-btn{background:none;border:none;cursor:pointer;font-size:12px;color:#4a5e2a;font-family:inherit;text-decoration:underline;padding:2px 0;}
 
-/* ── Stats ── */
+/* Stats */
 .stat-bar{display:flex;border-bottom:1px solid #eee;background:#fafafa;}
 .stat{flex:1;padding:11px 14px;text-align:center;border-right:1px solid #eee;}
 .stat:last-child{border-right:none;}
 .stat-num{font-size:18px;font-weight:600;color:#4a5e2a;}
 .stat-label{font-size:11px;color:#888;margin-top:1px;}
 
-/* ── Search ── */
+/* Search */
 .search-bar{display:flex;gap:8px;padding:11px 22px;border-bottom:1px solid #eee;flex-wrap:wrap;}
 .search-bar input,.search-bar select{padding:6px 10px;border:1px solid #d0d0d0;border-radius:6px;font-size:13px;font-family:inherit;background:#fff;}
 .search-bar input{flex:1;min-width:160px;}
 .search-bar input:focus,.search-bar select:focus{outline:none;border-color:#4a5e2a;}
 
-/* ── Records table ── */
+/* Records table */
 .rec-table{width:100%;border-collapse:collapse;font-size:13px;}
 .rec-table th{background:#f7f7f5;color:#666;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:8px 13px;text-align:left;border-bottom:1px solid #e0e0e0;white-space:nowrap;}
 .rec-table td{padding:9px 13px;border-bottom:1px solid #f0f0f0;vertical-align:top;}
@@ -133,7 +133,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .badge-prov{background:#fff3e0;color:#8a5400;}
 .badge-done{background:#e3f0ff;color:#1a4d8a;}
 
-/* ── Export ── */
+/* Export */
 .proj-group{border:1px solid #e0e0e0;border-radius:8px;margin-bottom:14px;overflow:hidden;}
 .proj-group-hdr{background:#f2f6eb;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dde8cc;gap:10px;flex-wrap:wrap;}
 .proj-group-name{font-weight:600;color:#4a5e2a;font-size:14px;}
@@ -142,83 +142,89 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .copy-area label{font-size:12px;color:#666;font-weight:500;display:block;margin-bottom:5px;}
 .copy-area textarea{width:100%;height:130px;font-family:monospace;font-size:12px;border:1px solid #d0d0d0;border-radius:6px;padding:8px;background:#f8f8f6;resize:vertical;}
 
-/* ── Detail rows ── */
-.dr{display:grid;grid-template-columns:130px 1fr;gap:4px;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:13px;}
+/* Detail rows */
+.dr{display:grid;grid-template-columns:160px 1fr;gap:4px;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:13px;}
 .dr:last-child{border:none;}
 .dk{color:#777;font-weight:500;}
 .sub-h{margin:11px 0 5px;font-size:11px;font-weight:600;color:#4a5e2a;text-transform:uppercase;letter-spacing:.05em;}
 
-/* ── Empty ── */
+/* Empty */
 .empty{text-align:center;padding:44px 20px;color:#aaa;}
 .empty-icon{font-size:38px;margin-bottom:10px;}
 .empty-title{font-size:14px;font-weight:500;color:#888;margin-bottom:5px;}
 
-/* ── Toast ── */
+/* Conflict / edit banners */
+.conflict{background:#fff8e1;border:1px solid #ffc107;border-radius:6px;padding:9px 14px;font-size:13px;color:#7a5800;margin:10px 22px;display:none;}
+
+/* Toast */
 .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:9px 20px;border-radius:20px;font-size:13px;z-index:999;white-space:nowrap;display:none;}
 .toast.show{display:block;}
 
-.conflict{background:#fff8e1;border:1px solid #ffc107;border-radius:6px;padding:9px 14px;font-size:13px;color:#7a5800;margin:10px 22px;display:none;}
-
-/* ── Print sheet ── */
+/* ── PRINT STYLES ── */
 #print-sheet{display:none;}
 @media print{
-  body > .app, #modal-new-proj, #modal-detail, .toast { display:none !important; }
-  #print-sheet { display:block !important; }
+  body>.app,#modal-new-proj,#modal-detail,.toast{display:none!important;}
+  #print-sheet{display:block!important;}
 }
-.ps{font-family:Arial,sans-serif;font-size:10pt;color:#000;max-width:210mm;margin:0 auto;}
-.ps-header{display:grid;grid-template-columns:1fr auto auto;border:2px solid #000;}
-.ps-logo{background:#5a6e3a;color:#fff;padding:8px 12px;font-size:14pt;font-weight:700;line-height:1.2;}
-.ps-logo span{display:block;font-size:10pt;font-weight:400;}
-.ps-project{border-left:2px solid #000;padding:6px 10px;min-width:160px;}
-.ps-project-label{font-size:8pt;color:#555;text-transform:uppercase;letter-spacing:.05em;}
-.ps-project-val{font-size:11pt;font-weight:700;color:#5a6e3a;}
-.ps-sheetnum{border-left:2px solid #000;padding:6px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:60px;background:#f5f5dc;}
-.ps-sheetnum-label{font-size:7pt;color:#777;text-transform:uppercase;}
-.ps-sheetnum-val{font-size:22pt;font-weight:700;line-height:1;}
-.ps-body{border:2px solid #000;border-top:none;}
-.ps-row{display:grid;grid-template-columns:110px 1fr;border-bottom:1px solid #ccc;}
-.ps-row:last-child{border-bottom:none;}
-.ps-row-split{display:grid;grid-template-columns:110px 1fr 110px 1fr;border-bottom:1px solid #ccc;}
-.ps-label{background:#f0f0f0;padding:5px 8px;font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:#444;border-right:1px solid #ccc;display:flex;align-items:flex-start;}
-.ps-val{padding:5px 8px;font-size:9.5pt;}
-.ps-section-header{background:#5a6e3a;color:#fff;padding:4px 8px;font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #000;}
-.ps-notes-row{display:grid;grid-template-columns:22px 1fr;gap:0;border-bottom:1px solid #eee;min-height:22px;}
-.ps-notes-row:last-child{border-bottom:none;}
-.ps-note-num{background:#f0f0f0;padding:4px 6px;font-size:8pt;color:#666;text-align:center;border-right:1px solid #ccc;display:flex;align-items:flex-start;justify-content:center;}
-.ps-note-val{padding:4px 8px;font-size:9pt;}
-.ps-mat-table{width:100%;border-collapse:collapse;font-size:9pt;}
-.ps-mat-table th{background:#f0f0f0;padding:4px 8px;text-align:left;border:1px solid #ccc;font-size:8pt;font-weight:700;text-transform:uppercase;}
-.ps-mat-table td{padding:5px 8px;border:1px solid #ccc;min-height:20px;}
-.ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid #000;}
-.ps-signoff-cell{padding:10px 12px;border-right:1px solid #ccc;}
-.ps-signoff-cell:last-child{border-right:none;}
-.ps-signoff-line{border-bottom:1px solid #000;margin-top:20px;margin-bottom:4px;}
-.ps-signoff-label{font-size:8pt;color:#555;}
-.ps-ra{font-size:9pt;line-height:1.6;}
-.ps-feedback-box{min-height:60px;padding:6px 8px;font-size:9pt;border-top:1px solid #eee;}
+.ps{font-family:Arial,sans-serif;font-size:9pt;color:#000;}
+.ps-top{display:grid;grid-template-columns:180px 80px 90px 130px 80px 110px 60px;border:1.5px solid #000;border-bottom:none;}
+.ps-logo{background:#5a6e3a;color:#fff;padding:6px 10px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;}
+.ps-logo-main{font-size:13pt;font-weight:700;line-height:1.1;}
+.ps-logo-sub{font-size:8pt;margin-top:3px;}
+.ps-hcell{border-left:1px solid #000;padding:3px 6px;}
+.ps-hcell-label{font-size:7pt;color:#555;text-transform:uppercase;}
+.ps-hcell-val{font-size:11pt;font-weight:700;color:#c0392b;margin-top:1px;}
+.ps-hcell-val-sm{font-size:9pt;font-weight:700;margin-top:1px;}
+.ps-sheetnum{background:#f5f5dc;border-left:1px solid #000;padding:3px 6px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.ps-sheetnum-label{font-size:7pt;color:#555;}
+.ps-sheetnum-val{font-size:16pt;font-weight:700;line-height:1;}
+.ps-body{border:1.5px solid #000;border-top:none;}
+.ps-row{display:grid;grid-template-columns:160px 1fr;border-top:1px solid #ccc;}
+.ps-row-split{display:grid;grid-template-columns:160px 1fr 130px 1fr;border-top:1px solid #ccc;}
+.ps-row-4{display:grid;grid-template-columns:160px 1fr 130px 1fr;border-top:1px solid #ccc;}
+.ps-lbl{background:#4a5e2a;color:#fff;padding:4px 7px;font-size:8pt;font-weight:700;border-right:1px solid #3a4e1e;}
+.ps-val{padding:4px 7px;font-size:9pt;}
+.ps-lbl2{background:#4a5e2a;color:#fff;padding:4px 7px;font-size:8pt;font-weight:700;border-left:1px solid #3a4e1e;border-right:1px solid #3a4e1e;}
+.ps-briefing{background:#f9f9f9;border-top:1px solid #000;padding:7px;text-align:center;font-size:9pt;}
+.ps-briefing strong{font-size:10pt;}
+.ps-section-hdr{background:#4a5e2a;color:#fff;padding:4px 8px;font-size:8pt;font-weight:700;border-top:1px solid #000;}
+.ps-special{min-height:50px;padding:6px 8px;font-size:9pt;border-top:1px solid #ccc;color:#c0392b;font-style:italic;}
+.ps-table{width:100%;border-collapse:collapse;font-size:8.5pt;}
+.ps-table th{background:#4a5e2a;color:#fff;padding:4px 7px;text-align:left;border:1px solid #3a4e1e;font-size:7.5pt;}
+.ps-table td{padding:4px 7px;border:1px solid #ccc;min-height:18px;}
+.ps-table .sh{background:#e8edf8;}
+.ps-ops-table{width:100%;border-collapse:collapse;font-size:8.5pt;}
+.ps-ops-table th{background:#4a5e2a;color:#fff;padding:4px 7px;text-align:left;border:1px solid #3a4e1e;font-size:7.5pt;}
+.ps-ops-table td{padding:4px 7px;border:1px solid #ccc;min-height:20px;}
+.ps-ops-table .sh{background:#e8edf8;width:60px;}
+.ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #ccc;}
+.ps-weight-cell{padding:5px 8px;border-right:1px solid #ccc;}
+.ps-weight-cell:last-child{border-right:none;}
+.ps-weight-lbl{font-size:8pt;font-weight:700;color:#4a5e2a;}
+.ps-weight-val{font-size:9pt;min-height:16px;}
+.ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #ccc;}
+.ps-mat-half{padding:6px 8px;}
+.ps-mat-half:first-child{border-right:1px solid #ccc;}
+.ps-feedback{min-height:60px;padding:6px 8px;font-size:9pt;border-top:1px solid #ccc;}
+.ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid #000;}
+.ps-so-cell{padding:10px 12px;border-right:1px solid #ccc;}
+.ps-so-cell:last-child{border-right:none;}
+.ps-so-line{border-bottom:1px solid #000;margin:16px 0 3px;}
+.ps-so-lbl{font-size:8pt;color:#555;}
 </style>
 </head>
 <body>
 <div class="app">
 
-<!-- ── HEADER ── -->
 <div class="header">
   <div>
     <div class="header-title">FIBRE Mechanics</div>
     <div class="header-sub" id="header-sub">Task Record Database</div>
   </div>
   <div class="header-right">
-    <div class="sync-wrap" id="sync-wrap">
-      <span class="sync-dot" id="sync-dot"></span>
-      <span id="sync-txt">Synced</span>
-    </div>
-    <button class="project-crumb" id="project-crumb" onclick="goHome()" title="Back to all projects">
-      &#8592; All projects
-    </button>
-    <div class="user-pill" id="user-pill" style="display:none;">
-      <div class="user-avatar" id="user-avatar">?</div>
-      <span class="user-name" id="user-name"></span>
-    </div>
+    <div class="sync-wrap" id="sync-wrap"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Synced</span></div>
+    <button class="project-crumb" id="project-crumb" onclick="goHome()">&#8592; All projects</button>
+    <div class="user-pill" id="user-pill" style="display:none;"><div class="user-avatar" id="user-avatar">?</div><span class="user-name" id="user-name"></span></div>
   </div>
 </div>
 
@@ -228,7 +234,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   <div class="screen" id="screen-auth">
     <div class="screen-icon">&#x1F4CB;</div>
     <div class="screen-title">Sign in to continue</div>
-    <div class="screen-sub">The task record database is stored in Google Drive and shared across your team. Sign in to view and edit all projects.</div>
+    <div class="screen-sub">The task record database is stored in Google Drive and shared across your team.</div>
     <button class="g-btn" onclick="signIn()">
       <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       Sign in with Google
@@ -238,10 +244,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 
   <!-- PROJECT PICKER -->
   <div id="screen-picker" style="display:none;">
-    <div class="picker-header">
-      <h2>All projects</h2>
-      <button class="btn btn-primary" onclick="openNewProject()">+ New project</button>
-    </div>
+    <div class="picker-header"><h2>All projects</h2><button class="btn btn-primary" onclick="openNewProject()">+ New project</button></div>
     <div class="proj-loading" id="picker-loading"><div class="spinner"></div>Loading projects…</div>
     <div class="picker-grid" id="picker-grid" style="display:none;"></div>
   </div>
@@ -249,72 +252,141 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   <!-- PROJECT WORKSPACE -->
   <div id="screen-project" style="display:none;">
     <div class="conflict" id="conflict-banner">&#9888; Another user saved while you were editing — changes merged safely.</div>
+
     <div class="tabs">
       <div class="tab active" id="tab-new" onclick="switchTab('new')">+ New task sheet</div>
       <div class="tab" id="tab-records" onclick="switchTab('records')">&#9776; Records</div>
       <div class="tab" id="tab-export" onclick="switchTab('export')">&#8681; Export</div>
     </div>
 
-    <!-- FORM -->
+    <!-- ══ FORM ══ -->
     <div id="pane-new">
       <div class="section">
+
         <div class="sh">Sheet reference</div>
-        <div class="fg3">
-          <div class="field"><label>Project code</label><input id="f-code" type="text" placeholder="MM62"></div>
-          <div class="field"><label>Project number</label><input id="f-num" type="text" placeholder="178"></div>
-          <div class="field"><label>Sheet number</label><input id="f-sheet" type="text" placeholder="49"></div>
+        <div class="fg4">
+          <div class="field"><label>Project No</label><input id="f-projno" type="text" placeholder="177"></div>
+          <div class="field"><label>Project Name</label><input id="f-projname" type="text" placeholder="MM62"></div>
+          <div class="field"><label>Task sheet document number <button id="docnum-override-btn" onclick="toggleDocNumOverride()" style="background:none;border:none;cursor:pointer;font-size:10px;color:#4a5e2a;text-decoration:underline;font-family:inherit;font-weight:400;letter-spacing:0;text-transform:none;margin-left:6px;">override</button></label><input id="f-docnum" type="text" placeholder="Auto-generated" readonly style="background:#f5f5f5;color:#555;cursor:default;"></div>
+          <div class="field"><label>Task sheet revision</label><input id="f-revision" type="text" placeholder="A"></div>
         </div>
-        <div class="sh">Project details</div>
-        <div class="fg">
-          <div class="field full"><label>Project name</label><input id="f-pname" type="text" placeholder="0178-P-0 Moulded Structures (Provisional)"></div>
-          <div class="field full"><label>Operation</label><input id="f-op" type="text" placeholder="Engine Longitudinal Construction"></div>
-          <div class="field full"><label>Task description</label><input id="f-tdesc" type="text" placeholder="CNC Operations"></div>
-          <div class="field"><label>TaskMaster</label><input id="f-tm" type="text" placeholder="Matt.G"></div>
-          <div class="field"><label>Questions to</label><input id="f-qt" type="text" placeholder="Richard.T / Justin.W"></div>
-          <div class="field"><label>Drawings</label><input id="f-draw" type="text"></div>
-          <div class="field"><label>Sketches</label><input id="f-sketch" type="text"></div>
-          <div class="field"><label>Cure programme</label><input id="f-cure" type="text"></div>
-          <div class="field"><label>Issued by</label><input id="f-issued" type="text" placeholder="George.C"></div>
-          <div class="field"><label>Planned finish</label><input id="f-finish" type="date"></div>
+        <div class="fg3" style="margin-top:11px;">
+          <div class="field"><label>Task sheet issue date</label><input id="f-issuedate" type="date"></div>
+          <div class="field"><label>Sheet (e.g. 1 of 2)</label><input id="f-sheetof" type="text" placeholder="1 of 2"></div>
           <div class="field"><label>Status</label>
             <select id="f-status"><option value="open">Open</option><option value="provisional">Provisional</option><option value="complete">Complete</option></select>
           </div>
         </div>
-        <div class="sh">Risk assessment codes</div>
-        <div class="field"><input id="f-ra" type="text" placeholder="RA 002, RA 003, RA 007, RA 010…"></div>
-        <div class="sh">Notes and instructions</div>
-        <div class="notes-grid" id="notes-grid">
-          <span class="num">1</span><input class="ni" type="text" placeholder="Add instruction…">
-          <span class="num">2</span><input class="ni" type="text" placeholder="Add instruction…">
-          <span class="num">3</span><input class="ni" type="text" placeholder="Add instruction…">
-          <span class="num">4</span><input class="ni" type="text" placeholder="Add instruction…">
-          <span class="num">5</span><input class="ni" type="text" placeholder="Add instruction…">
-          <span class="num">6</span><input class="ni" type="text" placeholder="Add instruction…">
-          <span class="num">7</span><input class="ni" type="text" placeholder="Add instruction…">
-          <span class="num">8</span><input class="ni" type="text" placeholder="Add instruction…">
+
+        <div class="sh">Job details</div>
+        <div class="fg">
+          <div class="field"><label>Cloudattend job</label><input id="f-cajob" type="text" placeholder="Cloud Attend"></div>
+          <div class="field"><label>Cloudattend operation</label><input id="f-caop" type="text" placeholder="Sheets"></div>
+          <div class="field full"><label>Operation description</label><input id="f-opdesc" type="text" placeholder="Make Spreadsheet"></div>
+          <div class="field full"><label>Reference drawings incl revision</label><input id="f-drawings" type="text" placeholder="N/A"></div>
+          <div class="field full"><label>Additional sheets</label><input id="f-addsheets" type="text" placeholder="None"></div>
         </div>
-        <button class="link-btn" onclick="addNote()" style="margin-top:8px;">+ Add row</button>
-        <div class="sh">Materials record</div>
-        <table class="mat-table">
-          <thead><tr><th style="width:28%">Material</th><th>Batch 1</th><th>Batch 2</th><th>Batch 3</th><th>Batch 4</th></tr></thead>
-          <tbody id="mat-body">
-            <tr><td><input type="text" placeholder="XC411"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-            <tr><td><input type="text" placeholder="RC200"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-            <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-            <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+
+        <div class="sh">People &amp; timing</div>
+        <div class="fg">
+          <div class="field"><label>Cloudattend hours estimate (hrs)</label><input id="f-hours" type="number" placeholder="120"></div>
+          <div class="field"><label>Required finish date</label><input id="f-finishdate" type="date"></div>
+          <div class="field"><label>Task sheet author</label><input id="f-author" type="text" placeholder="Jo Bloggs"></div>
+          <div class="field"><label>Task sheet approver</label><input id="f-approver" type="text" placeholder="Bob Marley"></div>
+        </div>
+
+        <div class="sh">Risk &amp; compliance</div>
+        <div class="fg">
+          <div class="field full"><label>Relevant risk assessments</label><input id="f-ra" type="text" placeholder="RA 002, RA 003, RA 004…"></div>
+          <div class="field full"><label>Relevant COSHH documents</label><input id="f-coshh" type="text" placeholder="COSHH 4,7,9"></div>
+          <div class="field full"><label>Relevant standard operating procedures</label><input id="f-sop" type="text" placeholder="SOP 1,7, 8, 8"></div>
+          <div class="field"><label>Task sheets to be completed before starting work</label><input id="f-prereq" type="text" placeholder="22"></div>
+          <div class="field"><label>Required cure schedule</label><input id="f-cure" type="text" placeholder="Program 23"></div>
+        </div>
+
+        <div class="sh">Special instructions</div>
+        <div class="field"><textarea id="f-special" rows="3" placeholder="e.g. Interleave UD tapes with 1 x XC411 @ ±45° every 4000g" style="color:#c0392b;font-style:italic;"></textarea></div>
+
+        <div class="sh">QA / sign-off points</div>
+        <table class="itable" id="qa-table">
+          <thead><tr>
+            <th style="width:40%">QA / sign-off point</th>
+            <th style="width:15%">NDT required</th>
+            <th style="width:15%">Stage</th>
+            <th style="width:15%">Date</th>
+            <th style="width:15%">Results</th>
+          </tr></thead>
+          <tbody id="qa-body">
+            <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td class="shaded"><input type="text" class="shaded"></td></tr>
+            <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td class="shaded"><input type="text" class="shaded"></td></tr>
+            <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td class="shaded"><input type="text" class="shaded"></td></tr>
           </tbody>
         </table>
-        <button class="link-btn" onclick="addMatRow()" style="margin-top:6px;">+ Add row</button>
-        <div class="sh">Feedback, notes and comments</div>
-        <div class="field"><textarea id="f-feedback" placeholder="Operator feedback…"></textarea></div>
+        <button class="link-btn" onclick="addQARow()" style="margin-top:6px;">+ Add row</button>
+
+        <div class="sh">Operation description steps</div>
+        <table class="itable" id="ops-table">
+          <thead><tr>
+            <th style="width:55%">Operation description</th>
+            <th style="width:15%">Operator initials</th>
+            <th style="width:15%">QA check initials</th>
+            <th style="width:15%">Date</th>
+          </tr></thead>
+          <tbody id="ops-body"></tbody>
+        </table>
+        <button class="link-btn" onclick="addOpsRow()" style="margin-top:6px;">+ Add row</button>
+
+        <div class="sh">Weight record</div>
+        <div class="fg">
+          <div class="field"><label>Target weight (kg)</label><input id="f-targetwt" type="text"></div>
+          <div class="field"><label>Measured weight (kg)</label><input id="f-measuredwt" type="text"></div>
+          <div class="field"><label>Resin trace number</label><input id="f-resintrace" type="text"></div>
+          <div class="field"><label>Hardener trace number</label><input id="f-hardtrace" type="text"></div>
+        </div>
+
+        <div class="sh">Materials record</div>
+        <div class="fg" style="gap:14px;">
+          <div>
+            <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Left</div>
+            <table class="itable" id="mat-left-table">
+              <thead><tr><th style="width:50%">Material</th><th>Trace #</th><th>Amount used</th></tr></thead>
+              <tbody id="mat-left-body">
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              </tbody>
+            </table>
+            <button class="link-btn" onclick="addMatRow('mat-left-body')" style="margin-top:5px;">+ Add row</button>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Right</div>
+            <table class="itable" id="mat-right-table">
+              <thead><tr><th style="width:50%">Material</th><th>Trace #</th><th>Amount used</th></tr></thead>
+              <tbody id="mat-right-body">
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              </tbody>
+            </table>
+            <button class="link-btn" onclick="addMatRow('mat-right-body')" style="margin-top:5px;">+ Add row</button>
+          </div>
+        </div>
+
+        <div class="sh">Feedback, notes &amp; comments</div>
+        <div class="field"><textarea id="f-feedback" rows="4" placeholder="Operator feedback and notes…"></textarea></div>
+
         <div class="sh">Sign-off</div>
         <div class="fg">
-          <div class="field"><label>Operator sign-off</label><input id="f-opname" type="text" placeholder="Name"></div>
-          <div class="field"><label>Operator date</label><input id="f-opdate" type="date"></div>
-          <div class="field"><label>Inspected by</label><input id="f-insp" type="text" placeholder="Name"></div>
-          <div class="field"><label>Inspection date</label><input id="f-inspdate" type="date"></div>
-          <div class="field"><label>Part number</label><input id="f-partno" type="text"></div>
+          <div class="field"><label>Overall sign-off by operator</label><input id="f-opname" type="text" placeholder="Name"></div>
+          <div class="field"><label>Operator sign-off date</label><input id="f-opdate" type="date"></div>
+          <div class="field"><label>Overall sign-off by task leader</label><input id="f-tlname" type="text" placeholder="Name"></div>
+          <div class="field"><label>Task leader sign-off date</label><input id="f-tldate" type="date"></div>
         </div>
+
       </div>
       <div class="btn-row">
         <button class="btn" onclick="clearForm()">Clear form</button>
@@ -331,7 +403,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
         <div class="stat"><div class="stat-num" id="s-done">0</div><div class="stat-label">Complete</div></div>
       </div>
       <div class="search-bar">
-        <input type="text" id="search" placeholder="Search operation, taskmaster, sheet…" oninput="renderRecords()">
+        <input type="text" id="search" placeholder="Search document number, operation, author…" oninput="renderRecords()">
         <select id="filter-status" onchange="renderRecords()">
           <option value="">All statuses</option>
           <option value="open">Open</option>
@@ -342,23 +414,22 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
       </div>
       <div id="rec-loading" style="display:none;" class="empty"><div class="spinner"></div></div>
       <div style="overflow-x:auto;">
-        <table class="rec-table"><thead><tr><th>Sheet ref</th><th>Operation / task</th><th>TaskMaster</th><th>Added by</th><th>Finish</th><th>Status</th><th></th></tr></thead>
-        <tbody id="rec-body"></tbody></table>
-        <div class="empty" id="rec-empty" style="display:none;"><div class="empty-icon">&#x1F4CB;</div><div class="empty-title">No records in this project</div><p style="font-size:13px;">Add the first task sheet using the form.</p></div>
+        <table class="rec-table"><thead><tr>
+          <th>Doc number</th><th>Project</th><th>Operation</th><th>Author</th><th>Finish</th><th>Status</th><th></th>
+        </tr></thead><tbody id="rec-body"></tbody></table>
+        <div class="empty" id="rec-empty" style="display:none;"><div class="empty-icon">&#x1F4CB;</div><div class="empty-title">No records yet</div></div>
       </div>
     </div>
 
     <!-- EXPORT -->
     <div id="pane-export" style="display:none;">
       <div class="section">
-        <p style="font-size:13px;color:#666;margin-bottom:14px;">Plain-text export of all task sheets in this project. Use "Copy all" to paste into email, Word, or any document.</p>
+        <p style="font-size:13px;color:#666;margin-bottom:14px;">Plain-text export of all task sheets in this project.</p>
         <div id="export-body"></div>
       </div>
     </div>
   </div>
-
-</div><!-- /wrap -->
-</div><!-- /app -->
+</div>
 
 <!-- NEW PROJECT MODAL -->
 <div class="modal-bg" id="modal-new-proj">
@@ -367,9 +438,9 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="modal-body">
       <div class="fg" style="gap:11px;">
         <div class="field"><label>Project code</label><input id="np-code" type="text" placeholder="MM62" autofocus></div>
-        <div class="field"><label>Project number</label><input id="np-num" type="text" placeholder="178"></div>
-        <div class="field full"><label>Project name</label><input id="np-name" type="text" placeholder="0178-P-0 Moulded Structures (Provisional)"></div>
-        <div class="field full"><label>Description (optional)</label><input id="np-desc" type="text" placeholder="Brief description…"></div>
+        <div class="field"><label>Project number</label><input id="np-num" type="text" placeholder="177"></div>
+        <div class="field full"><label>Project name</label><input id="np-name" type="text" placeholder="Kraken K7 Hull"></div>
+        <div class="field full"><label>Description (optional)</label><input id="np-desc" type="text"></div>
       </div>
     </div>
     <div class="modal-foot">
@@ -387,50 +458,35 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="modal-foot">
       <button class="btn btn-danger" onclick="deleteSheet()">Delete</button>
       <button class="btn" onclick="printSheet()">&#x1F5A8; Print</button>
-      <button class="btn btn-primary" onclick="editSheet(records[viewIdx].id)">&#9998; Edit</button>
+      <button class="btn btn-primary" onclick="editSheetFromModal()">&#9998; Edit</button>
       <button class="btn" onclick="closeModal('modal-detail')">Close</button>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
-
-<!-- PRINT SHEET (hidden on screen, shown when printing) -->
 <div id="print-sheet"></div>
 
 <script>
-/* ════════════════════════════════════════════════════════════════
-   SETUP — replace with your own Google Cloud OAuth Client ID
-   Steps:
-   1. console.cloud.google.com → new project → enable Drive API
-   2. Credentials → Create OAuth 2.0 Client ID (Web application)
-   3. Add your hosting URL to Authorised JavaScript origins
-   4. Paste Client ID below
-   5. Host this file anywhere (intranet, GitHub Pages, etc.)
-   6. First user to sign in creates FM_TaskSheets/ folder in their
-      Drive — share that folder with all team members
-════════════════════════════════════════════════════════════════ */
-const CLIENT_ID   = '532958625397-kdr26ksrjc4vdditqolv65p41i91lftk.apps.googleusercontent.com';
-const SCOPES      = 'https://www.googleapis.com/auth/drive.file';
+const CLIENT_ID = '532958625397-kdr26ksrjc4vdditqolv65p41i91lftk.apps.googleusercontent.com';
+const SCOPES    = 'https://www.googleapis.com/auth/drive.file';
 const FOLDER_NAME = 'FM_TaskSheets';
 const INDEX_FILE  = 'FM_Projects_Index.json';
 const DISC_DOC    = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
 
 let tokenClient, gapiOk=false, gsiOk=false;
 let folderId=null, indexFileId=null;
-let projects=[];          // [{id,code,num,name,desc,fileId,sheetCount,updatedAt,createdBy}]
-let records=[];           // sheets in current project
-let currentProject=null;  // project object
-let currentUser={};
-let viewIdx=null, noteCount=8, saving=false, editingId=null;
+let projects=[], records=[], currentProject=null, currentUser={};
+let viewIdx=null, saving=false, editingId=null;
 
-/* ── Google API boot ── */
+/* ── Boot ── */
 window.addEventListener('load',()=>{
   const s1=document.createElement('script'); s1.src='https://apis.google.com/js/api.js';
   s1.onload=()=>gapi.load('client',async()=>{ await gapi.client.init({discoveryDocs:[DISC_DOC]}); gapiOk=true; boot(); });
   const s2=document.createElement('script'); s2.src='https://accounts.google.com/gsi/client';
   s2.onload=()=>{ gsiOk=true; boot(); };
   document.head.appendChild(s1); document.head.appendChild(s2);
+  initOpsTable();
 });
 
 function boot(){
@@ -443,7 +499,7 @@ function boot(){
   if(tok){ gapi.client.setToken(JSON.parse(tok)); fetchUser().then(loadIndex); }
 }
 
-function signIn(){ if(!tokenClient){toast('Still loading, try again.');return;} tokenClient.requestAccessToken({prompt:''}); }
+function signIn(){ if(!tokenClient){toast('Still loading…');return;} tokenClient.requestAccessToken({prompt:''}); }
 
 async function fetchUser(){
   try{
@@ -457,93 +513,39 @@ async function fetchUser(){
 }
 
 /* ── Drive helpers ── */
-function setSyncing(state){
-  const w=document.getElementById('sync-wrap'),d=document.getElementById('sync-dot'),t=document.getElementById('sync-txt');
-  w.style.display='flex'; d.className='sync-dot'+(state==='syncing'?' syncing':state==='error'?' error':'');
-  t.textContent=state==='syncing'?'Saving…':state==='error'?'Error':'Synced';
-}
+function setSyncing(s){ const w=document.getElementById('sync-wrap'),d=document.getElementById('sync-dot'),t=document.getElementById('sync-txt'); w.style.display='flex'; d.className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':''); t.textContent=s==='syncing'?'Saving…':s==='error'?'Error':'Synced'; }
+async function driveGet(fid){ return gapi.client.request({path:`https://www.googleapis.com/drive/v3/files/${fid}`,params:{alt:'media'}}); }
+async function drivePatch(fid,json){ return gapi.client.request({path:`https://www.googleapis.com/upload/drive/v3/files/${fid}`,method:'PATCH',params:{uploadType:'media',fields:'id'},headers:{'Content-Type':'application/json'},body:JSON.stringify(json)}); }
+async function driveCreate(name,json,parentId){ const b='fmbnd123',meta=JSON.stringify({name,mimeType:'application/json',...(parentId?{parents:[parentId]}:{})}),body=JSON.stringify(json),mp=`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: application/json\r\n\r\n${body}\r\n--${b}--`; const r=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',params:{uploadType:'multipart',fields:'id'},headers:{'Content-Type':`multipart/related; boundary=${b}`},body:mp}); return r.result.id; }
+async function driveFind(name,parentId,mimeType){ let q=`name='${name}' and trashed=false`; if(parentId) q+=` and '${parentId}' in parents`; if(mimeType) q+=` and mimeType='${mimeType}'`; const r=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',params:{q,fields:'files(id,name)'}}); return r.result.files||[]; }
 
-async function driveGet(fileId){ return gapi.client.request({path:`https://www.googleapis.com/drive/v3/files/${fileId}`,params:{alt:'media'}}); }
-
-async function drivePatch(fileId,json){
-  return gapi.client.request({path:`https://www.googleapis.com/upload/drive/v3/files/${fileId}`,method:'PATCH',params:{uploadType:'media',fields:'id'},headers:{'Content-Type':'application/json'},body:JSON.stringify(json)});
-}
-
-async function driveCreate(name,json,parentId){
-  const boundary='fmbnd123';
-  const meta=JSON.stringify({name,mimeType:'application/json',...(parentId?{parents:[parentId]}:{})});
-  const body=JSON.stringify(json);
-  const mp=`--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n${body}\r\n--${boundary}--`;
-  const r=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',params:{uploadType:'multipart',fields:'id'},headers:{'Content-Type':`multipart/related; boundary=${boundary}`},body:mp});
-  return r.result.id;
-}
-
-async function driveFind(name,parentId,mimeType){
-  let q=`name='${name}' and trashed=false`;
-  if(parentId) q+=` and '${parentId}' in parents`;
-  if(mimeType) q+=` and mimeType='${mimeType}'`;
-  const r=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',params:{q,fields:'files(id,name)'}});
-  return r.result.files||[];
-}
-
-/* ── Index / folder management ── */
+/* ── Index ── */
 async function loadIndex(){
-  show('screen-picker'); document.getElementById('picker-loading').style.display='';
-  document.getElementById('picker-grid').style.display='none';
+  show('screen-picker'); document.getElementById('picker-loading').style.display=''; document.getElementById('picker-grid').style.display='none';
   setSyncing('syncing');
   try{
-    // Find or create folder
     const folders=await driveFind(FOLDER_NAME,null,'application/vnd.google-apps.folder');
-    if(folders.length){ folderId=folders[0].id; }
-    else{
-      folderId=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',method:'POST',params:{fields:'id'},headers:{'Content-Type':'application/json'},body:JSON.stringify({name:FOLDER_NAME,mimeType:'application/vnd.google-apps.folder'})}).then(r=>r.result.id);
-    }
-    // Find or create index
+    if(folders.length){ folderId=folders[0].id; } else { folderId=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',method:'POST',params:{fields:'id'},headers:{'Content-Type':'application/json'},body:JSON.stringify({name:FOLDER_NAME,mimeType:'application/vnd.google-apps.folder'})}).then(r=>r.result.id); }
     const indices=await driveFind(INDEX_FILE,folderId);
-    if(indices.length){
-      indexFileId=indices[0].id;
-      const res=await driveGet(indexFileId);
-      const data=typeof res.result==='string'?JSON.parse(res.result):res.result;
-      projects=Array.isArray(data.projects)?data.projects:(Array.isArray(data)?data:[]);
-    } else {
-      projects=[];
-      indexFileId=await driveCreate(INDEX_FILE,{projects:[],createdAt:new Date().toISOString()},folderId);
-    }
-    setSyncing('synced');
-    renderPicker();
-  }catch(e){
-    setSyncing('error');
-    if(e.status===401){ sessionStorage.removeItem('fm_tok'); signIn(); }
-    else toast('Error loading: '+e.message);
-  }finally{
-    document.getElementById('picker-loading').style.display='none';
-    document.getElementById('picker-grid').style.display='';
-  }
+    if(indices.length){ indexFileId=indices[0].id; const res=await driveGet(indexFileId); const data=typeof res.result==='string'?JSON.parse(res.result):res.result; projects=Array.isArray(data.projects)?data.projects:[]; }
+    else { projects=[]; indexFileId=await driveCreate(INDEX_FILE,{projects:[],createdAt:new Date().toISOString()},folderId); }
+    setSyncing('synced'); renderPicker();
+  }catch(e){ setSyncing('error'); if(e.status===401){sessionStorage.removeItem('fm_tok');signIn();} else toast('Error: '+e.message); }
+  finally{ document.getElementById('picker-loading').style.display='none'; document.getElementById('picker-grid').style.display=''; }
 }
+async function saveIndex(){ await drivePatch(indexFileId,{projects,updatedAt:new Date().toISOString()}); }
 
-async function saveIndex(){
-  await drivePatch(indexFileId,{projects,updatedAt:new Date().toISOString()});
-}
-
-/* ── Project picker ── */
+/* ── Picker ── */
 function renderPicker(){
   document.getElementById('header-sub').textContent='Task Record Database';
   document.getElementById('project-crumb').style.display='none';
   const grid=document.getElementById('picker-grid');
   const cards=projects.map(p=>{
-    const badges=[];
-    if((p.openCount||0)>0) badges.push(`<span class="badge badge-open">${p.openCount} open</span>`);
-    if((p.provCount||0)>0) badges.push(`<span class="badge badge-prov">${p.provCount} provisional</span>`);
-    if((p.doneCount||0)>0) badges.push(`<span class="badge badge-done">${p.doneCount} complete</span>`);
-    const updated=p.updatedAt?'Updated '+fmtDate(p.updatedAt.split('T')[0]):'';
-    return `<div class="proj-card" onclick="loadProject(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+    const b=[]; if((p.openCount||0)>0) b.push(`<span class="badge badge-open">${p.openCount} open</span>`); if((p.provCount||0)>0) b.push(`<span class="badge badge-prov">${p.provCount} provisional</span>`); if((p.doneCount||0)>0) b.push(`<span class="badge badge-done">${p.doneCount} complete</span>`);
+    return `<div class="proj-card" onclick='loadProject(${JSON.stringify(p).replace(/'/g,"&#39;")})'>
       <div class="proj-card-code">${esc(p.code||p.id)}</div>
-      <div class="proj-card-name">${esc(p.name||'Unnamed project')}${p.desc?`<br><span style="color:#aaa">${esc(p.desc)}</span>`:''}</div>
-      <div class="proj-card-meta">
-        <span class="proj-card-count">${p.sheetCount||0} sheet${(p.sheetCount||0)!==1?'s':''}</span>
-        ${badges.join('')}
-        <span class="proj-card-date">${updated}</span>
-      </div>
+      <div class="proj-card-name">${esc(p.name||'Unnamed')}</div>
+      <div class="proj-card-meta"><span class="proj-card-count">${p.sheetCount||0} sheet${(p.sheetCount||0)!==1?'s':''}</span>${b.join('')}<span class="proj-card-date">${p.updatedAt?'Updated '+fmtDate(p.updatedAt.split('T')[0]):''}</span></div>
     </div>`;
   }).join('');
   grid.innerHTML=cards+`<div class="new-proj-card" onclick="openNewProject()">&#43; New project</div>`;
@@ -551,25 +553,16 @@ function renderPicker(){
 }
 
 async function openNewProject(){ openModal('modal-new-proj'); document.getElementById('np-code').focus(); }
-
 async function createProject(){
-  const code=document.getElementById('np-code').value.trim();
-  const num=document.getElementById('np-num').value.trim();
-  const name=document.getElementById('np-name').value.trim();
-  const desc=document.getElementById('np-desc').value.trim();
-  if(!code){ toast('Enter a project code'); return; }
+  const code=document.getElementById('np-code').value.trim(), num=document.getElementById('np-num').value.trim(), name=document.getElementById('np-name').value.trim(), desc=document.getElementById('np-desc').value.trim();
+  if(!code){toast('Enter a project code');return;}
   setSyncing('syncing');
-  const id='proj_'+Date.now();
-  const filename=`FM_Project_${code.replace(/[^a-zA-Z0-9]/g,'_')}_${Date.now()}.json`;
+  const id='proj_'+Date.now(), filename=`FM_Project_${code.replace(/[^a-zA-Z0-9]/g,'_')}_${Date.now()}.json`;
   const fileId=await driveCreate(filename,{records:[],projectId:id,createdAt:new Date().toISOString(),createdBy:currentUser.email||'unknown'},folderId);
   const proj={id,code,num,name,desc,fileId,filename,sheetCount:0,openCount:0,provCount:0,doneCount:0,createdAt:new Date().toISOString(),createdBy:currentUser.name||currentUser.email||'unknown',updatedAt:new Date().toISOString()};
-  projects.push(proj);
-  await saveIndex();
-  setSyncing('synced');
-  closeModal('modal-new-proj');
-  ['np-code','np-num','np-name','np-desc'].forEach(id=>document.getElementById(id).value='');
-  toast('Project created');
-  loadProject(proj);
+  projects.push(proj); await saveIndex(); setSyncing('synced'); closeModal('modal-new-proj');
+  ['np-code','np-num','np-name','np-desc'].forEach(i=>document.getElementById(i).value='');
+  toast('Project created'); loadProject(proj);
 }
 
 /* ── Project workspace ── */
@@ -577,219 +570,166 @@ async function loadProject(proj,showSpinner){
   currentProject=typeof proj==='string'?JSON.parse(proj):proj;
   document.getElementById('header-sub').textContent=`${currentProject.code||''} — ${currentProject.name||'Project'}`;
   document.getElementById('project-crumb').style.display='flex';
-  show('screen-project');
-  switchTab('records');
+  show('screen-project'); switchTab('records');
   if(showSpinner) document.getElementById('rec-loading').style.display='';
   setSyncing('syncing');
   try{
     const res=await driveGet(currentProject.fileId);
     const data=typeof res.result==='string'?JSON.parse(res.result):res.result;
-    records=Array.isArray(data.records)?data.records:(Array.isArray(data)?data:[]);
-    setSyncing('synced');
-    renderRecords();
-    // Pre-fill form fields with project info
-    document.getElementById('f-code').value=currentProject.code||'';
-    document.getElementById('f-num').value=currentProject.num||'';
-    document.getElementById('f-pname').value=currentProject.name||'';
-  }catch(e){
-    setSyncing('error');
-    if(e.status===401){ sessionStorage.removeItem('fm_tok'); signIn(); }
-    else toast('Error loading project: '+e.message);
-  }finally{ document.getElementById('rec-loading').style.display='none'; }
+    records=Array.isArray(data.records)?data.records:[];
+    setSyncing('synced'); renderRecords();
+    document.getElementById('f-projno').value=currentProject.num||'';
+    document.getElementById('f-projname').value=currentProject.code||'';
+    setAutoDocNum();
+  }catch(e){ setSyncing('error'); if(e.status===401){sessionStorage.removeItem('fm_tok');signIn();} else toast('Error: '+e.message); }
+  finally{ document.getElementById('rec-loading').style.display='none'; }
 }
 
 async function saveProjectFile(){
-  // Read-merge-write to handle concurrent edits
   let merged=records;
   try{
-    const res=await driveGet(currentProject.fileId);
-    const remote=typeof res.result==='string'?JSON.parse(res.result):res.result;
+    const res=await driveGet(currentProject.fileId); const remote=typeof res.result==='string'?JSON.parse(res.result):res.result;
     const remoteRecs=Array.isArray(remote.records)?remote.records:[];
-    const localIds=new Set(records.map(r=>r.id));
-    const extra=remoteRecs.filter(r=>!localIds.has(r.id));
-    if(extra.length){
-      merged=[...records,...extra].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-      records=merged;
-      document.getElementById('conflict-banner').style.display='';
-      setTimeout(()=>document.getElementById('conflict-banner').style.display='none',5000);
-    }
+    const localIds=new Set(records.map(r=>r.id)); const extra=remoteRecs.filter(r=>!localIds.has(r.id));
+    if(extra.length){ merged=[...records,...extra].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)); records=merged; document.getElementById('conflict-banner').style.display=''; setTimeout(()=>document.getElementById('conflict-banner').style.display='none',5000); }
   }catch(e){}
   await drivePatch(currentProject.fileId,{records:merged,updatedAt:new Date().toISOString(),updatedBy:currentUser.email||'unknown'});
-  // Update index counts
   const idx=projects.findIndex(p=>p.id===currentProject.id);
-  if(idx>=0){
-    projects[idx].sheetCount=merged.length;
-    projects[idx].openCount=merged.filter(r=>r.status==='open').length;
-    projects[idx].provCount=merged.filter(r=>r.status==='provisional').length;
-    projects[idx].doneCount=merged.filter(r=>r.status==='complete').length;
-    projects[idx].updatedAt=new Date().toISOString();
-    currentProject=projects[idx];
-    await saveIndex();
-  }
+  if(idx>=0){ projects[idx].sheetCount=merged.length; projects[idx].openCount=merged.filter(r=>r.status==='open').length; projects[idx].provCount=merged.filter(r=>r.status==='provisional').length; projects[idx].doneCount=merged.filter(r=>r.status==='complete').length; projects[idx].updatedAt=new Date().toISOString(); currentProject=projects[idx]; await saveIndex(); }
 }
 
 function goHome(){ records=[]; currentProject=null; renderPicker(); loadIndex(); }
 
-/* ── Form ── */
-function addNote(){ noteCount++; const g=document.getElementById('notes-grid'); const s=document.createElement('span'); s.className='num'; s.textContent=noteCount; const i=document.createElement('input'); i.className='ni'; i.type='text'; i.placeholder='Add instruction…'; g.appendChild(s); g.appendChild(i); }
-function addMatRow(){ const b=document.getElementById('mat-body'); const tr=document.createElement('tr'); tr.innerHTML='<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>'; b.appendChild(tr); }
-function getNotes(){ return Array.from(document.querySelectorAll('.ni')).map(i=>i.value.trim()).filter(Boolean); }
-function getMats(){ const out=[]; document.querySelectorAll('#mat-body tr').forEach(r=>{ const c=r.querySelectorAll('input'),m=c[0].value.trim(); if(!m) return; out.push({material:m,b1:c[1].value.trim(),b2:c[2].value.trim(),b3:c[3].value.trim(),b4:c[4].value.trim()}); }); return out; }
+/* ── Auto document number ── */
+function generateDocNum(){
+  if(!currentProject) return '';
+  const projRef=(currentProject.num||currentProject.code||'PROJ').replace(/\s+/g,'');
+  const existingNums=records
+    .filter(r=>!editingId||r.id!==editingId)
+    .map(r=>{ const m=r.docNum&&r.docNum.match(/-TS-(\d+)$/); return m?parseInt(m[1],10):0; });
+  const nextNum=existingNums.length?Math.max(...existingNums)+1:1;
+  return projRef+'-TS-'+String(nextNum).padStart(3,'0');
+}
+function setAutoDocNum(){
+  const el=document.getElementById('f-docnum');
+  if(!el||!el.readOnly) return;
+  const num=generateDocNum();
+  if(num){ el.value=num; el.style.background='#f5f5f5'; el.style.color='#555'; }
+}
+function toggleDocNumOverride(){
+  const el=document.getElementById('f-docnum');
+  const btn=document.getElementById('docnum-override-btn');
+  if(el.readOnly){ el.readOnly=false; el.style.background=''; el.style.color=''; el.style.cursor=''; el.focus(); btn.textContent='auto'; }
+  else { el.readOnly=true; setAutoDocNum(); btn.textContent='override'; }
+}
+
+/* ── Table builders ── */
+function initOpsTable(){
+  const b=document.getElementById('ops-body'); b.innerHTML='';
+  for(let i=0;i<10;i++) b.appendChild(makeOpsRow());
+}
+function makeOpsRow(op){ const tr=document.createElement('tr'); tr.innerHTML=`<td><input type="text" value="${esc(op&&op.desc||'')}"></td><td class="shaded"><input type="text" class="shaded" value="${esc(op&&op.opInit||'')}"></td><td class="shaded"><input type="text" class="shaded" value="${esc(op&&op.qaInit||'')}"></td><td class="shaded"><input type="text" class="shaded" value="${esc(op&&op.date||'')}"></td>`; return tr; }
+function addOpsRow(){ document.getElementById('ops-body').appendChild(makeOpsRow()); }
+function addQARow(){ const b=document.getElementById('qa-body'); const tr=document.createElement('tr'); tr.innerHTML='<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td class="shaded"><input type="text" class="shaded"></td>'; b.appendChild(tr); }
+function addMatRow(bodyId){ const b=document.getElementById(bodyId); const tr=document.createElement('tr'); tr.innerHTML='<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>'; b.appendChild(tr); }
+
+/* ── Data getters ── */
+function getQA(){ const rows=[]; document.querySelectorAll('#qa-body tr').forEach(r=>{ const c=r.querySelectorAll('input'); rows.push({point:c[0].value.trim(),ndt:c[1].value.trim(),stage:c[2].value.trim(),date:c[3].value.trim(),results:c[4].value.trim()}); }); return rows; }
+function getOps(){ const rows=[]; document.querySelectorAll('#ops-body tr').forEach(r=>{ const c=r.querySelectorAll('input'); rows.push({desc:c[0].value.trim(),opInit:c[1].value.trim(),qaInit:c[2].value.trim(),date:c[3].value.trim()}); }); return rows.filter(r=>r.desc||r.opInit||r.qaInit); }
+function getMat(bodyId){ const rows=[]; document.querySelectorAll(`#${bodyId} tr`).forEach(r=>{ const c=r.querySelectorAll('input'); rows.push({material:c[0].value.trim(),trace:c[1].value.trim(),amount:c[2].value.trim()}); }); return rows.filter(r=>r.material||r.trace); }
 function v(id){ return document.getElementById(id).value.trim(); }
 
+/* ── Save / Edit ── */
 async function saveSheet(){
-  if(!v('f-code')&&!v('f-pname')){ toast('Enter a project code or name'); return; }
+  if(!v('f-docnum')&&!v('f-opdesc')){toast('Enter a document number or operation description');return;}
   if(saving) return; saving=true;
   const btn=document.getElementById('save-btn'); btn.disabled=true; btn.textContent='Saving…';
   setSyncing('syncing');
-
+  const data={
+    projNo:v('f-projno'),projName:v('f-projname'),docNum:v('f-docnum'),revision:v('f-revision'),
+    issueDate:v('f-issuedate'),sheetOf:v('f-sheetof'),status:document.getElementById('f-status').value,
+    caJob:v('f-cajob'),caOp:v('f-caop'),opDesc:v('f-opdesc'),drawings:v('f-drawings'),addSheets:v('f-addsheets'),
+    hours:v('f-hours'),finishDate:v('f-finishdate'),author:v('f-author'),approver:v('f-approver'),
+    ra:v('f-ra'),coshh:v('f-coshh'),sop:v('f-sop'),prereq:v('f-prereq'),cure:v('f-cure'),
+    special:v('f-special'),qa:getQA(),ops:getOps(),
+    targetWt:v('f-targetwt'),measuredWt:v('f-measuredwt'),resinTrace:v('f-resintrace'),hardTrace:v('f-hardtrace'),
+    matLeft:getMat('mat-left-body'),matRight:getMat('mat-right-body'),
+    feedback:v('f-feedback'),opName:v('f-opname'),opDate:v('f-opdate'),tlName:v('f-tlname'),tlDate:v('f-tldate'),
+  };
   if(editingId){
-    // UPDATE existing record
     const idx=records.findIndex(r=>r.id===editingId);
-    if(idx<0){ toast('Record not found'); saving=false; btn.disabled=false; btn.textContent='✓ Save task sheet'; return; }
-    const original=records[idx];
-    records[idx]={
-      ...original,
-      projectCode:v('f-code'),projectNum:v('f-num'),sheetNum:v('f-sheet'),
-      projectName:v('f-pname'),operation:v('f-op'),taskDesc:v('f-tdesc'),
-      taskMaster:v('f-tm'),questionsTo:v('f-qt'),drawings:v('f-draw'),
-      sketches:v('f-sketch'),cure:v('f-cure'),issuedBy:v('f-issued'),
-      plannedFinish:v('f-finish'),status:document.getElementById('f-status').value,
-      ra:v('f-ra'),notes:getNotes(),materials:getMats(),
-      feedback:v('f-feedback'),operatorName:v('f-opname'),operatorDate:v('f-opdate'),
-      inspector:v('f-insp'),inspectorDate:v('f-inspdate'),partNo:v('f-partno'),
-      updatedAt:new Date().toISOString(),
-      updatedBy:currentUser.email||'unknown',updatedByName:currentUser.name||currentUser.email||'Unknown'
-    };
-    try{
-      await saveProjectFile();
-      clearForm(); toast('Record updated'); switchTab('records');
-    }catch(e){
-      records[idx]=original; setSyncing('error'); toast('Update failed: '+e.message);
-    }finally{ saving=false; btn.disabled=false; btn.textContent='✓ Save task sheet'; }
+    if(idx>=0){ records[idx]={...records[idx],...data,updatedAt:new Date().toISOString(),updatedBy:currentUser.email||'unknown'}; }
+    try{ await saveProjectFile(); clearForm(); toast('Record updated'); switchTab('records'); }
+    catch(e){ setSyncing('error'); toast('Update failed: '+e.message); }
   } else {
-    // NEW record
-    const rec={
-      id:Date.now()+'_'+Math.random().toString(36).slice(2),
-      projectCode:v('f-code'),projectNum:v('f-num'),sheetNum:v('f-sheet'),
-      projectName:v('f-pname'),operation:v('f-op'),taskDesc:v('f-tdesc'),
-      taskMaster:v('f-tm'),questionsTo:v('f-qt'),drawings:v('f-draw'),
-      sketches:v('f-sketch'),cure:v('f-cure'),issuedBy:v('f-issued'),
-      plannedFinish:v('f-finish'),status:document.getElementById('f-status').value,
-      ra:v('f-ra'),notes:getNotes(),materials:getMats(),
-      feedback:v('f-feedback'),operatorName:v('f-opname'),operatorDate:v('f-opdate'),
-      inspector:v('f-insp'),inspectorDate:v('f-inspdate'),partNo:v('f-partno'),
-      createdAt:new Date().toISOString(),
-      createdBy:currentUser.email||'unknown',createdByName:currentUser.name||currentUser.email||'Unknown'
-    };
+    const rec={id:Date.now()+'_'+Math.random().toString(36).slice(2),createdAt:new Date().toISOString(),createdBy:currentUser.email||'unknown',createdByName:currentUser.name||currentUser.email||'Unknown',...data};
     records.unshift(rec);
-    try{
-      await saveProjectFile();
-      clearForm(); toast('Task sheet saved'); switchTab('records');
-    }catch(e){
-      records.shift(); setSyncing('error'); toast('Save failed: '+e.message);
-    }finally{ saving=false; btn.disabled=false; btn.textContent='✓ Save task sheet'; }
+    try{ await saveProjectFile(); clearForm(); toast('Task sheet saved'); switchTab('records'); setAutoDocNum(); }
+    catch(e){ records.shift(); setSyncing('error'); toast('Save failed: '+e.message); }
   }
+  saving=false; btn.disabled=false; btn.textContent=editingId?'✓ Update task sheet':'✓ Save task sheet';
+  editingId=null;
 }
 
 function editSheet(id){
-  const r=records.find(rec=>rec.id==id); if(!r) return;
-  closeModal('modal-detail');
+  const r=records.find(x=>x.id==id); if(!r) return;
   editingId=r.id;
-  // Populate all form fields
   const set=(fid,val)=>{ const el=document.getElementById(fid); if(el) el.value=val||''; };
-  set('f-code',r.projectCode); set('f-num',r.projectNum); set('f-sheet',r.sheetNum);
-  set('f-pname',r.projectName); set('f-op',r.operation); set('f-tdesc',r.taskDesc);
-  set('f-tm',r.taskMaster); set('f-qt',r.questionsTo); set('f-draw',r.drawings);
-  set('f-sketch',r.sketches); set('f-cure',r.cure); set('f-issued',r.issuedBy);
-  set('f-finish',r.plannedFinish); set('f-ra',r.ra);
-  set('f-feedback',r.feedback); set('f-opname',r.operatorName); set('f-opdate',r.operatorDate);
-  set('f-insp',r.inspector); set('f-inspdate',r.inspectorDate); set('f-partno',r.partNo);
+  set('f-projno',r.projNo); set('f-projname',r.projName); set('f-docnum',r.docNum); set('f-revision',r.revision);
+  set('f-issuedate',r.issueDate); set('f-sheetof',r.sheetOf); set('f-cajob',r.caJob); set('f-caop',r.caOp);
+  set('f-opdesc',r.opDesc); set('f-drawings',r.drawings); set('f-addsheets',r.addSheets);
+  set('f-hours',r.hours); set('f-finishdate',r.finishDate); set('f-author',r.author); set('f-approver',r.approver);
+  set('f-ra',r.ra); set('f-coshh',r.coshh); set('f-sop',r.sop); set('f-prereq',r.prereq); set('f-cure',r.cure);
+  set('f-special',r.special); set('f-targetwt',r.targetWt); set('f-measuredwt',r.measuredWt);
+  set('f-resintrace',r.resinTrace); set('f-hardtrace',r.hardTrace); set('f-feedback',r.feedback);
+  set('f-opname',r.opName); set('f-opdate',r.opDate); set('f-tlname',r.tlName); set('f-tldate',r.tlDate);
   document.getElementById('f-status').value=r.status||'open';
-  // Notes
-  const noteInputs=document.querySelectorAll('.ni');
-  noteInputs.forEach((inp,i)=>{ inp.value=(r.notes&&r.notes[i])||''; });
-  // Extra notes beyond the default 8
-  if(r.notes&&r.notes.length>noteInputs.length){
-    r.notes.slice(noteInputs.length).forEach((n,i)=>{
-      noteCount++; const g=document.getElementById('notes-grid');
-      const s=document.createElement('span'); s.className='num'; s.textContent=noteCount;
-      const inp=document.createElement('input'); inp.className='ni'; inp.type='text'; inp.value=n;
-      g.appendChild(s); g.appendChild(inp);
-    });
-  }
+  // QA rows
+  const qb=document.getElementById('qa-body'); qb.innerHTML='';
+  (r.qa&&r.qa.length?r.qa:[{},{},{}]).forEach(q=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td><input type="text" value="${esc(q.point||'')}"></td><td><input type="text" value="${esc(q.ndt||'')}"></td><td><input type="text" value="${esc(q.stage||'')}"></td><td><input type="text" value="${esc(q.date||'')}"></td><td class="shaded"><input type="text" class="shaded" value="${esc(q.results||'')}"></td>`; qb.appendChild(tr); });
+  // Ops rows
+  const ob=document.getElementById('ops-body'); ob.innerHTML='';
+  const opsData=r.ops&&r.ops.length?r.ops:Array(10).fill({});
+  opsData.forEach(o=>ob.appendChild(makeOpsRow(o)));
+  if(opsData.length<10) for(let i=opsData.length;i<10;i++) ob.appendChild(makeOpsRow());
   // Materials
-  const matRows=document.querySelectorAll('#mat-body tr');
-  matRows.forEach((row,i)=>{
-    const cells=row.querySelectorAll('input');
-    const m=r.materials&&r.materials[i];
-    cells[0].value=m?m.material||'':'';
-    cells[1].value=m?m.b1||'':'';
-    cells[2].value=m?m.b2||'':'';
-    cells[3].value=m?m.b3||'':'';
-    cells[4].value=m?m.b4||'':'';
-  });
-  // Extra material rows
-  if(r.materials&&r.materials.length>matRows.length){
-    r.materials.slice(matRows.length).forEach(m=>{
-      const b=document.getElementById('mat-body');
-      const tr=document.createElement('tr');
-      tr.innerHTML=`<td><input type="text" value="${esc(m.material||'')}"></td><td><input type="text" value="${esc(m.b1||'')}"></td><td><input type="text" value="${esc(m.b2||'')}"></td><td><input type="text" value="${esc(m.b3||'')}"></td><td><input type="text" value="${esc(m.b4||'')}"></td>`;
-      b.appendChild(tr);
-    });
-  }
-  // Update UI to show edit mode
-  document.getElementById('save-btn').textContent='✓ Update task sheet';
-  document.getElementById('save-btn').style.background='#2a5e8a';
-  document.getElementById('save-btn').style.borderColor='#2a5e8a';
-  // Show edit banner
+  const fillMat=(bodyId,data)=>{ const b=document.getElementById(bodyId); b.innerHTML=''; (data&&data.length?data:[{},{},{},{},{}]).forEach(m=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td><input type="text" value="${esc(m.material||'')}"></td><td><input type="text" value="${esc(m.trace||'')}"></td><td><input type="text" value="${esc(m.amount||'')}"></td>`; b.appendChild(tr); }); };
+  fillMat('mat-left-body',r.matLeft); fillMat('mat-right-body',r.matRight);
+  // Edit mode UI
+  const btn=document.getElementById('save-btn'); btn.textContent='✓ Update task sheet'; btn.style.background='#1a5e8a'; btn.style.borderColor='#1a5e8a';
   let banner=document.getElementById('edit-banner');
   if(!banner){ banner=document.createElement('div'); banner.id='edit-banner'; banner.style.cssText='background:#e3f0ff;border:1px solid #90c0e8;border-radius:6px;padding:9px 14px;font-size:13px;color:#1a4d8a;margin:10px 22px;display:flex;align-items:center;justify-content:space-between;'; document.getElementById('pane-new').querySelector('.section').prepend(banner); }
-  banner.innerHTML=`<span>&#9998; Editing sheet ${esc(r.sheetNum||r.id)} — ${esc(r.operation||'')}</span><button onclick="cancelEdit()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#1a4d8a;text-decoration:underline;font-family:inherit;">Cancel edit</button>`;
+  banner.innerHTML=`<span>&#9998; Editing: ${esc(r.docNum||r.id)} — ${esc(r.opDesc||'')}</span><button onclick="cancelEdit()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#1a4d8a;text-decoration:underline;font-family:inherit;">Cancel</button>`;
   banner.style.display='flex';
-  switchTab('new');
-  window.scrollTo(0,0);
+  switchTab('new'); window.scrollTo(0,0);
 }
+
+function editSheetFromModal(){ if(viewIdx===null||viewIdx<0) return; const id=records[viewIdx].id; closeModal('modal-detail'); editSheet(id); }
 
 function cancelEdit(){
   editingId=null;
-  document.getElementById('save-btn').textContent='✓ Save task sheet';
-  document.getElementById('save-btn').style.background='';
-  document.getElementById('save-btn').style.borderColor='';
-  const banner=document.getElementById('edit-banner');
-  if(banner) banner.style.display='none';
+  const btn=document.getElementById('save-btn'); btn.textContent='✓ Save task sheet'; btn.style.background=''; btn.style.borderColor='';
+  const b=document.getElementById('edit-banner'); if(b) b.style.display='none';
   clearForm();
 }
 
 function clearForm(){
   editingId=null;
-  ['f-code','f-num','f-sheet','f-pname','f-op','f-tdesc','f-tm','f-qt','f-draw','f-sketch','f-cure','f-issued','f-finish','f-ra','f-feedback','f-opname','f-opdate','f-insp','f-inspdate','f-partno'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  ['f-projno','f-projname','f-docnum','f-revision','f-issuedate','f-sheetof','f-cajob','f-caop','f-opdesc','f-drawings','f-addsheets','f-hours','f-finishdate','f-author','f-approver','f-ra','f-coshh','f-sop','f-prereq','f-cure','f-special','f-targetwt','f-measuredwt','f-resintrace','f-hardtrace','f-feedback','f-opname','f-opdate','f-tlname','f-tldate'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   document.getElementById('f-status').value='open';
-  document.querySelectorAll('.ni').forEach(i=>i.value='');
-  document.querySelectorAll('#mat-body input').forEach(i=>i.value='');
-  document.getElementById('save-btn').textContent='✓ Save task sheet';
-  document.getElementById('save-btn').style.background='';
-  document.getElementById('save-btn').style.borderColor='';
-  const banner=document.getElementById('edit-banner');
-  if(banner) banner.style.display='none';
-  if(currentProject){
-    document.getElementById('f-code').value=currentProject.code||'';
-    document.getElementById('f-num').value=currentProject.num||'';
-    document.getElementById('f-pname').value=currentProject.name||'';
-  }
-}
-
-/* ── Tabs ── */
-function switchTab(t){
-  ['new','records','export'].forEach(n=>{
-    document.getElementById('pane-'+n).style.display=n===t?'':'none';
-    document.getElementById('tab-'+n).classList.toggle('active',n===t);
-  });
-  if(t==='records') renderRecords();
-  if(t==='export') renderExport();
+  document.getElementById('qa-body').innerHTML=''; [{},{},{}].forEach(()=>addQARow());
+  initOpsTable();
+  ['mat-left-body','mat-right-body'].forEach(id=>{ const b=document.getElementById(id); b.innerHTML=''; for(let i=0;i<5;i++){ const tr=document.createElement('tr'); tr.innerHTML='<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>'; b.appendChild(tr); } });
+  const btn=document.getElementById('save-btn'); btn.textContent='✓ Save task sheet'; btn.style.background=''; btn.style.borderColor='';
+  const banner=document.getElementById('edit-banner'); if(banner) banner.style.display='none';
+  if(currentProject){ document.getElementById('f-projno').value=currentProject.num||''; document.getElementById('f-projname').value=currentProject.code||''; }
+  // Reset to auto mode on clear
+  const dnel=document.getElementById('f-docnum'); if(dnel){ dnel.readOnly=true; dnel.style.background='#f5f5f5'; dnel.style.color='#555'; dnel.style.cursor='default'; } const dnbtn=document.getElementById('docnum-override-btn'); if(dnbtn) dnbtn.textContent='override';
+  setAutoDocNum();
 }
 
 /* ── Records ── */
+function switchTab(t){ ['new','records','export'].forEach(n=>{ document.getElementById('pane-'+n).style.display=n===t?'':'none'; document.getElementById('tab-'+n).classList.toggle('active',n===t); }); if(t==='records') renderRecords(); if(t==='export') renderExport(); }
 function fmtDate(d){ if(!d) return '—'; try{ return new Date(d+'T12:00:00').toLocaleDateString('en-GB'); }catch(e){ return d; } }
 function statusBadge(s){ const m={open:'badge-open',provisional:'badge-prov',complete:'badge-done'}; return `<span class="badge ${m[s]||'badge-open'}">${s.charAt(0).toUpperCase()+s.slice(1)}</span>`; }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -797,68 +737,78 @@ function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
 function renderRecords(){
   const q=(document.getElementById('search').value||'').toLowerCase();
   const sf=document.getElementById('filter-status').value;
-  const f=records.filter(r=>{ const txt=[r.projectCode,r.sheetNum,r.operation,r.taskDesc,r.taskMaster].join(' ').toLowerCase(); return (!q||txt.includes(q))&&(!sf||r.status===sf); });
+  const f=records.filter(r=>{ const txt=[r.docNum,r.projNo,r.projName,r.opDesc,r.author,r.caJob].join(' ').toLowerCase(); return (!q||txt.includes(q))&&(!sf||r.status===sf); });
   document.getElementById('s-total').textContent=records.length;
   document.getElementById('s-open').textContent=records.filter(r=>r.status==='open').length;
   document.getElementById('s-prov').textContent=records.filter(r=>r.status==='provisional').length;
   document.getElementById('s-done').textContent=records.filter(r=>r.status==='complete').length;
-  const tbody=document.getElementById('rec-body');
-  const empty=document.getElementById('rec-empty');
+  const tbody=document.getElementById('rec-body'), empty=document.getElementById('rec-empty');
   if(!f.length){ tbody.innerHTML=''; empty.style.display=''; return; }
   empty.style.display='none';
-  tbody.innerHTML=f.map(r=>{
-    const ref=[r.projectCode,r.projectNum,r.sheetNum].filter(Boolean).join('/')||'—';
-    return `<tr>
-      <td style="font-weight:500;white-space:nowrap;">${esc(ref)}</td>
-      <td><div style="font-weight:500;">${esc(r.operation)||'—'}</div><div style="font-size:12px;color:#888;">${esc(r.taskDesc||'')}</div></td>
-      <td>${esc(r.taskMaster)||'—'}</td>
-      <td style="font-size:12px;color:#888;">${esc(r.createdByName||r.createdBy||'—')}</td>
-      <td style="white-space:nowrap;">${fmtDate(r.plannedFinish)}</td>
-      <td>${statusBadge(r.status)}</td>
-      <td style="white-space:nowrap;"><button class="link-btn" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#666;" onclick="editSheet('${r.id}')">Edit</button></td>
-    </tr>`;
-  }).join('');
+  tbody.innerHTML=f.map(r=>`<tr>
+    <td style="font-weight:500;white-space:nowrap;">${esc(r.docNum||'—')}</td>
+    <td style="font-size:12px;">${esc(r.projNo||'')} ${esc(r.projName||'')}</td>
+    <td><div style="font-weight:500;">${esc(r.opDesc||'—')}</div><div style="font-size:12px;color:#888;">${esc(r.caJob||'')}</div></td>
+    <td>${esc(r.author||'—')}</td>
+    <td style="white-space:nowrap;">${fmtDate(r.finishDate)}</td>
+    <td>${statusBadge(r.status)}</td>
+    <td style="white-space:nowrap;"><button class="link-btn" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#666;" onclick="editSheet('${r.id}')">Edit</button></td>
+  </tr>`).join('');
 }
 
 function viewSheet(id){
   const idx=records.findIndex(r=>r.id==id); if(idx<0) return; viewIdx=idx;
   const r=records[idx];
-  const ref=[r.projectCode,r.projectNum,r.sheetNum].filter(Boolean).join(' / ')||'Task sheet';
-  document.getElementById('detail-title').textContent=ref;
-  const matRows=r.materials&&r.materials.length?r.materials.map(m=>`<tr><td style="padding:5px 8px;border:1px solid #e0e0e0;">${esc(m.material)}</td><td style="padding:5px 8px;border:1px solid #e0e0e0;">${esc(m.b1)}</td><td style="padding:5px 8px;border:1px solid #e0e0e0;">${esc(m.b2)}</td><td style="padding:5px 8px;border:1px solid #e0e0e0;">${esc(m.b3)}</td><td style="padding:5px 8px;border:1px solid #e0e0e0;">${esc(m.b4)}</td></tr>`).join(''):'<tr><td colspan="5" style="padding:6px 8px;color:#aaa;">None</td></tr>';
-  const ra=r.ra?r.ra.split(',').map(c=>`<span style="display:inline-block;background:#f2f6eb;border:1px solid #c8dea0;border-radius:20px;padding:1px 8px;font-size:11px;color:#3a5a1a;margin:2px;">${esc(c.trim())}</span>`).join(''):'—';
+  document.getElementById('detail-title').textContent=r.docNum||'Task sheet';
+  const qaRows=r.qa&&r.qa.some(q=>q.point)?r.qa.filter(q=>q.point).map(q=>`<tr><td>${esc(q.point)}</td><td>${esc(q.ndt)}</td><td>${esc(q.stage)}</td><td>${esc(q.date)}</td><td>${esc(q.results)}</td></tr>`).join(''):'<tr><td colspan="5" style="color:#aaa;">None</td></tr>';
+  const opsRows=r.ops&&r.ops.length?r.ops.map(o=>`<tr><td>${esc(o.desc)}</td><td>${esc(o.opInit)}</td><td>${esc(o.qaInit)}</td><td>${esc(o.date)}</td></tr>`).join(''):'<tr><td colspan="4" style="color:#aaa;">None</td></tr>';
+  const matRow=(m)=>`<tr><td>${esc(m.material)}</td><td>${esc(m.trace)}</td><td>${esc(m.amount)}</td></tr>`;
+  const matLeftRows=r.matLeft&&r.matLeft.length?r.matLeft.map(matRow).join(''):'<tr><td colspan="3" style="color:#aaa;">None</td></tr>';
+  const matRightRows=r.matRight&&r.matRight.length?r.matRight.map(matRow).join(''):'<tr><td colspan="3" style="color:#aaa;">None</td></tr>';
   document.getElementById('detail-body').innerHTML=`
-    <div class="dr"><span class="dk">Project name</span><span>${esc(r.projectName)||'—'}</span></div>
-    <div class="dr"><span class="dk">Operation</span><span>${esc(r.operation)||'—'}</span></div>
-    <div class="dr"><span class="dk">Task description</span><span>${esc(r.taskDesc)||'—'}</span></div>
-    <div class="dr"><span class="dk">TaskMaster</span><span>${esc(r.taskMaster)||'—'}</span></div>
-    <div class="dr"><span class="dk">Questions to</span><span>${esc(r.questionsTo)||'—'}</span></div>
-    <div class="dr"><span class="dk">Drawings</span><span>${esc(r.drawings)||'—'}</span></div>
-    <div class="dr"><span class="dk">Sketches</span><span>${esc(r.sketches)||'—'}</span></div>
-    <div class="dr"><span class="dk">Cure programme</span><span>${esc(r.cure)||'—'}</span></div>
-    <div class="dr"><span class="dk">Issued by</span><span>${esc(r.issuedBy)||'—'}</span></div>
-    <div class="dr"><span class="dk">Planned finish</span><span>${fmtDate(r.plannedFinish)}</span></div>
-    <div class="dr"><span class="dk">Status</span><span>${statusBadge(r.status)}</span></div>
-    <div class="dr"><span class="dk">Risk assessments</span><span>${ra}</span></div>
-    <div class="dr"><span class="dk">Added by</span><span style="font-size:12px;">${esc(r.createdByName||r.createdBy||'—')} · ${r.createdAt?fmtDate(r.createdAt.split('T')[0]):'—'}</span></div>
-    <div class="sub-h">Notes and instructions</div>
-    ${r.notes&&r.notes.length?r.notes.map((n,i)=>`<div style="padding:3px 0;font-size:13px;"><span style="color:#aaa;font-size:12px;margin-right:6px;">${i+1}.</span>${esc(n)}</div>`).join(''):'<div style="color:#aaa;font-size:13px;">None</div>'}
-    <div class="sub-h">Materials record</div>
-    <table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr>${['Material','Batch 1','Batch 2','Batch 3','Batch 4'].map(h=>`<th style="background:#f2f6eb;padding:5px 8px;text-align:left;border:1px solid #dde8cc;font-size:11px;">${h}</th>`).join('')}</tr></thead><tbody>${matRows}</tbody></table>
+    <div class="dr"><span class="dk">Document number</span><span>${esc(r.docNum||'—')}</span></div>
+    <div class="dr"><span class="dk">Project</span><span>${esc(r.projNo||'')} ${esc(r.projName||'')}</span></div>
+    <div class="dr"><span class="dk">Revision</span><span>${esc(r.revision||'—')}</span></div>
+    <div class="dr"><span class="dk">Issue date</span><span>${fmtDate(r.issueDate)}</span></div>
+    <div class="dr"><span class="dk">Sheet</span><span>${esc(r.sheetOf||'—')}</span></div>
+    <div class="dr"><span class="dk">Cloudattend job</span><span>${esc(r.caJob||'—')}</span></div>
+    <div class="dr"><span class="dk">Cloudattend operation</span><span>${esc(r.caOp||'—')}</span></div>
+    <div class="dr"><span class="dk">Operation description</span><span>${esc(r.opDesc||'—')}</span></div>
+    <div class="dr"><span class="dk">Drawings</span><span>${esc(r.drawings||'—')}</span></div>
+    <div class="dr"><span class="dk">Hours estimate</span><span>${esc(r.hours||'—')}</span></div>
+    <div class="dr"><span class="dk">Required finish</span><span>${fmtDate(r.finishDate)}</span></div>
+    <div class="dr"><span class="dk">Author</span><span>${esc(r.author||'—')}</span></div>
+    <div class="dr"><span class="dk">Approver</span><span>${esc(r.approver||'—')}</span></div>
+    <div class="dr"><span class="dk">Risk assessments</span><span>${esc(r.ra||'—')}</span></div>
+    <div class="dr"><span class="dk">COSHH</span><span>${esc(r.coshh||'—')}</span></div>
+    <div class="dr"><span class="dk">SOPs</span><span>${esc(r.sop||'—')}</span></div>
+    <div class="dr"><span class="dk">Prerequisites</span><span>${esc(r.prereq||'—')}</span></div>
+    <div class="dr"><span class="dk">Cure schedule</span><span>${esc(r.cure||'—')}</span></div>
+    ${r.special?`<div class="dr"><span class="dk">Special instructions</span><span style="color:#c0392b;font-style:italic;">${esc(r.special)}</span></div>`:''}
+    <div class="sub-h">QA / sign-off points</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['QA point','NDT','Stage','Date','Results'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #dde8cc;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${qaRows}</tbody></table>
+    <div class="sub-h">Operation steps</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Operation','Op initials','QA initials','Date'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #dde8cc;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${opsRows}</tbody></table>
+    <div class="sub-h">Weight</div>
+    <div class="dr"><span class="dk">Target weight</span><span>${esc(r.targetWt||'—')} kg</span></div>
+    <div class="dr"><span class="dk">Measured weight</span><span>${esc(r.measuredWt||'—')} kg</span></div>
+    <div class="dr"><span class="dk">Resin trace</span><span>${esc(r.resinTrace||'—')}</span></div>
+    <div class="dr"><span class="dk">Hardener trace</span><span>${esc(r.hardTrace||'—')}</span></div>
+    <div class="sub-h">Materials — left</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Material','Trace #','Amount used'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #dde8cc;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${matLeftRows}</tbody></table>
+    <div class="sub-h">Materials — right</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Material','Trace #','Amount used'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #dde8cc;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${matRightRows}</tbody></table>
     ${r.feedback?`<div class="sub-h">Feedback</div><div style="font-size:13px;">${esc(r.feedback)}</div>`:''}
     <div class="sub-h">Sign-off</div>
-    <div class="dr"><span class="dk">Operator</span><span>${esc(r.operatorName)||'—'}${r.operatorDate?' · '+fmtDate(r.operatorDate):''}</span></div>
-    <div class="dr"><span class="dk">Inspector</span><span>${esc(r.inspector)||'—'}${r.inspectorDate?' · '+fmtDate(r.inspectorDate):''}</span></div>
-    <div class="dr"><span class="dk">Part number</span><span>${esc(r.partNo)||'—'}</span></div>`;
+    <div class="dr"><span class="dk">Operator</span><span>${esc(r.opName||'—')}${r.opDate?' · '+fmtDate(r.opDate):''}</span></div>
+    <div class="dr"><span class="dk">Task leader</span><span>${esc(r.tlName||'—')}${r.tlDate?' · '+fmtDate(r.tlDate):''}</span></div>`;
   openModal('modal-detail');
 }
 
 async function deleteSheet(){
   if(viewIdx===null||viewIdx<0) return;
   if(!confirm('Delete this record for all users?')) return;
-  records.splice(viewIdx,1);
-  closeModal('modal-detail');
-  setSyncing('syncing');
+  records.splice(viewIdx,1); closeModal('modal-detail'); setSyncing('syncing');
   try{ await saveProjectFile(); renderRecords(); toast('Record deleted'); }
   catch(e){ toast('Delete failed: '+e.message); setSyncing('error'); }
 }
@@ -867,67 +817,75 @@ async function deleteSheet(){
 function printSheet(){
   if(viewIdx===null||viewIdx<0) return;
   const r=records[viewIdx];
-  const projectLine=[r.projectCode,r.projectName].filter(Boolean).join(' — ')||'—';
-  const notesRows=(r.notes&&r.notes.length?r.notes:Array(8).fill('')).map((n,i)=>`<div class="ps-notes-row"><div class="ps-note-num">${i+1}</div><div class="ps-note-val">${esc(n)}</div></div>`).join('');
-  const matRows=(r.materials&&r.materials.length?r.materials:[{material:'',b1:'',b2:'',b3:'',b4:''},{material:'',b1:'',b2:'',b3:'',b4:''},{material:'',b1:'',b2:'',b3:'',b4:''},{material:'',b1:'',b2:'',b3:'',b4:''},{material:'',b1:'',b2:'',b3:'',b4:''}]).map(m=>`<tr><td>${esc(m.material)}</td><td>${esc(m.b1)}</td><td>${esc(m.b2)}</td><td>${esc(m.b3)}</td><td>${esc(m.b4)}</td></tr>`).join('');
+  const qaRows=(r.qa&&r.qa.some(q=>q.point)?r.qa.filter(q=>q.point):Array(3).fill({})).map(q=>`<tr><td style="width:40%">${esc(q.point||'')}</td><td>${esc(q.ndt||'')}</td><td>${esc(q.stage||'')}</td><td>${esc(q.date||'')}</td><td class="sh">${esc(q.results||'')}</td></tr>`).join('');
+  const opsRows=(r.ops&&r.ops.length?r.ops:Array(10).fill({})).map(o=>`<tr><td>${esc(o&&o.desc||'')}</td><td class="sh">${esc(o&&o.opInit||'')}</td><td class="sh">${esc(o&&o.qaInit||'')}</td><td class="sh">${esc(o&&o.date||'')}</td></tr>`).join('');
+  const matHalf=(data,title)=>{
+    const rows=(data&&data.length?data:Array(5).fill({})).map(m=>`<tr><td>${esc(m&&m.material||'')}</td><td>${esc(m&&m.trace||'')}</td><td>${esc(m&&m.amount||'')}</td></tr>`).join('');
+    return `<div class="ps-mat-half"><table class="ps-table" style="width:100%;"><thead><tr><th style="width:50%">Materials record</th><th>Trace #</th><th>Amount used</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  };
   document.getElementById('print-sheet').innerHTML=`<div class="ps">
-    <div class="ps-header">
-      <div class="ps-logo">FIBRE Mechanics<span>Task Record Sheet</span></div>
-      <div class="ps-project"><div class="ps-project-label">Project</div><div class="ps-project-val">${esc(projectLine)}</div></div>
-      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">${esc(r.sheetNum||'—')}</div></div>
+    <div class="ps-top">
+      <div class="ps-logo" style="grid-row:1/3;"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Project No</div><div class="ps-hcell-val">${esc(r.projNo||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Project Name</div><div class="ps-hcell-val">${esc(r.projName||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Task sheet document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Task sheet revision</div><div class="ps-hcell-val">${esc(r.revision||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Task sheet issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
+      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sht</div><div class="ps-sheetnum-val">${esc(r.sheetOf||'')}</div></div>
     </div>
     <div class="ps-body">
-      <div class="ps-row-split">
-        <div class="ps-label">Operation</div><div class="ps-val" style="grid-column:2/5;font-weight:600;">${esc(r.operation||'—')}</div>
+      <div class="ps-row"><div class="ps-lbl">Cloudattend job</div><div class="ps-val" style="color:#c0392b;">${esc(r.caJob||'')}</div></div>
+      <div class="ps-row"><div class="ps-lbl">Cloudattend operation</div><div class="ps-val" style="color:#c0392b;">${esc(r.caOp||'')}</div></div>
+      <div class="ps-row"><div class="ps-lbl">Operation description</div><div class="ps-val" style="color:#c0392b;font-weight:600;">${esc(r.opDesc||'')}</div></div>
+      <div class="ps-row"><div class="ps-lbl">Reference drawings incl revision</div><div class="ps-val">${esc(r.drawings||'N/A')}</div></div>
+      <div class="ps-row"><div class="ps-lbl">Additional sheets</div><div class="ps-val">${esc(r.addSheets||'None')}</div></div>
+      <div class="ps-row-4">
+        <div class="ps-lbl">Cloudattend hours estimate (hrs)</div><div class="ps-val">${esc(r.hours||'')}</div>
+        <div class="ps-lbl2">Required finish date</div><div class="ps-val">${fmtDate(r.finishDate)}</div>
       </div>
-      <div class="ps-row-split">
-        <div class="ps-label">Task description</div><div class="ps-val" style="grid-column:2/5;font-weight:600;">${esc(r.taskDesc||'—')}</div>
+      <div class="ps-row-4">
+        <div class="ps-lbl">Task sheet author</div><div class="ps-val">${esc(r.author||'')}</div>
+        <div class="ps-lbl2">Task sheet approver</div><div class="ps-val">${esc(r.approver||'')}</div>
       </div>
-      <div class="ps-row-split">
-        <div class="ps-label">TaskMaster</div><div class="ps-val">${esc(r.taskMaster||'')}</div>
-        <div class="ps-label" style="border-left:1px solid #ccc;">Questions to</div><div class="ps-val">${esc(r.questionsTo||'')}</div>
+      <div class="ps-row-4">
+        <div class="ps-lbl">Relevant risk assessments</div><div class="ps-val">${esc(r.ra||'')}</div>
+        <div class="ps-lbl2">Relevant COSHH documents</div><div class="ps-val">${esc(r.coshh||'')}</div>
       </div>
-      <div class="ps-row-split">
-        <div class="ps-label">Drawings</div><div class="ps-val" style="grid-column:2/5;">${esc(r.drawings||'')}</div>
+      <div class="ps-row-4">
+        <div class="ps-lbl">Relevant SOPs</div><div class="ps-val">${esc(r.sop||'')}</div>
+        <div class="ps-lbl2">Task sheets to complete before starting</div><div class="ps-val">${esc(r.prereq||'')}</div>
       </div>
-      <div class="ps-row-split">
-        <div class="ps-label">Sketches</div><div class="ps-val">${esc(r.sketches||'')}</div>
-        <div class="ps-label" style="border-left:1px solid #ccc;">Cure programme</div><div class="ps-val">${esc(r.cure||'')}</div>
+      <div class="ps-row"><div class="ps-lbl">Required cure schedule</div><div class="ps-val">${esc(r.cure||'')}</div></div>
+      <div class="ps-briefing"><strong>IMPORTANT — Do not continue until you have signed the briefing log</strong><br>List all people working on the job and get them to sign back off this sheet after briefing</div>
+      <div class="ps-section-hdr">Special instructions</div>
+      <div class="ps-special">${esc(r.special||'')}</div>
+      <div class="ps-section-hdr">QA / sign-off points</div>
+      <table class="ps-table"><thead><tr><th style="width:40%">QA / sign-off point</th><th>NDT required</th><th>Stage</th><th>Date</th><th>Results</th></tr></thead><tbody>${qaRows}</tbody></table>
+      <div class="ps-section-hdr">Operation description</div>
+      <table class="ps-ops-table"><thead><tr><th style="width:55%">Operation description</th><th>Operator initials</th><th>QA check initials</th><th>Date</th></tr></thead><tbody>${opsRows}</tbody></table>
+      <div style="font-size:8pt;text-align:center;padding:4px;border-top:1px solid #ccc;color:#888;">See continuation sheet (delete this if not relevant)</div>
+      <div class="ps-weight-row">
+        <div class="ps-weight-cell"><div class="ps-weight-lbl">Target weight kg</div><div class="ps-weight-val">${esc(r.targetWt||'')}</div></div>
+        <div class="ps-weight-cell"><div class="ps-weight-lbl">Measured weight kg</div><div class="ps-weight-val">${esc(r.measuredWt||'')}</div></div>
       </div>
-      <div class="ps-row-split">
-        <div class="ps-label">Issued by</div><div class="ps-val">${esc(r.issuedBy||'')}${r.createdAt?'&nbsp;&nbsp;'+fmtDate(r.createdAt.split('T')[0]):''}</div>
-        <div class="ps-label" style="border-left:1px solid #ccc;">Planned finish</div><div class="ps-val">${fmtDate(r.plannedFinish)}</div>
+      <div class="ps-weight-row">
+        <div class="ps-weight-cell"><div class="ps-weight-lbl">Resin trace number</div><div class="ps-weight-val">${esc(r.resinTrace||'')}</div></div>
+        <div class="ps-weight-cell"><div class="ps-weight-lbl">Hardener trace number</div><div class="ps-weight-val">${esc(r.hardTrace||'')}</div></div>
       </div>
-      <div class="ps-row">
-        <div class="ps-label">Safety &amp; Risk assessment</div>
-        <div class="ps-val ps-ra">${esc(r.ra||'—')}</div>
-      </div>
-      <div class="ps-section-header">Notes and instructions</div>
-      ${notesRows}
-      <div class="ps-section-header">Materials record</div>
-      <div style="padding:8px;">
-        <table class="ps-mat-table">
-          <thead><tr><th style="width:28%">Material</th><th>Batch 1</th><th>Batch 2</th><th>Batch 3</th><th>Batch 4</th></tr></thead>
-          <tbody>${matRows}</tbody>
-        </table>
-      </div>
-      <div class="ps-section-header">Feedback, notes &amp; comments</div>
-      <div class="ps-feedback-box">${esc(r.feedback||'')}<br><br><br></div>
+      <div class="ps-mat-wrap">${matHalf(r.matLeft,'Left')}${matHalf(r.matRight,'Right')}</div>
+      <div class="ps-section-hdr">Feedback, notes and comments</div>
+      <div class="ps-feedback">${esc(r.feedback||'')}<br><br><br></div>
     </div>
     <div class="ps-signoff">
-      <div class="ps-signoff-cell">
-        <div style="font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">FIBRE Mechanics &nbsp;|&nbsp; Part No: ${esc(r.partNo||'')}</div>
-        <div class="ps-signoff-line"></div>
-        <div class="ps-signoff-label">Operator sign-off: ${esc(r.operatorName||'')}</div>
-        <div style="margin-top:12px;" class="ps-signoff-line"></div>
-        <div class="ps-signoff-label">Inspected by: ${esc(r.inspector||'')}</div>
+      <div class="ps-so-cell">
+        <div class="ps-so-line"></div>
+        <div class="ps-so-lbl">Overall sign-off by operator: ${esc(r.opName||'')}</div>
+        <div style="margin-top:6px;font-size:8pt;color:#555;">Date: ${r.opDate?fmtDate(r.opDate):''}</div>
       </div>
-      <div class="ps-signoff-cell">
-        <div style="font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Dates</div>
-        <div class="ps-signoff-line"></div>
-        <div class="ps-signoff-label">Date: ${r.operatorDate?fmtDate(r.operatorDate):''}</div>
-        <div style="margin-top:12px;" class="ps-signoff-line"></div>
-        <div class="ps-signoff-label">Date: ${r.inspectorDate?fmtDate(r.inspectorDate):''}</div>
+      <div class="ps-so-cell">
+        <div class="ps-so-line"></div>
+        <div class="ps-so-lbl">Overall sign-off by task leader: ${esc(r.tlName||'')}</div>
+        <div style="margin-top:6px;font-size:8pt;color:#555;">Date: ${r.tlDate?fmtDate(r.tlDate):''}</div>
       </div>
     </div>
   </div>`;
@@ -937,18 +895,21 @@ function printSheet(){
 
 /* ── Export ── */
 function sheetToText(r){
-  const ref=[r.projectCode,r.projectNum,r.sheetNum].filter(Boolean).join(' / ');
-  const L=['========================================',`FIBRE Mechanics — Task Record Sheet`,`Sheet: ${ref||'—'}`,'========================================',
-    `Project:        ${r.projectName||'—'}`,`Operation:      ${r.operation||'—'}`,`Task:           ${r.taskDesc||'—'}`,
-    `TaskMaster:     ${r.taskMaster||'—'}`,`Questions to:   ${r.questionsTo||'—'}`,`Drawings:       ${r.drawings||'—'}`,
-    `Sketches:       ${r.sketches||'—'}`,`Cure programme: ${r.cure||'—'}`,`Issued by:      ${r.issuedBy||'—'}`,
-    `Planned finish: ${fmtDate(r.plannedFinish)}`,`Status:         ${r.status}`,`Risk assessments: ${r.ra||'—'}`,
-    `Added by:       ${r.createdByName||r.createdBy||'—'}`,'','--- Notes and instructions ---'];
-  if(r.notes&&r.notes.length) r.notes.forEach((n,i)=>L.push(`  ${i+1}. ${n}`)); else L.push('  None');
-  L.push('','--- Materials record ---');
-  if(r.materials&&r.materials.length){ L.push('  Material       | Batch 1 | Batch 2 | Batch 3 | Batch 4'); r.materials.forEach(m=>L.push(`  ${(m.material||'').padEnd(14)} | ${(m.b1||'').padEnd(7)} | ${(m.b2||'').padEnd(7)} | ${(m.b3||'').padEnd(7)} | ${m.b4||''}`)); } else L.push('  None');
+  const L=['========================================','FIBRE Mechanics — Task Record Sheet',`Doc: ${r.docNum||'—'}  Rev: ${r.revision||'—'}  Issued: ${fmtDate(r.issueDate)}`,'========================================',
+    `Project:     ${r.projNo||''} ${r.projName||''}`,`Operation:   ${r.opDesc||'—'}`,`CA Job:      ${r.caJob||'—'}`,`CA Op:       ${r.caOp||'—'}`,
+    `Drawings:    ${r.drawings||'—'}`,`Hours est:   ${r.hours||'—'}`,`Finish:      ${fmtDate(r.finishDate)}`,
+    `Author:      ${r.author||'—'}`,`Approver:    ${r.approver||'—'}`,`RA:          ${r.ra||'—'}`,
+    `COSHH:       ${r.coshh||'—'}`,`SOPs:        ${r.sop||'—'}`,`Prerequisites: ${r.prereq||'—'}`,`Cure:        ${r.cure||'—'}`,
+    '',`Special instructions: ${r.special||'—'}`,'','--- QA / Sign-off points ---'];
+  if(r.qa&&r.qa.some(q=>q.point)) r.qa.filter(q=>q.point).forEach(q=>L.push(`  ${q.point} | NDT: ${q.ndt||'—'} | Stage: ${q.stage||'—'} | Results: ${q.results||'—'}`)); else L.push('  None');
+  L.push('','--- Operation steps ---');
+  if(r.ops&&r.ops.length) r.ops.forEach((o,i)=>L.push(`  ${i+1}. ${o.desc} [Op: ${o.opInit||'—'} QA: ${o.qaInit||'—'} Date: ${o.date||'—'}]`)); else L.push('  None');
+  L.push('','--- Weight & trace ---',`  Target: ${r.targetWt||'—'} kg  Measured: ${r.measuredWt||'—'} kg`,`  Resin trace: ${r.resinTrace||'—'}  Hardener trace: ${r.hardTrace||'—'}`);
+  L.push('','--- Materials ---');
+  if(r.matLeft&&r.matLeft.length) r.matLeft.forEach(m=>L.push(`  [L] ${m.material} | Trace: ${m.trace||'—'} | Qty: ${m.amount||'—'}`));
+  if(r.matRight&&r.matRight.length) r.matRight.forEach(m=>L.push(`  [R] ${m.material} | Trace: ${m.trace||'—'} | Qty: ${m.amount||'—'}`));
   if(r.feedback) L.push('','--- Feedback ---','  '+r.feedback);
-  L.push('','--- Sign-off ---',`  Operator:  ${r.operatorName||'—'}  ${fmtDate(r.operatorDate)}`,`  Inspector: ${r.inspector||'—'}  ${fmtDate(r.inspectorDate)}`,`  Part No:   ${r.partNo||'—'}`,'');
+  L.push('','--- Sign-off ---',`  Operator: ${r.opName||'—'}  ${r.opDate?fmtDate(r.opDate):''}`,`  Task leader: ${r.tlName||'—'}  ${r.tlDate?fmtDate(r.tlDate):''}`,'' );
   return L.join('\n');
 }
 
@@ -957,21 +918,10 @@ function renderExport(){
   if(!records.length){ body.innerHTML='<div class="empty"><div class="empty-icon">📤</div><div class="empty-title">No records to export</div></div>'; return; }
   const uid='ex_'+Math.random().toString(36).slice(2);
   const allText=records.map(sheetToText).join('\n');
-  const rows=records.map(r=>{
-    const ref=[r.projectCode,r.projectNum,r.sheetNum].filter(Boolean).join('/')||'—';
-    return `<tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-weight:500;">${esc(ref)}</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">${esc(r.operation)||'—'}</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">${fmtDate(r.plannedFinish)}</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">${statusBadge(r.status)}</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;"><button class="link-btn" onclick="copySingle('${r.id}')">Copy</button></td></tr>`;
-  }).join('');
-  body.innerHTML=`<div class="proj-group">
-    <div class="proj-group-hdr">
-      <div><div class="proj-group-name">${esc(currentProject.code||'')} — ${esc(currentProject.name||'')}</div><div class="proj-group-meta">${records.length} sheet${records.length!==1?'s':''}</div></div>
-      <button class="btn btn-primary" onclick="copyTA('${uid}')">Copy all sheets</button>
-    </div>
-    <table class="rec-table" style="margin:0;"><thead><tr><th>Sheet</th><th>Operation</th><th>Finish</th><th>Status</th><th></th></tr></thead><tbody>${rows}</tbody></table>
-    <div class="copy-area"><label>Plain-text export — or use the button above:</label><textarea id="${uid}" readonly></textarea></div>
-  </div>`;
+  const rows=records.map(r=>`<tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-weight:500;">${esc(r.docNum||'—')}</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">${esc(r.opDesc||'—')}</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">${fmtDate(r.finishDate)}</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">${statusBadge(r.status)}</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;"><button class="link-btn" onclick="copySingle('${r.id}')">Copy</button></td></tr>`).join('');
+  body.innerHTML=`<div class="proj-group"><div class="proj-group-hdr"><div><div class="proj-group-name">${esc(currentProject.code||'')} — ${esc(currentProject.name||'')}</div><div class="proj-group-meta">${records.length} sheet${records.length!==1?'s':''}</div></div><button class="btn btn-primary" onclick="copyTA('${uid}')">Copy all sheets</button></div><table class="rec-table" style="margin:0;"><thead><tr><th>Doc number</th><th>Operation</th><th>Finish</th><th>Status</th><th></th></tr></thead><tbody>${rows}</tbody></table><div class="copy-area"><label>Plain-text export:</label><textarea id="${uid}" readonly></textarea></div></div>`;
   document.getElementById(uid).value=allText;
 }
-
 function copyTA(uid){ const ta=document.getElementById(uid); ta.select(); document.execCommand('copy'); toast('Copied to clipboard'); }
 function copySingle(id){ const r=records.find(x=>x.id==id); if(!r) return; const t=sheetToText(r); navigator.clipboard?navigator.clipboard.writeText(t).then(()=>toast('Sheet copied')):fallbackCopy(t); }
 function fallbackCopy(t){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); toast('Sheet copied'); }
@@ -979,7 +929,7 @@ function fallbackCopy(t){ const ta=document.createElement('textarea'); ta.value=
 /* ── UI helpers ── */
 function show(id){ ['screen-auth','screen-picker','screen-project'].forEach(s=>document.getElementById(s).style.display=s===id?'':'none'); }
 function openModal(id){ document.getElementById(id).classList.add('open'); }
-function closeModal(id){ document.getElementById(id).classList.remove('open'); ['np-code','np-num','np-name','np-desc'].forEach(f=>{ const el=document.getElementById(f); if(el) el.value=''; }); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
 
 ['modal-new-proj','modal-detail'].forEach(id=>{ document.getElementById(id).addEventListener('click',function(e){ if(e.target===this) closeModal(id); }); });
