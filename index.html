@@ -6,11 +6,11 @@
 <title>FIBRE Mechanics — Task Record Database</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f4f4f0;min-height:100vh;}
+body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f5f5f5;min-height:100vh;}
 .app{max-width:1020px;margin:0 auto;padding:16px;}
 
 /* Header */
-.header{background:#4a5e2a;color:#fff;padding:14px 22px;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.header{background:#f07020;color:#fff;padding:14px 22px;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
 .header-title{font-size:19px;font-weight:600;letter-spacing:-.3px;}
 .header-sub{font-size:12px;opacity:.7;margin-top:2px;}
 .header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
@@ -18,7 +18,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .user-avatar{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;}
 .user-name{font-size:12px;}
 .sync-wrap{display:none;align-items:center;gap:5px;font-size:11px;opacity:.8;}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:#8bc34a;flex-shrink:0;}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#f07020;flex-shrink:0;}
 .sync-dot.syncing{background:#ffc107;animation:blink 1s infinite;}
 .sync-dot.error{background:#ef5350;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
@@ -30,11 +30,11 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 
 /* Auth */
 .screen{padding:60px 40px;text-align:center;}
-.screen-icon{width:60px;height:60px;background:#4a5e2a;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:26px;color:#fff;}
+.screen-icon{width:60px;height:60px;background:#f07020;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:26px;color:#fff;}
 .screen-title{font-size:21px;font-weight:600;margin-bottom:8px;}
 .screen-sub{font-size:13px;color:#666;max-width:400px;margin:0 auto 26px;line-height:1.6;}
-.g-btn{display:inline-flex;align-items:center;gap:10px;background:#4a5e2a;color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:14px;font-family:inherit;cursor:pointer;font-weight:500;}
-.g-btn:hover{background:#3a4e1e;}
+.g-btn{display:inline-flex;align-items:center;gap:10px;background:#f07020;color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:14px;font-family:inherit;cursor:pointer;font-weight:500;}
+.g-btn:hover{background:#c85810;}
 .g-btn svg{width:18px;height:18px;flex-shrink:0;}
 .auth-note{font-size:12px;color:#999;margin-top:14px;}
 
@@ -43,16 +43,16 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .picker-header h2{font-size:16px;font-weight:600;}
 .picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;padding:16px 22px 22px;}
 .proj-card{border:1px solid #e0e0e0;border-radius:8px;padding:16px;cursor:pointer;background:#fff;text-align:left;}
-.proj-card:hover{border-color:#4a5e2a;background:#f9fdf5;}
-.proj-card-code{font-size:18px;font-weight:700;color:#4a5e2a;line-height:1;}
+.proj-card:hover{border-color:#f07020;background:#fff8f3;}
+.proj-card-code{font-size:18px;font-weight:700;color:#f07020;line-height:1;}
 .proj-card-name{font-size:12px;color:#666;margin-top:3px;margin-bottom:10px;line-height:1.4;}
 .proj-card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .proj-card-count{font-size:12px;font-weight:500;color:#333;}
 .proj-card-date{font-size:11px;color:#aaa;}
-.new-proj-card{border:1px dashed #c0d0a0;border-radius:8px;padding:16px;cursor:pointer;background:#fafdf5;display:flex;align-items:center;gap:10px;color:#4a5e2a;font-size:13px;font-weight:500;}
-.new-proj-card:hover{background:#f2f8e8;border-color:#4a5e2a;}
+.new-proj-card{border:1px dashed #f0b080;border-radius:8px;padding:16px;cursor:pointer;background:#fff8f3;display:flex;align-items:center;gap:10px;color:#f07020;font-size:13px;font-weight:500;}
+.new-proj-card:hover{background:#fff0e8;border-color:#f07020;}
 .proj-loading{padding:40px;text-align:center;color:#888;font-size:13px;}
-.spinner{width:26px;height:26px;border:2px solid #e0e0e0;border-top-color:#4a5e2a;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px;}
+.spinner{width:26px;height:26px;border:2px solid #e0e0e0;border-top-color:#f07020;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
 /* Modals */
@@ -72,12 +72,12 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 /* Tabs */
 .tabs{display:flex;border-bottom:1px solid #e0e0e0;background:#fafafa;}
 .tab{padding:10px 18px;cursor:pointer;font-size:13px;color:#666;border-bottom:2px solid transparent;user-select:none;white-space:nowrap;}
-.tab.active{color:#4a5e2a;border-bottom-color:#4a5e2a;font-weight:500;}
+.tab.active{color:#f07020;border-bottom-color:#f07020;font-weight:500;}
 .tab:hover:not(.active){background:#f0f0f0;}
 
 /* Form */
 .section{padding:18px 22px;}
-.sh{font-size:11px;font-weight:600;color:#4a5e2a;text-transform:uppercase;letter-spacing:.07em;margin:18px 0 9px;border-bottom:1px solid #e8f0de;padding-bottom:5px;}
+.sh{font-size:11px;font-weight:600;color:#f07020;text-transform:uppercase;letter-spacing:.07em;margin:18px 0 9px;border-bottom:1px solid #f0c8a0;padding-bottom:5px;}
 .sh:first-child{margin-top:0;}
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
 .fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;}
@@ -85,15 +85,15 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .full{grid-column:1/-1;}
 .field label{display:block;font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
 .field input,.field select,.field textarea{width:100%;padding:7px 10px;border:1px solid #d0d0d0;border-radius:6px;font-size:13px;font-family:inherit;background:#fff;color:#1a1a1a;}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#4a5e2a;box-shadow:0 0 0 2px #e8f0de;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#f07020;box-shadow:0 0 0 2px #ffe8d5;}
 .field textarea{resize:vertical;min-height:60px;}
 
 /* Inline editable tables */
 .itable{width:100%;border-collapse:collapse;font-size:13px;}
-.itable th{background:#4a5e2a;color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:6px 8px;text-align:left;border:1px solid #3a4e1e;}
+.itable th{background:#f07020;color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:6px 8px;text-align:left;border:1px solid #333;}
 .itable td{border:1px solid #d8d8d8;padding:0;vertical-align:middle;}
 .itable td input,.itable td textarea{border:none;width:100%;padding:6px 8px;font-size:12px;font-family:inherit;background:transparent;resize:none;}
-.itable td input:focus,.itable td textarea:focus{outline:none;background:#f8fff0;}
+.itable td input:focus,.itable td textarea:focus{outline:none;background:#fff5ee;}
 .itable .shaded{background:#e8edf8;}
 .itable .shaded input{background:#e8edf8;}
 .itable .shaded input:focus{background:#dce4f5;}
@@ -102,32 +102,32 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .btn-row{display:flex;gap:8px;justify-content:flex-end;padding:13px 22px;border-top:1px solid #eee;background:#fafafa;border-radius:0 0 10px 10px;}
 .btn{padding:7px 15px;border-radius:6px;font-size:13px;font-family:inherit;cursor:pointer;border:1px solid #ccc;background:#fff;color:#333;}
 .btn:hover{background:#f5f5f5;}
-.btn-primary{background:#4a5e2a;color:#fff;border-color:#4a5e2a;}
-.btn-primary:hover{background:#3a4e1e;}
+.btn-primary{background:#f07020;color:#fff;border-color:#f07020;}
+.btn-primary:hover{background:#c85810;}
 .btn-danger{color:#c0392b;border-color:#e8a0a0;}
 .btn-danger:hover{background:#fff5f5;}
 .btn:disabled{opacity:.45;cursor:not-allowed;}
-.link-btn{background:none;border:none;cursor:pointer;font-size:12px;color:#4a5e2a;font-family:inherit;text-decoration:underline;padding:2px 0;}
+.link-btn{background:none;border:none;cursor:pointer;font-size:12px;color:#f07020;font-family:inherit;text-decoration:underline;padding:2px 0;}
 
 /* Stats */
 .stat-bar{display:flex;border-bottom:1px solid #eee;background:#fafafa;}
 .stat{flex:1;padding:11px 14px;text-align:center;border-right:1px solid #eee;}
 .stat:last-child{border-right:none;}
-.stat-num{font-size:18px;font-weight:600;color:#4a5e2a;}
+.stat-num{font-size:18px;font-weight:600;color:#f07020;}
 .stat-label{font-size:11px;color:#888;margin-top:1px;}
 
 /* Search */
 .search-bar{display:flex;gap:8px;padding:11px 22px;border-bottom:1px solid #eee;flex-wrap:wrap;}
 .search-bar input,.search-bar select{padding:6px 10px;border:1px solid #d0d0d0;border-radius:6px;font-size:13px;font-family:inherit;background:#fff;}
 .search-bar input{flex:1;min-width:160px;}
-.search-bar input:focus,.search-bar select:focus{outline:none;border-color:#4a5e2a;}
+.search-bar input:focus,.search-bar select:focus{outline:none;border-color:#f07020;}
 
 /* Records table */
 .rec-table{width:100%;border-collapse:collapse;font-size:13px;}
 .rec-table th{background:#f7f7f5;color:#666;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:8px 13px;text-align:left;border-bottom:1px solid #e0e0e0;white-space:nowrap;}
 .rec-table td{padding:9px 13px;border-bottom:1px solid #f0f0f0;vertical-align:top;}
 .rec-table tr:last-child td{border-bottom:none;}
-.rec-table tr:hover td{background:#f9fdf5;}
+.rec-table tr:hover td{background:#fff8f3;}
 .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;}
 .badge-open{background:#e8f5e2;color:#2e6b1a;}
 .badge-prov{background:#fff3e0;color:#8a5400;}
@@ -135,8 +135,8 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 
 /* Export */
 .proj-group{border:1px solid #e0e0e0;border-radius:8px;margin-bottom:14px;overflow:hidden;}
-.proj-group-hdr{background:#f2f6eb;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dde8cc;gap:10px;flex-wrap:wrap;}
-.proj-group-name{font-weight:600;color:#4a5e2a;font-size:14px;}
+.proj-group-hdr{background:#fef0e8;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0c8a0;gap:10px;flex-wrap:wrap;}
+.proj-group-name{font-weight:600;color:#c85810;font-size:14px;}
 .proj-group-meta{font-size:12px;color:#777;}
 .copy-area{padding:11px 16px;border-top:1px solid #eee;background:#fafafa;}
 .copy-area label{font-size:12px;color:#666;font-weight:500;display:block;margin-bottom:5px;}
@@ -146,7 +146,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .dr{display:grid;grid-template-columns:160px 1fr;gap:4px;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:13px;}
 .dr:last-child{border:none;}
 .dk{color:#777;font-weight:500;}
-.sub-h{margin:11px 0 5px;font-size:11px;font-weight:600;color:#4a5e2a;text-transform:uppercase;letter-spacing:.05em;}
+.sub-h{margin:11px 0 5px;font-size:11px;font-weight:600;color:#f07020;text-transform:uppercase;letter-spacing:.05em;}
 
 /* Empty */
 .empty{text-align:center;padding:44px 20px;color:#aaa;}
@@ -163,54 +163,70 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 /* ── PRINT STYLES ── */
 #print-sheet{display:none;}
 @media print{
-  body>.app,#modal-new-proj,#modal-detail,.toast{display:none!important;}
-  #print-sheet{display:block!important;}
+  @page{size:A4 portrait;margin:8mm 10mm 8mm 10mm;}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
+  body,html{margin:0;padding:0;background:#fff!important;}
+  body>.app,#modal-new-proj,#modal-detail,#modal-issue,#modal-return,.toast{display:none!important;}
+  #print-sheet{display:block!important;width:100%;margin:0;padding:0;}
 }
-.ps{font-family:Arial,sans-serif;font-size:9pt;color:#000;}
-.ps-top{display:grid;grid-template-columns:180px 80px 90px 130px 80px 110px 60px;border:1.5px solid #000;border-bottom:none;}
-.ps-logo{background:#5a6e3a;color:#fff;padding:6px 10px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;}
-.ps-logo-main{font-size:13pt;font-weight:700;line-height:1.1;}
-.ps-logo-sub{font-size:8pt;margin-top:3px;}
-.ps-hcell{border-left:1px solid #000;padding:3px 6px;}
-.ps-hcell-label{font-size:7pt;color:#555;text-transform:uppercase;}
-.ps-hcell-val{font-size:11pt;font-weight:700;color:#c0392b;margin-top:1px;}
-.ps-hcell-val-sm{font-size:9pt;font-weight:700;margin-top:1px;}
-.ps-sheetnum{background:#f5f5dc;border-left:1px solid #000;padding:3px 6px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
-.ps-sheetnum-label{font-size:7pt;color:#555;}
-.ps-sheetnum-val{font-size:16pt;font-weight:700;line-height:1;}
+.ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
+.ps-top{display:grid;grid-template-columns:170px 75px 85px 125px 75px 105px 55px;border:1.5px solid #000;border-bottom:none;}
+.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;}
+.ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
+.ps-logo-sub{font-size:7.5pt;margin-top:3px;}
+.ps-hcell{border-left:1px solid #000;padding:3px 5px;}
+.ps-hcell-label{font-size:6.5pt;color:#444;text-transform:uppercase;}
+.ps-hcell-val{font-size:10pt;font-weight:700;color:#000;margin-top:1px;}
+.ps-hcell-val-sm{font-size:8.5pt;font-weight:700;color:#000;margin-top:1px;}
+.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.ps-sheetnum-label{font-size:6.5pt;color:#444;}
+.ps-sheetnum-val{font-size:15pt;font-weight:700;line-height:1;color:#000;}
 .ps-body{border:1.5px solid #000;border-top:none;}
-.ps-row{display:grid;grid-template-columns:160px 1fr;border-top:1px solid #ccc;}
-.ps-row-split{display:grid;grid-template-columns:160px 1fr 130px 1fr;border-top:1px solid #ccc;}
-.ps-row-4{display:grid;grid-template-columns:160px 1fr 130px 1fr;border-top:1px solid #ccc;}
-.ps-lbl{background:#4a5e2a;color:#fff;padding:4px 7px;font-size:8pt;font-weight:700;border-right:1px solid #3a4e1e;}
-.ps-val{padding:4px 7px;font-size:9pt;}
-.ps-lbl2{background:#4a5e2a;color:#fff;padding:4px 7px;font-size:8pt;font-weight:700;border-left:1px solid #3a4e1e;border-right:1px solid #3a4e1e;}
-.ps-briefing{background:#f9f9f9;border-top:1px solid #000;padding:7px;text-align:center;font-size:9pt;}
-.ps-briefing strong{font-size:10pt;}
-.ps-section-hdr{background:#4a5e2a;color:#fff;padding:4px 8px;font-size:8pt;font-weight:700;border-top:1px solid #000;}
-.ps-special{min-height:50px;padding:6px 8px;font-size:9pt;border-top:1px solid #ccc;color:#c0392b;font-style:italic;}
-.ps-table{width:100%;border-collapse:collapse;font-size:8.5pt;}
-.ps-table th{background:#4a5e2a;color:#fff;padding:4px 7px;text-align:left;border:1px solid #3a4e1e;font-size:7.5pt;}
-.ps-table td{padding:4px 7px;border:1px solid #ccc;min-height:18px;}
-.ps-table .sh{background:#e8edf8;}
-.ps-ops-table{width:100%;border-collapse:collapse;font-size:8.5pt;}
-.ps-ops-table th{background:#4a5e2a;color:#fff;padding:4px 7px;text-align:left;border:1px solid #3a4e1e;font-size:7.5pt;}
-.ps-ops-table td{padding:4px 7px;border:1px solid #ccc;min-height:20px;}
-.ps-ops-table .sh{background:#e8edf8;width:60px;}
-.ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #ccc;}
-.ps-weight-cell{padding:5px 8px;border-right:1px solid #ccc;}
+.ps-row{display:grid;grid-template-columns:155px 1fr;border-top:1px solid #999;}
+.ps-row-split{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;}
+.ps-row-4{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;}
+.ps-lbl{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-right:1px solid #444;}
+.ps-val{padding:3px 6px;font-size:8.5pt;color:#000;}
+.ps-lbl2{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-left:1px solid #444;border-right:1px solid #444;}
+.ps-briefing{background:#eee!important;border-top:1.5px solid #000;border-bottom:1.5px solid #000;padding:5px;text-align:center;font-size:8.5pt;}
+.ps-briefing strong{font-size:9pt;}
+.ps-section-hdr{background:#555!important;color:#fff!important;padding:3px 7px;font-size:7.5pt;font-weight:700;border-top:1px solid #000;}
+.ps-special{min-height:28px;padding:4px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;font-style:italic;}
+.ps-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
+.ps-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
+.ps-table td{padding:3px 6px;border:1px solid #999;min-height:14px;color:#000;}
+.ps-table .sh{background:#ddd!important;}
+.ps-ops-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
+.ps-ops-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
+.ps-ops-table td{padding:3px 6px;border:1px solid #999;min-height:16px;color:#000;}
+.ps-ops-table .sh{background:#ddd!important;}
+.ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
+.ps-weight-cell{padding:4px 7px;border-right:1px solid #999;}
 .ps-weight-cell:last-child{border-right:none;}
-.ps-weight-lbl{font-size:8pt;font-weight:700;color:#4a5e2a;}
-.ps-weight-val{font-size:9pt;min-height:16px;}
-.ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #ccc;}
-.ps-mat-half{padding:6px 8px;}
-.ps-mat-half:first-child{border-right:1px solid #ccc;}
-.ps-feedback{min-height:60px;padding:6px 8px;font-size:9pt;border-top:1px solid #ccc;}
+.ps-weight-lbl{font-size:7.5pt;font-weight:700;color:#000;}
+.ps-weight-val{font-size:8.5pt;min-height:14px;color:#000;}
+.ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
+.ps-mat-half{padding:5px 7px;}
+.ps-mat-half:first-child{border-right:1px solid #999;}
+.ps-feedback{min-height:40px;padding:5px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;}
 .ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid #000;}
-.ps-so-cell{padding:10px 12px;border-right:1px solid #ccc;}
+.ps-so-cell{padding:8px 10px;border-right:1px solid #999;}
 .ps-so-cell:last-child{border-right:none;}
-.ps-so-line{border-bottom:1px solid #000;margin:16px 0 3px;}
-.ps-so-lbl{font-size:8pt;color:#555;}
+.ps-so-line{border-bottom:1px solid #000;margin:14px 0 3px;}
+.ps-so-lbl{font-size:7.5pt;color:#333;}
+/* ── Issue control ── */
+.issue-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap;}
+.issue-draft{background:#f0f0f0;color:#666;}
+.issue-issued{background:#fff3cd;color:#856404;}
+.issue-overdue{background:#ffe0e0;color:#a00;}
+.issue-returned{background:#e8f5e2;color:#2e6b1a;}
+.issue-superseded{background:#e8e8e8;color:#888;}
+.issue-log-row{background:#fafdf5;border-top:1px dashed #d0e0c0;}
+.issue-log-row td{padding:8px 13px;font-size:12px;}
+.issue-history-item{padding:5px 0;border-bottom:1px solid #f0f0f0;font-size:12px;display:grid;grid-template-columns:80px 140px 120px 1fr;gap:6px;align-items:center;}
+.issue-history-item:last-child{border-bottom:none;}
+.overdue-flag{color:#a00;font-size:11px;font-weight:600;}
+
 </style>
 </head>
 <body>
@@ -257,6 +273,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
       <div class="tab active" id="tab-new" onclick="switchTab('new')">+ New task sheet</div>
       <div class="tab" id="tab-records" onclick="switchTab('records')">&#9776; Records</div>
       <div class="tab" id="tab-export" onclick="switchTab('export')">&#8681; Export</div>
+      <div class="tab" id="tab-issues" onclick="switchTab('issues')">&#128196; Issue log</div>
     </div>
 
     <!-- ══ FORM ══ -->
@@ -267,7 +284,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
         <div class="fg4">
           <div class="field"><label>Project No</label><input id="f-projno" type="text" placeholder="177"></div>
           <div class="field"><label>Project Name</label><input id="f-projname" type="text" placeholder="MM62"></div>
-          <div class="field"><label>Task sheet document number <button id="docnum-override-btn" onclick="toggleDocNumOverride()" style="background:none;border:none;cursor:pointer;font-size:10px;color:#4a5e2a;text-decoration:underline;font-family:inherit;font-weight:400;letter-spacing:0;text-transform:none;margin-left:6px;">override</button></label><input id="f-docnum" type="text" placeholder="Auto-generated" readonly style="background:#f5f5f5;color:#555;cursor:default;"></div>
+          <div class="field"><label>Task sheet document number <button id="docnum-override-btn" onclick="toggleDocNumOverride()" style="background:none;border:none;cursor:pointer;font-size:10px;color:#f07020;text-decoration:underline;font-family:inherit;font-weight:400;letter-spacing:0;text-transform:none;margin-left:6px;">override</button></label><input id="f-docnum" type="text" placeholder="Auto-generated" readonly style="background:#f5f5f5;color:#555;cursor:default;"></div>
           <div class="field"><label>Task sheet revision</label><input id="f-revision" type="text" placeholder="A"></div>
         </div>
         <div class="fg3" style="margin-top:11px;">
@@ -415,9 +432,31 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
       <div id="rec-loading" style="display:none;" class="empty"><div class="spinner"></div></div>
       <div style="overflow-x:auto;">
         <table class="rec-table"><thead><tr>
-          <th>Doc number</th><th>Project</th><th>Operation</th><th>Author</th><th>Finish</th><th>Status</th><th></th>
+          <th>Doc number</th><th>Operation</th><th>Author</th><th>Finish</th><th>Doc status</th><th>Issue status</th><th></th>
         </tr></thead><tbody id="rec-body"></tbody></table>
         <div class="empty" id="rec-empty" style="display:none;"><div class="empty-icon">&#x1F4CB;</div><div class="empty-title">No records yet</div></div>
+      </div>
+    </div>
+
+
+    <!-- ISSUE LOG -->
+    <div id="pane-issues" style="display:none;">
+      <div style="padding:14px 22px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div style="font-size:15px;font-weight:600;">Issue log</div>
+          <div style="font-size:12px;color:#888;margin-top:2px;">All issued task sheets — who has them and their current status</div>
+        </div>
+        <button class="btn" onclick="renderIssueLog()">&#8635; Refresh</button>
+      </div>
+      <div style="display:flex;gap:10px;padding:10px 22px;flex-wrap:wrap;" id="issue-stats"></div>
+      <div style="overflow-x:auto;padding:0 22px 22px;">
+        <table class="rec-table" id="issue-log-table" style="margin-top:10px;">
+          <thead><tr>
+            <th>Doc number</th><th>Operation</th><th>Issue #</th><th>Issued to</th><th>Issued date</th><th>Due back</th><th>Returned</th><th>Status</th><th></th>
+          </tr></thead>
+          <tbody id="issue-log-body"></tbody>
+        </table>
+        <div class="empty" id="issue-log-empty" style="display:none;"><div class="empty-icon">&#128196;</div><div class="empty-title">No sheets have been issued yet</div><p style="font-size:13px;">Use the Issue button on any task sheet record to issue it to a team member.</p></div>
       </div>
     </div>
 
@@ -427,6 +466,48 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
         <p style="font-size:13px;color:#666;margin-bottom:14px;">Plain-text export of all task sheets in this project.</p>
         <div id="export-body"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ISSUE MODAL -->
+<div class="modal-bg" id="modal-issue">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-head"><h3 id="issue-modal-title">Issue task sheet</h3><button class="modal-close" onclick="closeModal('modal-issue')">&times;</button></div>
+    <div class="modal-body">
+      <div style="background:#fff8e1;border:1px solid #ffc107;border-radius:6px;padding:9px 12px;font-size:13px;color:#7a5800;margin-bottom:14px;">
+        Issuing this sheet creates a formal record of who is responsible for it. They will receive an email notification.
+      </div>
+      <div class="fg" style="gap:11px;">
+        <div class="field full"><label>Issue to (name)</label><input id="issue-to-name" type="text" placeholder="e.g. Glynn Morgan" autofocus></div>
+        <div class="field full"><label>Issue to (email) — for notification</label><input id="issue-to-email" type="email" placeholder="glynn@fibremechanics.com"></div>
+        <div class="field"><label>Issue date</label><input id="issue-date" type="date"></div>
+        <div class="field"><label>Expected return date</label><input id="issue-due-date" type="date"></div>
+        <div class="field full"><label>Notes</label><input id="issue-notes" type="text" placeholder="Any specific instructions…"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modal-issue')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmIssue()">&#128196; Issue sheet</button>
+    </div>
+  </div>
+</div>
+
+<!-- RETURN MODAL -->
+<div class="modal-bg" id="modal-return">
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-head"><h3>Return task sheet</h3><button class="modal-close" onclick="closeModal('modal-return')">&times;</button></div>
+    <div class="modal-body">
+      <div class="fg" style="gap:11px;">
+        <div class="field"><label>Date returned</label><input id="return-date" type="date"></div>
+        <div class="field full"><label>Returned by</label><input id="return-by" type="text" placeholder="Name"></div>
+        <div class="field full"><label>Notes</label><input id="return-notes" type="text" placeholder="Any comments on return…"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modal-return')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmReturn()">&#10003; Mark as returned</button>
     </div>
   </div>
 </div>
@@ -458,6 +539,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="modal-foot">
       <button class="btn btn-danger" onclick="deleteSheet()">Delete</button>
       <button class="btn" onclick="printSheet()">&#x1F5A8; Print</button>
+      <button class="btn" onclick="duplicateSheetFromModal()">&#x2398; Duplicate</button>
       <button class="btn btn-primary" onclick="editSheetFromModal()">&#9998; Edit</button>
       <button class="btn" onclick="closeModal('modal-detail')">Close</button>
     </div>
@@ -696,10 +778,10 @@ function editSheet(id){
   const fillMat=(bodyId,data)=>{ const b=document.getElementById(bodyId); b.innerHTML=''; (data&&data.length?data:[{},{},{},{},{}]).forEach(m=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td><input type="text" value="${esc(m.material||'')}"></td><td><input type="text" value="${esc(m.trace||'')}"></td><td><input type="text" value="${esc(m.amount||'')}"></td>`; b.appendChild(tr); }); };
   fillMat('mat-left-body',r.matLeft); fillMat('mat-right-body',r.matRight);
   // Edit mode UI
-  const btn=document.getElementById('save-btn'); btn.textContent='✓ Update task sheet'; btn.style.background='#1a5e8a'; btn.style.borderColor='#1a5e8a';
+  const btn=document.getElementById('save-btn'); btn.textContent='✓ Update task sheet'; btn.style.background='#c85810'; btn.style.borderColor='#c85810';
   let banner=document.getElementById('edit-banner');
-  if(!banner){ banner=document.createElement('div'); banner.id='edit-banner'; banner.style.cssText='background:#e3f0ff;border:1px solid #90c0e8;border-radius:6px;padding:9px 14px;font-size:13px;color:#1a4d8a;margin:10px 22px;display:flex;align-items:center;justify-content:space-between;'; document.getElementById('pane-new').querySelector('.section').prepend(banner); }
-  banner.innerHTML=`<span>&#9998; Editing: ${esc(r.docNum||r.id)} — ${esc(r.opDesc||'')}</span><button onclick="cancelEdit()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#1a4d8a;text-decoration:underline;font-family:inherit;">Cancel</button>`;
+  if(!banner){ banner=document.createElement('div'); banner.id='edit-banner'; banner.style.cssText='background:#fff3e8;border:1px solid #f0b070;border-radius:6px;padding:9px 14px;font-size:13px;color:#c85810;margin:10px 22px;display:flex;align-items:center;justify-content:space-between;'; document.getElementById('pane-new').querySelector('.section').prepend(banner); }
+  banner.innerHTML=`<span>&#9998; Editing: ${esc(r.docNum||r.id)} — ${esc(r.opDesc||'')}</span><button onclick="cancelEdit()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#c85810;text-decoration:underline;font-family:inherit;">Cancel</button>`;
   banner.style.display='flex';
   switchTab('new'); window.scrollTo(0,0);
 }
@@ -729,10 +811,163 @@ function clearForm(){
 }
 
 /* ── Records ── */
-function switchTab(t){ ['new','records','export'].forEach(n=>{ document.getElementById('pane-'+n).style.display=n===t?'':'none'; document.getElementById('tab-'+n).classList.toggle('active',n===t); }); if(t==='records') renderRecords(); if(t==='export') renderExport(); }
+function switchTab(t){ ['new','records','export','issues'].forEach(n=>{ document.getElementById('pane-'+n).style.display=n===t?'':'none'; document.getElementById('tab-'+n).classList.toggle('active',n===t); }); if(t==='records') renderRecords(); if(t==='export') renderExport(); if(t==='issues') renderIssueLog(); }
 function fmtDate(d){ if(!d) return '—'; try{ return new Date(d+'T12:00:00').toLocaleDateString('en-GB'); }catch(e){ return d; } }
 function statusBadge(s){ const m={open:'badge-open',provisional:'badge-prov',complete:'badge-done'}; return `<span class="badge ${m[s]||'badge-open'}">${s.charAt(0).toUpperCase()+s.slice(1)}</span>`; }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+
+/* ── Document control / issue log ── */
+let issuingRecordId=null, returningRecordId=null;
+
+function getCurrentIssueNum(r){ return r.issues&&r.issues.length?r.issues.length:0; }
+
+function issueBadge(r){
+  if(!r.issues||!r.issues.length) return '<span class="issue-badge issue-draft">Draft</span>';
+  const active=r.issues.find(i=>!i.returnedDate);
+  if(!active) return '<span class="issue-badge issue-returned">All returned</span>';
+  const issued=new Date(active.issuedDate);
+  const due=active.dueDate?new Date(active.dueDate):null;
+  const now=new Date();
+  const overdue=due&&now>due;
+  const daysSince=Math.floor((now-issued)/(1000*60*60*24));
+  const overdueGeneric=!due&&daysSince>7;
+  if(overdue||overdueGeneric) return `<span class="issue-badge issue-overdue">&#9888; Overdue — ${esc(active.issuedTo)}</span>`;
+  return `<span class="issue-badge issue-issued">Issued — ${esc(active.issuedTo)}</span>`;
+}
+
+function openIssueModal(id){
+  issuingRecordId=id;
+  const r=records.find(x=>x.id==id); if(!r) return;
+  const nextIssueNum=(r.issues&&r.issues.length||0)+1;
+  document.getElementById('issue-modal-title').textContent=`Issue ${esc(r.docNum||'task sheet')} — Issue #${nextIssueNum}`;
+  document.getElementById('issue-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('issue-due-date').value='';
+  document.getElementById('issue-to-name').value='';
+  document.getElementById('issue-to-email').value='';
+  document.getElementById('issue-notes').value='';
+  openModal('modal-issue');
+  setTimeout(()=>document.getElementById('issue-to-name').focus(),100);
+}
+
+async function confirmIssue(){
+  const name=document.getElementById('issue-to-name').value.trim();
+  const email=document.getElementById('issue-to-email').value.trim();
+  const date=document.getElementById('issue-date').value;
+  const due=document.getElementById('issue-due-date').value;
+  const notes=document.getElementById('issue-notes').value.trim();
+  if(!name){toast('Enter a name to issue to');return;}
+  if(!date){toast('Enter an issue date');return;}
+  const idx=records.findIndex(r=>r.id==issuingRecordId); if(idx<0) return;
+  const issueNum=(records[idx].issues&&records[idx].issues.length||0)+1;
+  const entry={issueNum,issuedTo:name,issuedToEmail:email,issuedDate:date,dueDate:due,notes,issuedBy:currentUser.name||currentUser.email||'unknown',issuedByEmail:currentUser.email||'',returnedDate:null,returnedBy:null,returnNotes:null};
+  if(!records[idx].issues) records[idx].issues=[];
+  records[idx].issues.push(entry);
+  closeModal('modal-issue');
+  setSyncing('syncing');
+  try{
+    await saveProjectFile();
+    toast(`Sheet issued to ${name}`);
+    renderRecords();
+    if(email) sendIssueEmail(records[idx],entry);
+  }catch(e){ records[idx].issues.pop(); setSyncing('error'); toast('Failed to save: '+e.message); }
+}
+
+function openReturnModal(id){
+  returningRecordId=id;
+  document.getElementById('return-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('return-by').value='';
+  document.getElementById('return-notes').value='';
+  openModal('modal-return');
+}
+
+async function confirmReturn(){
+  const date=document.getElementById('return-date').value;
+  const by=document.getElementById('return-by').value.trim();
+  const notes=document.getElementById('return-notes').value.trim();
+  if(!date){toast('Enter a return date');return;}
+  const idx=records.findIndex(r=>r.id==returningRecordId); if(idx<0) return;
+  const activeIdx=records[idx].issues&&records[idx].issues.findIndex(i=>!i.returnedDate);
+  if(activeIdx==null||activeIdx<0){toast('No active issue found');return;}
+  records[idx].issues[activeIdx].returnedDate=date;
+  records[idx].issues[activeIdx].returnedBy=by||currentUser.name||currentUser.email||'unknown';
+  records[idx].issues[activeIdx].returnNotes=notes;
+  closeModal('modal-return');
+  setSyncing('syncing');
+  try{
+    await saveProjectFile();
+    toast('Sheet marked as returned');
+    renderRecords();
+    if(document.getElementById('pane-issues').style.display!=='none') renderIssueLog();
+  }catch(e){ records[idx].issues[activeIdx].returnedDate=null; setSyncing('error'); toast('Failed to save: '+e.message); }
+}
+
+function sendIssueEmail(r,issue){
+  // Build mailto link — opens user's email client pre-filled
+  const subject=`Task sheet issued: ${r.docNum||r.opDesc||'Task sheet'} — Issue #${issue.issueNum}`;
+  const body=`Dear ${issue.issuedTo},\n\nTask sheet ${r.docNum||''} has been issued to you.\n\nOperation: ${r.opDesc||'—'}\nProject: ${r.projNo||''} ${r.projName||''}\nIssue number: ${issue.issueNum}\nIssued date: ${fmtDate(issue.issuedDate)}\nExpected return: ${issue.dueDate?fmtDate(issue.dueDate):'Not specified'}\n${issue.notes?'Notes: '+issue.notes+'\n':''}\nPlease complete and return this task sheet to the office when the job is finished.\n\nIssued by: ${issue.issuedBy}`;
+  const mailto=`mailto:${encodeURIComponent(issue.issuedToEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(mailto);
+}
+
+async function sendReminderEmail(recId,issueIdx){
+  const r=records.find(x=>x.id==recId); if(!r) return;
+  const issue=r.issues[issueIdx]; if(!issue||issue.returnedDate) return;
+  const subject=`REMINDER: Task sheet ${r.docNum||''} not yet returned`;
+  const body=`Dear ${issue.issuedTo},\n\nThis is a reminder that task sheet ${r.docNum||''} issued to you on ${fmtDate(issue.issuedDate)} has not yet been returned to the office.\n\nOperation: ${r.opDesc||'—'}\nProject: ${r.projNo||''} ${r.projName||''}\nExpected return: ${issue.dueDate?fmtDate(issue.dueDate):'Not specified'}\n\nPlease complete and return this sheet as soon as possible.\n\nFIBRE Mechanics`;
+  const mailto=`mailto:${encodeURIComponent(issue.issuedToEmail||'')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(mailto);
+}
+
+function renderIssueLog(){
+  const tbody=document.getElementById('issue-log-body');
+  const empty=document.getElementById('issue-log-empty');
+  // Gather all issue entries across all records
+  const allIssues=[];
+  records.forEach(r=>{ if(r.issues&&r.issues.length){ r.issues.forEach((issue,idx)=>{ allIssues.push({r,issue,idx}); }); } });
+  // Stats
+  const outstanding=allIssues.filter(x=>!x.issue.returnedDate).length;
+  const overdue=allIssues.filter(x=>{ if(x.issue.returnedDate) return false; const due=x.issue.dueDate?new Date(x.issue.dueDate):null; const days=Math.floor((new Date()-new Date(x.issue.issuedDate))/(1000*60*60*24)); return (due&&new Date()>due)||(!due&&days>7); }).length;
+  const returned=allIssues.filter(x=>x.issue.returnedDate).length;
+  document.getElementById('issue-stats').innerHTML=`
+    <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:6px;padding:8px 14px;font-size:13px;"><strong>${outstanding}</strong> <span style="color:#856404;">outstanding</span></div>
+    <div style="background:#ffe0e0;border:1px solid #f0a0a0;border-radius:6px;padding:8px 14px;font-size:13px;"><strong>${overdue}</strong> <span style="color:#a00;">overdue</span></div>
+    <div style="background:#e8f5e2;border:1px solid #a0d0a0;border-radius:6px;padding:8px 14px;font-size:13px;"><strong>${returned}</strong> <span style="color:#2e6b1a;">returned</span></div>`;
+  if(!allIssues.length){ tbody.innerHTML=''; empty.style.display=''; return; }
+  empty.style.display='none';
+  // Sort: overdue first, then outstanding, then returned
+  allIssues.sort((a,b)=>{
+    const aOver=!a.issue.returnedDate; const bOver=!b.issue.returnedDate;
+    if(aOver&&!bOver) return -1; if(!aOver&&bOver) return 1;
+    return new Date(b.issue.issuedDate)-new Date(a.issue.issuedDate);
+  });
+  tbody.innerHTML=allIssues.map(({r,issue,idx})=>{
+    const now=new Date();
+    const due=issue.dueDate?new Date(issue.dueDate):null;
+    const days=Math.floor((now-new Date(issue.issuedDate))/(1000*60*60*24));
+    const overdue=!issue.returnedDate&&((due&&now>due)||(!due&&days>7));
+    const rowStyle=overdue?'background:#fff8f8;':'';
+    const statusCell=issue.returnedDate
+      ?`<span class="issue-badge issue-returned">Returned ${fmtDate(issue.returnedDate)}</span>`
+      :overdue
+        ?`<span class="issue-badge issue-overdue">&#9888; Overdue ${days}d</span>`
+        :`<span class="issue-badge issue-issued">Outstanding ${days}d</span>`;
+    const actionBtns=issue.returnedDate
+      ?''
+      :`<button class="link-btn" style="color:#c85810;" onclick="openReturnModal('${r.id}')">Mark returned</button>${issue.issuedToEmail?` &nbsp; <button class="link-btn" style="color:#c85810;" onclick="sendReminderEmail('${r.id}',${idx})">&#9993; Remind</button>`:''}`;
+    return `<tr style="${rowStyle}">
+      <td style="font-weight:500;">${esc(r.docNum||'—')}</td>
+      <td><div style="font-weight:500;">${esc(r.opDesc||'—')}</div><div style="font-size:11px;color:#888;">${esc(r.caJob||'')}</div></td>
+      <td style="text-align:center;font-weight:600;">${issue.issueNum}</td>
+      <td><div style="font-weight:500;">${esc(issue.issuedTo)}</div>${issue.issuedToEmail?`<div style="font-size:11px;color:#888;">${esc(issue.issuedToEmail)}</div>`:''}</td>
+      <td style="white-space:nowrap;">${fmtDate(issue.issuedDate)}</td>
+      <td style="white-space:nowrap;">${issue.dueDate?fmtDate(issue.dueDate):'<span style="color:#aaa;">—</span>'}</td>
+      <td style="white-space:nowrap;">${issue.returnedDate?fmtDate(issue.returnedDate):'<span style="color:#aaa;">—</span>'}</td>
+      <td>${statusCell}</td>
+      <td style="white-space:nowrap;">${actionBtns}</td>
+    </tr>`;
+  }).join('');
+}
 
 function renderRecords(){
   const q=(document.getElementById('search').value||'').toLowerCase();
@@ -745,15 +980,22 @@ function renderRecords(){
   const tbody=document.getElementById('rec-body'), empty=document.getElementById('rec-empty');
   if(!f.length){ tbody.innerHTML=''; empty.style.display=''; return; }
   empty.style.display='none';
-  tbody.innerHTML=f.map(r=>`<tr>
-    <td style="font-weight:500;white-space:nowrap;">${esc(r.docNum||'—')}</td>
-    <td style="font-size:12px;">${esc(r.projNo||'')} ${esc(r.projName||'')}</td>
-    <td><div style="font-weight:500;">${esc(r.opDesc||'—')}</div><div style="font-size:12px;color:#888;">${esc(r.caJob||'')}</div></td>
-    <td>${esc(r.author||'—')}</td>
-    <td style="white-space:nowrap;">${fmtDate(r.finishDate)}</td>
-    <td>${statusBadge(r.status)}</td>
-    <td style="white-space:nowrap;"><button class="link-btn" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#666;" onclick="editSheet('${r.id}')">Edit</button></td>
-  </tr>`).join('');
+  tbody.innerHTML=f.map(r=>{
+    const ib=issueBadge(r);
+    const activeIssue=r.issues&&r.issues.find(i=>!i.returnedDate);
+    const issueBtn=activeIssue
+      ? `<button class="link-btn" style="color:#c85810;" onclick="openReturnModal('${r.id}')">Return</button>`
+      : `<button class="link-btn" style="color:#f07020;" onclick="openIssueModal('${r.id}')">Issue</button>`;
+    return `<tr>
+      <td style="font-weight:500;white-space:nowrap;">${esc(r.docNum||'—')}<div style="font-size:11px;color:#aaa;">${r.issues&&r.issues.length?'Issue '+getCurrentIssueNum(r):''}</div></td>
+      <td><div style="font-weight:500;">${esc(r.opDesc||'—')}</div><div style="font-size:12px;color:#888;">${esc(r.caJob||'')}</div></td>
+      <td>${esc(r.author||'—')}</td>
+      <td style="white-space:nowrap;">${fmtDate(r.finishDate)}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td>${ib}</td>
+      <td style="white-space:nowrap;">${issueBtn} &nbsp; <button class="link-btn" style="color:#666;" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#999;" onclick="editSheet('${r.id}')">Edit</button> &nbsp; <button class="link-btn" style="color:#aaa;" onclick="duplicateSheet('${r.id}')">Duplicate</button></td>
+    </tr>`;
+  }).join('');
 }
 
 function viewSheet(id){
@@ -785,19 +1027,21 @@ function viewSheet(id){
     <div class="dr"><span class="dk">Prerequisites</span><span>${esc(r.prereq||'—')}</span></div>
     <div class="dr"><span class="dk">Cure schedule</span><span>${esc(r.cure||'—')}</span></div>
     ${r.special?`<div class="dr"><span class="dk">Special instructions</span><span style="color:#c0392b;font-style:italic;">${esc(r.special)}</span></div>`:''}
+    <div class="sub-h">Issue history</div>
+    ${r.issues&&r.issues.length?`<div style="border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">${r.issues.map((issue,i)=>`<div class="issue-history-item" style="padding:7px 10px;${!issue.returnedDate?'background:#fffbf0;':''}"><span style="font-weight:600;color:#f07020;">Issue #${issue.issueNum}</span><span>${esc(issue.issuedTo)}</span><span style="color:#888;">${fmtDate(issue.issuedDate)}</span><span>${issue.returnedDate?'<span style=\"color:#2e6b1a;\">Returned '+fmtDate(issue.returnedDate)+'</span>':'<span style=\"color:#856404;\">Outstanding</span>'}</span></div>`).join('')}</div>`:'<div style="color:#aaa;font-size:13px;">Not yet issued</div>'}
     <div class="sub-h">QA / sign-off points</div>
-    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['QA point','NDT','Stage','Date','Results'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #dde8cc;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${qaRows}</tbody></table>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['QA point','NDT','Stage','Date','Results'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #555555;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${qaRows}</tbody></table>
     <div class="sub-h">Operation steps</div>
-    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Operation','Op initials','QA initials','Date'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #dde8cc;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${opsRows}</tbody></table>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Operation','Op initials','QA initials','Date'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #555555;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${opsRows}</tbody></table>
     <div class="sub-h">Weight</div>
     <div class="dr"><span class="dk">Target weight</span><span>${esc(r.targetWt||'—')} kg</span></div>
     <div class="dr"><span class="dk">Measured weight</span><span>${esc(r.measuredWt||'—')} kg</span></div>
     <div class="dr"><span class="dk">Resin trace</span><span>${esc(r.resinTrace||'—')}</span></div>
     <div class="dr"><span class="dk">Hardener trace</span><span>${esc(r.hardTrace||'—')}</span></div>
     <div class="sub-h">Materials — left</div>
-    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Material','Trace #','Amount used'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #dde8cc;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${matLeftRows}</tbody></table>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Material','Trace #','Amount used'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #555555;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${matLeftRows}</tbody></table>
     <div class="sub-h">Materials — right</div>
-    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Material','Trace #','Amount used'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #dde8cc;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${matRightRows}</tbody></table>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>${['Material','Trace #','Amount used'].map(h=>`<th style="background:#f2f6eb;padding:4px 7px;text-align:left;border:1px solid #555555;font-size:10px;">${h}</th>`).join('')}</tr></thead><tbody>${matRightRows}</tbody></table>
     ${r.feedback?`<div class="sub-h">Feedback</div><div style="font-size:13px;">${esc(r.feedback)}</div>`:''}
     <div class="sub-h">Sign-off</div>
     <div class="dr"><span class="dk">Operator</span><span>${esc(r.opName||'—')}${r.opDate?' · '+fmtDate(r.opDate):''}</span></div>
@@ -811,6 +1055,38 @@ async function deleteSheet(){
   records.splice(viewIdx,1); closeModal('modal-detail'); setSyncing('syncing');
   try{ await saveProjectFile(); renderRecords(); toast('Record deleted'); }
   catch(e){ toast('Delete failed: '+e.message); setSyncing('error'); }
+}
+
+
+async function duplicateSheet(id){
+  const r=records.find(x=>x.id==id); if(!r) return;
+  // Deep copy, strip issue history, assign new id and auto doc number
+  const copy=JSON.parse(JSON.stringify(r));
+  copy.id=Date.now()+'_'+Math.random().toString(36).slice(2);
+  copy.issues=[];
+  copy.createdAt=new Date().toISOString();
+  copy.createdBy=currentUser.email||'unknown';
+  copy.createdByName=currentUser.name||currentUser.email||'Unknown';
+  copy.updatedAt=null; copy.updatedBy=null;
+  // Auto-generate new doc number based on new position
+  records.unshift(copy);
+  const projRef=(currentProject.num||currentProject.code||'PROJ').replace(/\s+/g,'');
+  const existingNums=records.map(rec=>{ const m=rec.docNum&&rec.docNum.match(/-TS-(\d+)$/); return m?parseInt(m[1],10):0; });
+  const nextNum=Math.max(...existingNums.filter((_,i)=>i>0))+1;
+  copy.docNum=projRef+'-TS-'+String(nextNum).padStart(3,'0');
+  setSyncing('syncing');
+  try{
+    await saveProjectFile();
+    toast('Record duplicated as '+copy.docNum);
+    renderRecords();
+  }catch(e){ records.shift(); setSyncing('error'); toast('Duplicate failed: '+e.message); }
+}
+
+function duplicateSheetFromModal(){
+  if(viewIdx===null||viewIdx<0) return;
+  const id=records[viewIdx].id;
+  closeModal('modal-detail');
+  duplicateSheet(id);
 }
 
 /* ── Print ── */
@@ -834,9 +1110,9 @@ function printSheet(){
       <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sht</div><div class="ps-sheetnum-val">${esc(r.sheetOf||'')}</div></div>
     </div>
     <div class="ps-body">
-      <div class="ps-row"><div class="ps-lbl">Cloudattend job</div><div class="ps-val" style="color:#c0392b;">${esc(r.caJob||'')}</div></div>
-      <div class="ps-row"><div class="ps-lbl">Cloudattend operation</div><div class="ps-val" style="color:#c0392b;">${esc(r.caOp||'')}</div></div>
-      <div class="ps-row"><div class="ps-lbl">Operation description</div><div class="ps-val" style="color:#c0392b;font-weight:600;">${esc(r.opDesc||'')}</div></div>
+      <div class="ps-row"><div class="ps-lbl">Cloudattend job</div><div class="ps-val">${esc(r.caJob||'')}</div></div>
+      <div class="ps-row"><div class="ps-lbl">Cloudattend operation</div><div class="ps-val">${esc(r.caOp||'')}</div></div>
+      <div class="ps-row"><div class="ps-lbl">Operation description</div><div class="ps-val" style="font-weight:600;">${esc(r.opDesc||'')}</div></div>
       <div class="ps-row"><div class="ps-lbl">Reference drawings incl revision</div><div class="ps-val">${esc(r.drawings||'N/A')}</div></div>
       <div class="ps-row"><div class="ps-lbl">Additional sheets</div><div class="ps-val">${esc(r.addSheets||'None')}</div></div>
       <div class="ps-row-4">
@@ -932,7 +1208,7 @@ function openModal(id){ document.getElementById(id).classList.add('open'); }
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
 
-['modal-new-proj','modal-detail'].forEach(id=>{ document.getElementById(id).addEventListener('click',function(e){ if(e.target===this) closeModal(id); }); });
+['modal-new-proj','modal-detail','modal-issue','modal-return'].forEach(id=>{ document.getElementById(id).addEventListener('click',function(e){ if(e.target===this) closeModal(id); }); });
 </script>
 </body>
 </html>
