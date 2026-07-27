@@ -717,6 +717,7 @@ function goHome(){ records=[]; currentProject=null; renderPicker(); loadIndex();
 
 /* ── Auto document number ── */
 function generateDocNum(){
+  // Only called for NEW records — editing keeps the existing docNum
   if(!currentProject) return '';
   const projRef=(currentProject.num||'0000').replace(/^P/i,'').replace(/\s+/g,'');
   const rev=document.getElementById('f-revision')?document.getElementById('f-revision').value.trim()||'A':'A';
@@ -727,6 +728,7 @@ function generateDocNum(){
   return projRef+'-TS-'+String(nextNum).padStart(3,'0')+'-'+rev;
 }
 function setAutoDocNum(){
+  if(editingId) return; // Don't overwrite doc number when editing existing record
   const el=document.getElementById('f-docnum');
   if(!el||!el.readOnly) return;
   const num=generateDocNum();
