@@ -803,7 +803,7 @@ async function uploadModalScan(input){
     try{
       await saveProjectFile();
       statusEl.style.color='#2e7d32';
-      statusEl.innerHTML='✓ Scan saved — <a href="#" onclick="openScanPreview(\"'+fileId+'\");return false;" style="color:#f07020;">View ↗</a>';
+      statusEl.innerHTML='✓ Scan saved — <a href="https://drive.google.com/file/d/'+fileId+'/view" target="_blank" style="color:#f07020;">View ↗</a>';
       // Refresh detail view to show scan link
       viewSheet(r.id);
     } catch(e){ statusEl.style.color='#c00'; statusEl.textContent='Save failed: '+e.message; }
@@ -847,7 +847,7 @@ async function uploadScan(file, docNum, statusEl){
     const fileId=res.result.id;
     window._pendingScanId=fileId;
     window._pendingScanName=fname;
-    if(statusEl){ statusEl.style.color='#2e7d32'; statusEl.innerHTML='✓ Uploaded: '+fname+' — <a href="#" onclick="openScanPreview(\"'+fileId+'\");return false;" style="color:#f07020;">View ↗</a>'; }
+    if(statusEl){ statusEl.style.color='#2e7d32'; statusEl.innerHTML='✓ Uploaded: '+fname+' — <a href="https://drive.google.com/file/d/'+fileId+'/view" target="_blank" style="color:#f07020;">View ↗</a>'; }
     setSyncing('ok');
     return fileId;
   } catch(e){
@@ -1193,7 +1193,7 @@ function viewSheet(id){
     <div class="dr"><span class="dk">Operator</span><span>${esc(r.opName||'—')}${r.opDate?' · '+fmtDate(r.opDate):''}</span></div>
     <div class="dr"><span class="dk">Task leader</span><span>${esc(r.tlName||'—')}${r.tlDate?' · '+fmtDate(r.tlDate):''}</span></div>`;
   document.getElementById('print-btn').dataset.rid = r.id;
-  const ss=document.getElementById('modal-scan-status'); if(ss){ ss.style.display=r.scanFileId?'block':'none'; ss.style.color='#2e7d32'; ss.innerHTML=r.scanFileId?'✓ Scan attached — <a href="#" onclick="openScanPreview(\"'+r.scanFileId+'\");return false;" style="color:#f07020;">View scan ↗</a>':''; }
+  const ss=document.getElementById('modal-scan-status'); if(ss){ ss.style.display=r.scanFileId?'block':'none'; ss.style.color='#2e7d32'; ss.innerHTML=r.scanFileId?'✓ Scan attached — <a href="https://drive.google.com/file/d/'+r.scanFileId+'/view" target="_blank" style="color:#f07020;">View scan ↗</a>':''; }
   openModal('modal-detail');
 }
 
