@@ -44,7 +44,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 .picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;padding:16px 22px 22px;}
 .proj-card{border:1px solid #e0e0e0;border-radius:8px;padding:16px;cursor:pointer;background:#fff;text-align:left;}
 .proj-card:hover{border-color:#f07020;background:#fff8f3;}
-.proj-card-code{font-size:18px;font-weight:700;color:#f07020;line-height:1;}
+.proj-card-code{font-size:22px;font-weight:700;color:#f07020;line-height:1;}
 .proj-card-name{font-size:12px;color:#666;margin-top:3px;margin-bottom:10px;line-height:1.4;}
 .proj-card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .proj-card-count{font-size:12px;font-weight:500;color:#333;}
@@ -163,7 +163,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 /* ── PRINT STYLES ── */
 #print-sheet{display:none;}
 @media print{
-  @page{size:A4 portrait;margin:8mm 10mm 8mm 10mm;}
+  @page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} @page:bottom{content:counter(page) ' of ' counter(pages);}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
   html,body{margin:0;padding:0;background:#fff!important;}
   body>*{display:none!important;}
@@ -282,7 +282,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 
         <div class="sh">Sheet reference</div>
         <div class="fg4">
-          <div class="field"><label>Project No</label><input id="f-projno" type="text" placeholder="177"></div>
+          <div class="field"><label>Project No</label><input id="f-projno" type="text" placeholder="0183" maxlength="4"></div>
           <div class="field"><label>Project Name</label><input id="f-projname" type="text" placeholder="MM62"></div>
           <div class="field"><label>Task sheet document number <button id="docnum-override-btn" onclick="toggleDocNumOverride()" style="background:none;border:none;cursor:pointer;font-size:10px;color:#f07020;text-decoration:underline;font-family:inherit;font-weight:400;letter-spacing:0;text-transform:none;margin-left:6px;">override</button></label><input id="f-docnum" type="text" placeholder="Auto-generated" readonly style="background:#f5f5f5;color:#555;cursor:default;"></div>
           <div class="field"><label>Task sheet revision</label><input id="f-revision" type="text" placeholder="A"></div>
@@ -518,8 +518,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="modal-head"><h3>Create new project</h3><button class="modal-close" onclick="closeModal('modal-new-proj')">&times;</button></div>
     <div class="modal-body">
       <div class="fg" style="gap:11px;">
-        <div class="field"><label>Project code</label><input id="np-code" type="text" placeholder="MM62" autofocus></div>
-        <div class="field"><label>Project number</label><input id="np-num" type="text" placeholder="177"></div>
+        <div class="field"><label>Project number (4 digits)</label><input id="np-num" type="text" placeholder="0183" autofocus maxlength="4"></div>
         <div class="field full"><label>Project name</label><input id="np-name" type="text" placeholder="Kraken K7 Hull"></div>
         <div class="field full"><label>Description (optional)</label><input id="np-desc" type="text"></div>
       </div>
@@ -657,7 +656,7 @@ function renderPicker(){
   const cards=projects.map(p=>{
     const b=[]; if((p.openCount||0)>0) b.push(`<span class="badge badge-open">${p.openCount} open</span>`); if((p.provCount||0)>0) b.push(`<span class="badge badge-prov">${p.provCount} provisional</span>`); if((p.doneCount||0)>0) b.push(`<span class="badge badge-done">${p.doneCount} complete</span>`);
     return `<div class="proj-card" onclick='loadProject(${JSON.stringify(p).replace(/'/g,"&#39;")})'>
-      <div class="proj-card-code">${esc(p.code||p.id)}</div>
+      <div class="proj-card-code">${esc(p.num||p.code||p.id)}</div>
       <div class="proj-card-name">${esc(p.name||'Unnamed')}</div>
       <div class="proj-card-meta"><span class="proj-card-count">${p.sheetCount||0} sheet${(p.sheetCount||0)!==1?'s':''}</span>${b.join('')}<span class="proj-card-date">${p.updatedAt?'Updated '+fmtDate(p.updatedAt.split('T')[0]):''}</span></div>
     </div>`;
@@ -666,23 +665,25 @@ function renderPicker(){
   show('screen-picker');
 }
 
-async function openNewProject(){ openModal('modal-new-proj'); document.getElementById('np-code').focus(); }
+async function openNewProject(){ openModal('modal-new-proj'); document.getElementById('np-num').focus(); }
 async function createProject(){
-  const code=document.getElementById('np-code').value.trim(), num=document.getElementById('np-num').value.trim(), name=document.getElementById('np-name').value.trim(), desc=document.getElementById('np-desc').value.trim();
-  if(!code){toast('Enter a project code');return;}
+  const num=document.getElementById('np-num').value.trim(), name=document.getElementById('np-name').value.trim(), desc=document.getElementById('np-desc').value.trim();
+  if(!num||num.length!==4||!/^\d{4}$/.test(num)){toast('Enter a 4-digit project number (e.g. 0183)');return;}
+  if(!name){toast('Enter a project name');return;}
+  const code=num;
   setSyncing('syncing');
-  const id='proj_'+Date.now(), filename=`FM_Project_${code.replace(/[^a-zA-Z0-9]/g,'_')}_${Date.now()}.json`;
+  const id='proj_'+Date.now(), filename=`FM_Project_${num}_${name.replace(/[^a-zA-Z0-9]/g,'_')}_${Date.now()}.json`;
   const fileId=await driveCreate(filename,{records:[],projectId:id,createdAt:new Date().toISOString(),createdBy:currentUser.email||'unknown'},folderId);
   const proj={id,code,num,name,desc,fileId,filename,sheetCount:0,openCount:0,provCount:0,doneCount:0,createdAt:new Date().toISOString(),createdBy:currentUser.name||currentUser.email||'unknown',updatedAt:new Date().toISOString()};
   projects.push(proj); await saveIndex(); setSyncing('synced'); closeModal('modal-new-proj');
-  ['np-code','np-num','np-name','np-desc'].forEach(i=>document.getElementById(i).value='');
+  ['np-num','np-name','np-desc'].forEach(i=>{ const el=document.getElementById(i); if(el) el.value='');
   toast('Project created'); loadProject(proj);
 }
 
 /* ── Project workspace ── */
 async function loadProject(proj,showSpinner){
   currentProject=typeof proj==='string'?JSON.parse(proj):proj;
-  document.getElementById('header-sub').textContent=`${currentProject.code||''} — ${currentProject.name||'Project'}`;
+  document.getElementById('header-sub').textContent=`${currentProject.num||currentProject.code||''} — ${currentProject.name||'Project'}`;
   document.getElementById('project-crumb').style.display='flex';
   show('screen-project'); switchTab('records');
   if(showSpinner) document.getElementById('rec-loading').style.display='';
@@ -717,12 +718,13 @@ function goHome(){ records=[]; currentProject=null; renderPicker(); loadIndex();
 /* ── Auto document number ── */
 function generateDocNum(){
   if(!currentProject) return '';
-  const projRef=(currentProject.num||currentProject.code||'PROJ').replace(/\s+/g,'');
+  const projRef=(currentProject.num||'0000').replace(/^P/i,'').replace(/\s+/g,'');
+  const rev=document.getElementById('f-revision')?document.getElementById('f-revision').value.trim()||'A':'A';
   const existingNums=records
     .filter(r=>!editingId||r.id!==editingId)
-    .map(r=>{ const m=r.docNum&&r.docNum.match(/-TS-(\d+)$/); return m?parseInt(m[1],10):0; });
+    .map(r=>{ const m=r.docNum&&r.docNum.match(/(?:^|-)TS-(\d+)/); return m?parseInt(m[1],10):0; });
   const nextNum=existingNums.length?Math.max(...existingNums)+1:1;
-  return projRef+'-TS-'+String(nextNum).padStart(3,'0');
+  return projRef+'-TS-'+String(nextNum).padStart(3,'0')+'-'+rev;
 }
 function setAutoDocNum(){
   const el=document.getElementById('f-docnum');
@@ -754,6 +756,70 @@ function getMat(bodyId){ const rows=[]; document.querySelectorAll(`#${bodyId} tr
 function v(id){ return document.getElementById(id).value.trim(); }
 
 /* ── Save / Edit ── */
+async function uploadScan(file, docNum){
+  if(!file) return null;
+  setSyncing('syncing');
+  document.getElementById('f-scan-status').textContent='Uploading…';
+  try{
+    // Create subfolder name: num-ProjectName
+    const projNum=(currentProject.num||currentProject.code||'0000').replace(/^P/i,'');
+    const projName=(currentProject.name||'Project').replace(/[^a-zA-Z0-9]/g,'-');
+    const subfolderName=projNum+'-'+projName;
+    // Find or create subfolder
+    let subfolderId;
+    const existing=await driveFind(subfolderName,folderId,'application/vnd.google-apps.folder');
+    if(existing.length){ subfolderId=existing[0].id; }
+    else {
+      const r=await gapi.client.request({path:'https://www.googleapis.com/drive/v3/files',method:'POST',
+        params:{fields:'id',supportsAllDrives:true},
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({name:subfolderName,mimeType:'application/vnd.google-apps.folder',parents:[folderId]})});
+      subfolderId=r.result.id;
+    }
+    // Upload file via multipart
+    const reader=new FileReader();
+    const base64=await new Promise((res,rej)=>{ reader.onload=e=>res(e.target.result.split(',')[1]); reader.onerror=rej; reader.readAsDataURL(file); });
+    const ext=file.name.split('.').pop();
+    const fname=(docNum||'scan').replace(/[^a-zA-Z0-9\-_]/g,'-')+'_scan.'+ext;
+    const b='scanbnd456';
+    const meta=JSON.stringify({name:fname,parents:[subfolderId]});
+    const mp=`--${b}
+Content-Type: application/json; charset=UTF-8
+
+${meta}
+--${b}
+Content-Type: ${file.type||'application/octet-stream'}
+Content-Transfer-Encoding: base64
+
+${base64}
+--${b}--`;
+    const res=await gapi.client.request({path:'https://www.googleapis.com/upload/drive/v3/files',method:'POST',
+      params:{uploadType:'multipart',fields:'id,name',supportsAllDrives:true},
+      headers:{'Content-Type':`multipart/related; boundary=${b}`},body:mp});
+    const fileId=res.result.id;
+    window._pendingScanId=fileId;
+    window._pendingScanName=fname;
+    document.getElementById('f-scan-status').textContent='✓ Uploaded: '+fname;
+    document.getElementById('f-scan-status').style.color='#2e7d32';
+    document.getElementById('f-scan-link').innerHTML=`<a href="https://drive.google.com/file/d/${fileId}/view" target="_blank" style="color:#f07020;">View in Drive ↗</a>`;
+    setSyncing('ok');
+    return fileId;
+  } catch(e){
+    document.getElementById('f-scan-status').textContent='Upload failed: '+e.message;
+    document.getElementById('f-scan-status').style.color='#c00';
+    setSyncing('error');
+    return null;
+  }
+}
+
+// Auto-upload scan when file selected
+document.addEventListener('DOMContentLoaded',()=>{
+  const scanInput=document.getElementById('f-scan');
+  if(scanInput) scanInput.addEventListener('change',async function(){
+    if(this.files[0]){ await uploadScan(this.files[0], document.getElementById('f-docnum').value); }
+  });
+});
+
 async function saveSheet(){
   if(!v('f-docnum')&&!v('f-opdesc')){toast('Enter a document number or operation description');return;}
   if(saving) return; saving=true;
@@ -769,7 +835,9 @@ async function saveSheet(){
     targetWt:v('f-targetwt'),measuredWt:v('f-measuredwt'),resinTrace:v('f-resintrace'),hardTrace:v('f-hardtrace'),
     matLeft:getMat('mat-left-body'),matRight:getMat('mat-right-body'),
     feedback:v('f-feedback'),opName:v('f-opname'),opDate:v('f-opdate'),tlName:v('f-tlname'),tlDate:v('f-tldate'),
+    scanFileId:window._pendingScanId||null,scanFileName:window._pendingScanName||null,
   };
+  window._pendingScanId=null; window._pendingScanName=null;
   if(editingId){
     const idx=records.findIndex(r=>r.id===editingId);
     if(idx>=0){ records[idx]={...records[idx],...data,updatedAt:new Date().toISOString(),updatedBy:currentUser.email||'unknown'}; }
@@ -815,6 +883,14 @@ function editSheet(id){
   if(!banner){ banner=document.createElement('div'); banner.id='edit-banner'; banner.style.cssText='background:#fff3e8;border:1px solid #f0b070;border-radius:6px;padding:9px 14px;font-size:13px;color:#c85810;margin:10px 22px;display:flex;align-items:center;justify-content:space-between;'; document.getElementById('pane-new').querySelector('.section').prepend(banner); }
   banner.innerHTML=`<span>&#9998; Editing: ${esc(r.docNum||r.id)} — ${esc(r.opDesc||'')}</span><button onclick="cancelEdit()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#c85810;text-decoration:underline;font-family:inherit;">Cancel</button>`;
   banner.style.display='flex';
+  // Show existing scan link if present
+  const scanLink=document.getElementById('f-scan-link');
+  const scanStatus=document.getElementById('f-scan-status');
+  if(r.scanFileId && scanLink){
+    scanLink.innerHTML=`<a href="https://drive.google.com/file/d/${r.scanFileId}/view" target="_blank" style="color:#f07020;">Current scan: ${esc(r.scanFileName||'view')} ↗</a>`;
+    if(scanStatus) scanStatus.textContent='';
+    window._pendingScanId=r.scanFileId; window._pendingScanName=r.scanFileName;
+  }
   switchTab('new'); window.scrollTo(0,0);
 }
 
@@ -836,10 +912,14 @@ function clearForm(){
   ['mat-left-body','mat-right-body'].forEach(id=>{ const b=document.getElementById(id); b.innerHTML=''; for(let i=0;i<5;i++){ const tr=document.createElement('tr'); tr.innerHTML='<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>'; b.appendChild(tr); } });
   const btn=document.getElementById('save-btn'); btn.textContent='✓ Save task sheet'; btn.style.background=''; btn.style.borderColor='';
   const banner=document.getElementById('edit-banner'); if(banner) banner.style.display='none';
-  if(currentProject){ document.getElementById('f-projno').value=currentProject.num||''; document.getElementById('f-projname').value=currentProject.code||''; }
+  if(currentProject){ document.getElementById('f-projno').value=(currentProject.num||'').replace(/^P/i,''); document.getElementById('f-projname').value=currentProject.name||''; }
   // Reset to auto mode on clear
   const dnel=document.getElementById('f-docnum'); if(dnel){ dnel.readOnly=true; dnel.style.background='#f5f5f5'; dnel.style.color='#555'; dnel.style.cursor='default'; } const dnbtn=document.getElementById('docnum-override-btn'); if(dnbtn) dnbtn.textContent='override';
   setAutoDocNum();
+  window._pendingScanId=null; window._pendingScanName=null;
+  document.getElementById('f-scan-status').textContent='';
+  document.getElementById('f-scan-link').innerHTML='';
+  const scanInput=document.getElementById('f-scan'); if(scanInput) scanInput.value='';
 }
 
 /* ── Records ── */
@@ -1025,7 +1105,7 @@ function renderRecords(){
       <td style="white-space:nowrap;">${fmtDate(r.finishDate)}</td>
       <td>${statusBadge(r.status)}</td>
       <td>${ib}</td>
-      <td style="white-space:nowrap;">${issueBtn} &nbsp; <button class="link-btn" style="color:#666;" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#999;" onclick="editSheet('${r.id}')">Edit</button> &nbsp; <button class="link-btn" style="color:#aaa;" onclick="duplicateSheet('${r.id}')">Duplicate</button></td>
+      <td style="white-space:nowrap;">${r.scanFileId?'<span title="Scanned copy attached" style="color:#2e7d32;font-size:11px;">📎</span> ':''} ${issueBtn} &nbsp; <button class="link-btn" style="color:#666;" onclick="viewSheet('${r.id}')">View</button> &nbsp; <button class="link-btn" style="color:#999;" onclick="editSheet('${r.id}')">Edit</button> &nbsp; <button class="link-btn" style="color:#aaa;" onclick="duplicateSheet('${r.id}')">Duplicate</button></td>
     </tr>`;
   }).join('');
 }
@@ -1103,10 +1183,11 @@ async function duplicateSheet(id){
   copy.updatedAt=null; copy.updatedBy=null;
   // Auto-generate new doc number based on new position
   records.unshift(copy);
-  const projRef=(currentProject.num||currentProject.code||'PROJ').replace(/\s+/g,'');
-  const existingNums=records.map(rec=>{ const m=rec.docNum&&rec.docNum.match(/-TS-(\d+)$/); return m?parseInt(m[1],10):0; });
+  const projRef=(currentProject.num||'0000').replace(/^P/i,'').replace(/\s+/g,'');
+  const rev=r.revision||'A';
+  const existingNums=records.map(rec=>{ const m=rec.docNum&&rec.docNum.match(/(?:^|-)TS-(\d+)/); return m?parseInt(m[1],10):0; });
   const nextNum=Math.max(...existingNums.filter((_,i)=>i>0))+1;
-  copy.docNum=projRef+'-TS-'+String(nextNum).padStart(3,'0');
+  copy.docNum=projRef+'-TS-'+String(nextNum).padStart(3,'0')+'-'+rev;
   setSyncing('syncing');
   try{
     await saveProjectFile();
@@ -1142,7 +1223,7 @@ function printSheet(){
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet revision</div><div class="ps-hcell-val">${esc(r.revision||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
-      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">${esc(r.sheetOf||'')}</div></div>
+      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">1</div><div style="font-size:6pt;color:#444;">of 2</div></div>
     </div>
     <div class="ps-body">
       <div class="ps-row"><div class="ps-lbl">Cloudattend job</div><div class="ps-val">${esc(r.caJob||'')}</div></div>
@@ -1197,6 +1278,57 @@ function printSheet(){
         <div style="margin-top:6px;font-size:8pt;color:#555;">Date: ${r.tlDate?fmtDate(r.tlDate):''}</div>
       </div>
     </div>
+  </div>
+
+  <div style="page-break-before:always;"></div>
+  <div class="ps" style="margin-top:0;">
+    <div class="ps-top">
+      <div class="ps-logo"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Project No</div><div class="ps-hcell-val">${esc(r.projNo||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Project Name</div><div class="ps-hcell-val">${esc(r.projName||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Task sheet document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Revision</div><div class="ps-hcell-val">${esc(r.revision||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">Issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
+      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">2</div></div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section-hdr">Briefing sign-off log — Page 2 of 2</div>
+      <div style="padding:5px 7px;font-size:7.5pt;color:#000;border-bottom:1px solid #999;">
+        All personnel working on this task must confirm they have read the task sheet, attended the briefing and are aware of all relevant Risk Assessments, COSHH documents and Standard Operating Procedures listed on page 1.
+      </div>
+      <table class="ps-table" style="width:100%;">
+        <thead>
+          <tr>
+            <th style="width:25%">Name (print)</th>
+            <th style="width:20%">Signature</th>
+            <th style="width:15%">Date</th>
+            <th style="width:20%">Role / trade</th>
+            <th style="width:10%">RA read</th>
+            <th style="width:10%">Briefed</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${Array(14).fill('').map(()=>'<tr><td style="height:26px;"></td><td></td><td></td><td></td><td></td><td></td></tr>').join('')}
+        </tbody>
+      </table>
+      <div style="padding:5px 7px;font-size:7pt;color:#555;border-top:1px solid #999;">
+        Task leader confirms briefing was conducted and all personnel have signed above:
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;">
+        <div style="padding:8px 10px;border-right:1px solid #999;">
+          <div style="border-bottom:1px solid #000;margin:20px 0 3px;"></div>
+          <div style="font-size:7.5pt;color:#333;">Task leader signature</div>
+          <div style="margin-top:6px;font-size:7.5pt;color:#555;">Name: ${esc(r.tlName||'')}</div>
+          <div style="margin-top:4px;font-size:7.5pt;color:#555;">Date: ${r.tlDate?fmtDate(r.tlDate):''}</div>
+        </div>
+        <div style="padding:8px 10px;">
+          <div style="font-size:7.5pt;font-weight:700;color:#000;margin-bottom:5px;">Documents confirmed in briefing:</div>
+          <div style="font-size:7.5pt;color:#000;">Risk assessments: ${esc(r.ra||'—')}</div>
+          <div style="font-size:7.5pt;color:#000;margin-top:3px;">COSHH: ${esc(r.coshh||'—')}</div>
+          <div style="font-size:7.5pt;color:#000;margin-top:3px;">SOPs: ${esc(r.sop||'—')}</div>
+        </div>
+      </div>
+    </div>
   </div>`;
   // Don't close modal before print — @media print hides it automatically.
   // Close it after the print dialog is dismissed.
@@ -1247,7 +1379,7 @@ function printSheet(){
 .ps-so-cell:last-child{border-right:none;}
 .ps-so-line{border-bottom:1px solid #000;margin:14px 0 3px;}
 .ps-so-lbl{font-size:7.5pt;color:#333;}`;
-  pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Print — '+esc(r.docNum||'Task sheet')+'</title><style>*{box-sizing:border-box;margin:0;padding:0;}@page{size:A4 portrait;margin:8mm 10mm 8mm 10mm;}body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'+psCss+'</style></head><body>'+document.getElementById('print-sheet').innerHTML+'<scr'+'ipt>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<'+'/scr'+'ipt></body></html>');
+  pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Print — '+esc(r.docNum||'Task sheet')+'</title><style>*{box-sizing:border-box;margin:0;padding:0;}@page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} @page:bottom{content:counter(page) ' of ' counter(pages);}body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'+psCss+'</style></head><body>'+document.getElementById('print-sheet').innerHTML+'<scr'+'ipt>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<'+'/scr'+'ipt></body></html>');
   pw.document.close();
   closeModal('modal-detail');
 }
