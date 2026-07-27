@@ -539,7 +539,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="modal-body" id="detail-body" style="max-height:65vh;overflow-y:auto;"></div>
     <div class="modal-foot">
       <button class="btn btn-danger" onclick="deleteSheet()">Delete</button>
-      <button class="btn" onclick="printSheet()">&#x1F5A8; Print</button>
+      <button class="btn" id="print-btn" onclick="printSheet()">&#x1F5A8; Print</button>
       <button class="btn" onclick="duplicateSheetFromModal()">&#x2398; Duplicate</button>
       <button class="btn btn-primary" onclick="editSheetFromModal()">&#9998; Edit</button>
       <button class="btn" onclick="closeModal('modal-detail')">Close</button>
@@ -1047,6 +1047,7 @@ function viewSheet(id){
     <div class="sub-h">Sign-off</div>
     <div class="dr"><span class="dk">Operator</span><span>${esc(r.opName||'—')}${r.opDate?' · '+fmtDate(r.opDate):''}</span></div>
     <div class="dr"><span class="dk">Task leader</span><span>${esc(r.tlName||'—')}${r.tlDate?' · '+fmtDate(r.tlDate):''}</span></div>`;
+  document.getElementById('print-btn').dataset.rid = r.id;
   openModal('modal-detail');
 }
 
@@ -1092,8 +1093,10 @@ function duplicateSheetFromModal(){
 
 /* ── Print ── */
 function printSheet(){
-  if(viewIdx===null||viewIdx<0) return;
-  const r=records[viewIdx];
+  const btn = document.getElementById('print-btn');
+  const rid = btn && btn.dataset.rid;
+  const r = rid ? records.find(x=>x.id==rid) : (viewIdx!==null&&viewIdx>=0?records[viewIdx]:null);
+  if(!r){ alert('No record selected for printing.'); return; }
   const qaRows=(r.qa&&r.qa.some(q=>q.point)?r.qa.filter(q=>q.point):Array(3).fill({})).map(q=>`<tr><td style="width:40%">${esc(q.point||'')}</td><td>${esc(q.ndt||'')}</td><td>${esc(q.stage||'')}</td><td>${esc(q.date||'')}</td><td class="sh">${esc(q.results||'')}</td></tr>`).join('');
   const opsRows=(r.ops&&r.ops.length?r.ops:Array(10).fill({})).map(o=>`<tr><td>${esc(o&&o.desc||'')}</td><td class="sh">${esc(o&&o.opInit||'')}</td><td class="sh">${esc(o&&o.qaInit||'')}</td><td class="sh">${esc(o&&o.date||'')}</td></tr>`).join('');
   const matHalf=(data,title)=>{
