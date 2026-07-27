@@ -166,7 +166,8 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   @page{size:A4 portrait;margin:8mm 10mm 8mm 10mm;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
   body,html{margin:0;padding:0;background:#fff!important;}
-  body>.app,#modal-new-proj,#modal-detail,#modal-issue,#modal-return,.toast{display:none!important;}
+  body>.app,#modal-new-proj,#modal-issue,#modal-return,.toast{display:none!important;}
+  .detail-modal-bg{display:none!important;}
   #print-sheet{display:block!important;width:100%;margin:0;padding:0;}
 }
 .ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
@@ -1165,8 +1166,10 @@ function printSheet(){
       </div>
     </div>
   </div>`;
-  closeModal('modal-detail');
-  window.print();
+  // Don't close modal before print — @media print hides it automatically.
+  // Close it after the print dialog is dismissed.
+  window.onafterprint = function(){ closeModal('modal-detail'); window.onafterprint = null; };
+  setTimeout(function(){ window.print(); }, 150);
 }
 
 /* ── Export ── */
