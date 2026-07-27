@@ -170,7 +170,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   body>#print-sheet{display:block!important;width:100%;margin:0;padding:0;}
 }
 .ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
-.ps-top{display:grid;grid-template-columns:170px 75px 140px 125px 75px 90px 55px;border:1.5px solid #000;border-bottom:none;}
+.ps-top{display:grid;grid-template-columns:170px 75px 165px 145px 90px 55px;border:1.5px solid #000;border-bottom:none;}
 .ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;display:flex;flex-direction:column;justify-content:flex-start;}
 .ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
 .ps-logo-sub{font-size:7.5pt;margin-top:3px;}
@@ -285,7 +285,6 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
           <div class="field"><label>Project No</label><input id="f-projno" type="text" placeholder="0183" maxlength="4"></div>
           <div class="field"><label>Project Name</label><input id="f-projname" type="text" placeholder="MM62"></div>
           <div class="field"><label>Task sheet document number <button id="docnum-override-btn" onclick="toggleDocNumOverride()" style="background:none;border:none;cursor:pointer;font-size:10px;color:#f07020;text-decoration:underline;font-family:inherit;font-weight:400;letter-spacing:0;text-transform:none;margin-left:6px;">override</button></label><input id="f-docnum" type="text" placeholder="Auto-generated" readonly style="background:#f5f5f5;color:#555;cursor:default;"></div>
-          <div class="field"><label>Task sheet revision</label><input id="f-revision" type="text" placeholder="A"></div>
         </div>
         <div class="fg3" style="margin-top:11px;">
           <div class="field"><label>Task sheet issue date</label><input id="f-issuedate" type="date"></div>
@@ -732,16 +731,13 @@ function goHome(){ records=[]; currentProject=null; renderPicker(); loadIndex();
 
 /* ── Auto document number ── */
 function generateDocNum(){
-  // Only called for NEW records — editing keeps the existing docNum
   if(!currentProject) return '';
   const projRef=(currentProject.num||'0000').replace(/^P/i,'').replace(/\s+/g,'');
-  const revEl=document.getElementById('f-revision');
-  const rev=(revEl&&revEl.value.trim())||'A';
   const existingNums=records
     .filter(r=>!editingId||r.id!==editingId)
     .map(r=>{ const m=r.docNum&&r.docNum.match(/(?:^|-)TS-(\d+)/); return m?parseInt(m[1],10):0; });
   const nextNum=existingNums.length?Math.max(...existingNums)+1:1;
-  return projRef+'-TS-'+String(nextNum).padStart(3,'0')+'-'+rev;
+  return projRef+'-TS-'+String(nextNum).padStart(3,'0');
 }
 function setAutoDocNum(){
   if(editingId) return; // Don't overwrite doc number when editing existing record
@@ -832,8 +828,6 @@ ${base64}
 
 // Auto-upload scan when file selected
 document.addEventListener('DOMContentLoaded',()=>{
-  const revInput=document.getElementById('f-revision');
-  if(revInput) revInput.addEventListener('change',()=>setAutoDocNum());
   const scanInput=document.getElementById('f-scan');
   if(scanInput) scanInput.addEventListener('change',async function(){
     if(this.files[0]){ await uploadScan(this.files[0], document.getElementById('f-docnum').value); }
@@ -847,7 +841,7 @@ async function saveSheet(){
   if(btn){ btn.disabled=true; btn.textContent='Saving…'; }
   setSyncing('syncing');
   const data={
-    projNo:v('f-projno'),projName:v('f-projname'),docNum:v('f-docnum'),revision:v('f-revision'),
+    projNo:v('f-projno'),projName:v('f-projname'),docNum:v('f-docnum'),
     issueDate:v('f-issuedate'),sheetOf:v('f-sheetof'),status:document.getElementById('f-status').value,
     caJob:v('f-cajob'),caOp:v('f-caop'),opDesc:v('f-opdesc'),drawings:v('f-drawings'),addSheets:v('f-addsheets'),
     hours:v('f-hours'),finishDate:v('f-finishdate'),author:v('f-author'),approver:v('f-approver'),
@@ -878,7 +872,7 @@ function editSheet(id){
   const r=records.find(x=>x.id==id); if(!r) return;
   editingId=r.id;
   const set=(fid,val)=>{ const el=document.getElementById(fid); if(el) el.value=val||''; };
-  set('f-projno',r.projNo); set('f-projname',r.projName); set('f-docnum',r.docNum); set('f-revision',r.revision);
+  set('f-projno',r.projNo); set('f-projname',r.projName); set('f-docnum',r.docNum);
   set('f-issuedate',r.issueDate); set('f-sheetof',r.sheetOf); set('f-cajob',r.caJob); set('f-caop',r.caOp);
   set('f-opdesc',r.opDesc); set('f-drawings',r.drawings); set('f-addsheets',r.addSheets);
   set('f-hours',r.hours); set('f-finishdate',r.finishDate); set('f-author',r.author); set('f-approver',r.approver);
@@ -926,9 +920,9 @@ function cancelEdit(){
 
 function clearForm(){
   editingId=null;
-  ['f-projno','f-projname','f-docnum','f-revision','f-issuedate','f-sheetof','f-cajob','f-caop','f-opdesc','f-drawings','f-addsheets','f-hours','f-finishdate','f-author','f-approver','f-ra','f-coshh','f-sop','f-prereq','f-cure','f-special','f-targetwt','f-measuredwt','f-resintrace','f-hardtrace','f-feedback','f-opname','f-opdate','f-tlname','f-tldate'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  ['f-projno','f-projname','f-docnum','f-issuedate','f-sheetof','f-cajob','f-caop','f-opdesc','f-drawings','f-addsheets','f-hours','f-finishdate','f-author','f-approver','f-ra','f-coshh','f-sop','f-prereq','f-cure','f-special','f-targetwt','f-measuredwt','f-resintrace','f-hardtrace','f-feedback','f-opname','f-opdate','f-tlname','f-tldate'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   document.getElementById('f-status').value='open';
-  const revEl=document.getElementById('f-revision'); if(revEl&&!revEl.value) revEl.value='A';
+
   document.getElementById('qa-body').innerHTML=''; [{},{},{}].forEach(()=>addQARow());
   initOpsTable();
   ['mat-left-body','mat-right-body'].forEach(id=>{ const b=document.getElementById(id); b.innerHTML=''; for(let i=0;i<5;i++){ const tr=document.createElement('tr'); tr.innerHTML='<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>'; b.appendChild(tr); } });
@@ -1144,7 +1138,7 @@ function viewSheet(id){
   document.getElementById('detail-body').innerHTML=`
     <div class="dr"><span class="dk">Document number</span><span>${esc(r.docNum||'—')}</span></div>
     <div class="dr"><span class="dk">Project</span><span>${esc(r.projNo||'')} ${esc(r.projName||'')}</span></div>
-    <div class="dr"><span class="dk">Revision</span><span>${esc(r.revision||'—')}</span></div>
+    
     <div class="dr"><span class="dk">Issue date</span><span>${fmtDate(r.issueDate)}</span></div>
     <div class="dr"><span class="dk">Sheet</span><span>${esc(r.sheetOf||'—')}</span></div>
     <div class="dr"><span class="dk">Cloudattend job</span><span>${esc(r.caJob||'—')}</span></div>
@@ -1209,10 +1203,9 @@ async function duplicateSheet(id){
   // Auto-generate new doc number based on new position
   records.unshift(copy);
   const projRef=(currentProject.num||'0000').replace(/^P/i,'').replace(/\s+/g,'');
-  const rev=r.revision||'A';
   const existingNums=records.map(rec=>{ const m=rec.docNum&&rec.docNum.match(/(?:^|-)TS-(\d+)/); return m?parseInt(m[1],10):0; });
   const nextNum=Math.max(...existingNums.filter((_,i)=>i>0))+1;
-  copy.docNum=projRef+'-TS-'+String(nextNum).padStart(3,'0')+'-'+rev;
+  copy.docNum=projRef+'-TS-'+String(nextNum).padStart(3,'0');
   setSyncing('syncing');
   try{
     await saveProjectFile();
@@ -1246,7 +1239,6 @@ function printSheet(){
       <div class="ps-hcell"><div class="ps-hcell-label">Project No</div><div class="ps-hcell-val">${esc(r.projNo||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Project Name</div><div class="ps-hcell-val">${esc(r.projName||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Task sheet revision</div><div class="ps-hcell-val">${esc(r.revision||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
       <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">1</div><div style="font-size:6pt;color:#444;">of 2</div></div>
     </div>
@@ -1312,7 +1304,7 @@ function printSheet(){
       <div class="ps-hcell"><div class="ps-hcell-label">Project No</div><div class="ps-hcell-val">${esc(r.projNo||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Project Name</div><div class="ps-hcell-val">${esc(r.projName||'')}</div></div>
       <div class="ps-hcell"><div class="ps-hcell-label">Task sheet document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Revision</div><div class="ps-hcell-val">${esc(r.revision||'')}</div></div>
+
       <div class="ps-hcell"><div class="ps-hcell-label">Issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
       <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val">2</div></div>
     </div>
@@ -1360,7 +1352,7 @@ function printSheet(){
   // Open a dedicated print window — completely isolated from app DOM/CSS
   const pw = window.open('','_blank','width=900,height=700');
   const psCss = `.ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
-.ps-top{display:grid;grid-template-columns:170px 75px 140px 125px 75px 90px 55px;border:1.5px solid #000;border-bottom:none;}
+.ps-top{display:grid;grid-template-columns:170px 75px 165px 145px 90px 55px;border:1.5px solid #000;border-bottom:none;}
 .ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;display:flex;flex-direction:column;justify-content:flex-start;}
 .ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
 .ps-logo-sub{font-size:7.5pt;margin-top:3px;}
@@ -1411,7 +1403,7 @@ function printSheet(){
 
 /* ── Export ── */
 function sheetToText(r){
-  const L=['========================================','FIBRE Mechanics — Task Record Sheet',`Doc: ${r.docNum||'—'}  Rev: ${r.revision||'—'}  Issued: ${fmtDate(r.issueDate)}`,'========================================',
+  const L=['========================================','FIBRE Mechanics — Task Record Sheet',`Doc: ${r.docNum||'—'}  Issued: ${fmtDate(r.issueDate)}`,'========================================',
     `Project:     ${r.projNo||''} ${r.projName||''}`,`Operation:   ${r.opDesc||'—'}`,`CA Job:      ${r.caJob||'—'}`,`CA Op:       ${r.caOp||'—'}`,
     `Drawings:    ${r.drawings||'—'}`,`Hours est:   ${r.hours||'—'}`,`Finish:      ${fmtDate(r.finishDate)}`,
     `Author:      ${r.author||'—'}`,`Approver:    ${r.approver||'—'}`,`RA:          ${r.ra||'—'}`,
