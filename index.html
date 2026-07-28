@@ -171,51 +171,50 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   .detail-modal-bg{display:none!important;}
   #print-sheet{display:block!important;width:100%;margin:0;padding:0;}
 }
-.ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;min-height:277mm;display:flex;flex-direction:column;} .ps-body{flex:1;} .ps-signoff{margin-top:auto;}
-.ps-top{display:grid;grid-template-columns:155px 80px 160px 170px 110px 60px;border:1.5px solid #000;border-bottom:none;}
-.ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;}
-.ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
-.ps-logo-sub{font-size:7.5pt;margin-top:3px;}
-.ps-hcell{border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;}
-.ps-hcell-label{font-size:6.5pt;color:#444;text-transform:uppercase;}
-.ps-hcell-val{font-size:10pt;font-weight:700;color:#000;margin-top:1px;}
-.ps-hcell-val-sm{font-size:8.5pt;font-weight:700;color:#000;margin-top:1px;}
-.ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;}
-.ps-sheetnum-label{font-size:6.5pt;color:#444;}
-.ps-sheetnum-val{font-size:15pt;font-weight:700;line-height:1;color:#000;}
-.ps-body{border:1.5px solid #000;border-top:none;}
-.ps-row{display:grid;grid-template-columns:155px 1fr;border-top:1px solid #999;}
-.ps-row-split{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;}
-.ps-row-4{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;}
-.ps-lbl{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-right:1px solid #444;}
-.ps-val{padding:3px 6px;font-size:8.5pt;color:#000;}
-.ps-lbl2{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-left:1px solid #444;border-right:1px solid #444;}
-.ps-briefing{background:#eee!important;border-top:1.5px solid #000;border-bottom:1.5px solid #000;padding:5px;text-align:center;font-size:8.5pt;}
-.ps-briefing strong{font-size:9pt;}
-.ps-section-hdr{background:#555!important;color:#fff!important;padding:3px 7px;font-size:7.5pt;font-weight:700;border-top:1px solid #000;}
-.ps-special{min-height:28px;padding:4px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;font-style:italic;}
-.ps-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
-.ps-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
-.ps-table td{padding:0 6px;border:1px solid #999;height:28px;min-height:28px;color:#000;vertical-align:middle;}
-.ps-table .sh{background:#ddd!important;}
-.ps-ops-table{width:100%;border-collapse:collapse;font-size:7.5pt;}
-.ps-ops-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;}
-.ps-ops-table td{padding:0 6px;border:1px solid #999;height:24px;min-height:24px;color:#000;vertical-align:middle;}
-.ps-ops-table .sh{background:#ddd!important;}
-.ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
-.ps-weight-cell{padding:4px 7px;border-right:1px solid #999;}
-.ps-weight-cell:last-child{border-right:none;}
-.ps-weight-lbl{font-size:7.5pt;font-weight:700;color:#000;}
-.ps-weight-val{font-size:8.5pt;min-height:14px;color:#000;}
-.ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;}
-.ps-mat-half{padding:5px 7px;}
-.ps-mat-half:first-child{border-right:1px solid #999;}
-.ps-feedback{min-height:40px;padding:5px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;}
+.ps-page{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;min-height:277mm;display:flex;flex-direction:column;border:1.5px solid #000;margin-bottom:0;}
+.ps-header{display:flex;border-bottom:1.5px solid #000;}
+.ps-logo-cell{background:#222;color:#fff;padding:6px 9px;min-width:165px;max-width:165px;display:flex;flex-direction:column;justify-content:center;border-right:1.5px solid #000;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ps-logo-main{font-size:11pt;font-weight:700;line-height:1.2;}
+.ps-logo-sub{font-size:7pt;margin-top:2px;}
+.ps-header-fields{flex:1;display:flex;flex-direction:column;}
+.ps-hf-row{display:flex;flex:1;}
+.ps-hf{flex:1;border-right:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:space-between;}
+.ps-hf:last-child{border-right:none;}
+.ps-hf-docnum{flex:1.2;}
+.ps-hf-lbl{font-size:6.5pt;color:#555;text-transform:uppercase;font-weight:600;}
+.ps-hf-val{font-size:9pt;}
+.ps-hf-val.bold{font-weight:700;font-size:12pt;}
+.ps-hf-val.large{font-size:14pt;}
+.ps-rows{flex:1;display:flex;flex-direction:column;}
+.ps-row2{display:grid;grid-template-columns:165px 1fr;border-bottom:1px solid #ccc;}
+.ps-row4{display:grid;grid-template-columns:165px 1fr 165px 1fr;border-bottom:1px solid #ccc;}
+.ps-rl{background:#555;color:#fff;padding:3px 6px;font-size:7.5pt;font-weight:600;display:flex;align-items:center;border-right:1px solid #999;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ps-rl2{background:#555;color:#fff;padding:3px 6px;font-size:7.5pt;font-weight:600;display:flex;align-items:center;border-right:1px solid #999;border-left:1px solid #999;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ps-rv{padding:3px 6px;font-size:8pt;display:flex;align-items:center;}
+.ps-rv.bold{font-weight:600;}
+.ps-briefing{text-align:center;padding:5px 10px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;font-size:8pt;background:#f5f5f5;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ps-sh{background:#555;color:#fff;padding:3px 6px;font-size:7.5pt;font-weight:600;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ps-special{padding:4px 6px;font-size:8pt;font-style:italic;border-bottom:1px solid #ccc;min-height:18px;}
+.ps-t{border-collapse:collapse;font-size:8pt;}
+.ps-t th{background:#555;color:#fff;padding:3px 6px;text-align:left;border:1px solid #999;font-size:7.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ps-t td{border:1px solid #ccc;padding:0 5px;vertical-align:middle;}
+.ps-tc{border:1px solid #ccc;padding:0 5px;vertical-align:middle;}
+.h28{height:28px;}
+.h26{height:26px;}
+.sh{background:#e8e8e8;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ps-wt{border-bottom:1px solid #ccc;}
+.ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
+.ps-mat-half{border-right:1px solid #ccc;}
+.ps-mat-half:last-child{border-right:none;}
+.ps-feedback{flex:1;min-height:55px;border-bottom:1px solid #ccc;padding:4px 6px;}
 .ps-signoff{display:grid;grid-template-columns:50% 50%;border-top:1.5px solid #000;}
 .ps-so-cell{padding:8px 12px;border-right:1px solid #000;box-sizing:border-box;}
 .ps-so-cell:last-child{border-right:none;}
-.ps-so-line{border-bottom:1px solid #000;margin:12px 0 3px;}
+.ps-so-line{border-bottom:1px solid #000;margin:14px 0 3px;}
 .ps-so-lbl{font-size:7.5pt;color:#333;}
+.ps-so-sig{border-bottom:1px solid #000;margin:10px 0 3px;width:80%;}
+.ps-so-name{font-size:7.5pt;color:#333;margin-top:3px;}
+.ps-so-date{font-size:7.5pt;color:#555;margin-top:3px;}
 /* ── Issue control ── */
 .issue-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap;}
 .issue-draft{background:#f0f0f0;color:#666;}
@@ -240,7 +239,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="header-sub" id="header-sub">Task Record Database</div>
   </div>
   <div style="flex:1;"></div>
-  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.2.0</div><div>28 Jul 2026</div></div>
+  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.2.3</div><div>28 Jul 2026</div></div>
   <div class="header-right">
     <div class="sync-wrap" id="sync-wrap"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Synced</span></div>
     <button class="project-crumb" id="project-crumb" onclick="goHome()">&#8592; All projects</button>
@@ -558,7 +557,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 <div id="print-sheet"></div>
 
 <script>
-const APP_VERSION = '1.2.0';
+const APP_VERSION = '1.2.3';
 const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL';
 const SHARED_INDEX_ID   = '1G4hRf6LlYqDh_fpTgYKuK2OexpByRQ1z';
 const BUILD_DATE = '28 Jul 2026';
@@ -1298,107 +1297,174 @@ function printSheet(){
     return `<div class="ps-mat-half"><table class="ps-table" style="width:100%;table-layout:fixed;"><thead><tr><th style="width:50%">Materials record</th><th style="width:15%">Trace #</th><th style="width:20%">Amount used</th></tr></thead><tbody>${rows}</tbody></table></div>`;
   };
   document.getElementById('print-sheet').innerHTML=`<div class="ps">
-    <div class="ps-top">
-      <div class="ps-logo" style="grid-row:1/3;"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">PROJECT NO</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc((r.projNo||'').replace(/^P/i,''))}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">PROJECT NAME</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc(r.projName||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">TASK SHEET DOCUMENT NUMBER</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc(r.docNum||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">TASK SHEET ISSUE DATE</div><div class="ps-hcell-val" style="font-weight:700;">${fmtDate(r.issueDate)}</div></div>
-      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val" style="font-size:18pt;font-weight:700;">${esc(r.sheetOf||'1')}</div></div>
+
+  <!-- PAGE 1 -->
+  <div class="ps-page">
+
+    <!-- HEADER -->
+    <div class="ps-header">
+      <div class="ps-logo-cell">
+        <div class="ps-logo-main">FIBRE Mechanics</div>
+        <div class="ps-logo-sub">Task Record Sheet</div>
+      </div>
+      <div class="ps-header-fields">
+        <div class="ps-hf-row">
+          <div class="ps-hf"><div class="ps-hf-lbl">PROJECT NO</div><div class="ps-hf-val bold">\${esc((r.projNo||'').replace(/^P/i,''))}</div></div>
+          <div class="ps-hf"><div class="ps-hf-lbl">PROJECT NAME</div><div class="ps-hf-val bold">\${esc(r.projName||'')}</div></div>
+          <div class="ps-hf"><div class="ps-hf-lbl">TASK SHEET ISSUE DATE</div><div class="ps-hf-val bold">\${fmtDate(r.issueDate)}</div></div>
+          <div class="ps-hf ps-hf-docnum"><div class="ps-hf-lbl">TASK SHEET DOCUMENT NUMBER</div><div class="ps-hf-val bold large">\${esc(r.docNum||'')}</div></div>
+        </div>
+      </div>
     </div>
-    <div class="ps-body">
-      <div class="ps-row"><div class="ps-lbl">Cloudattend job</div><div class="ps-val">${esc(r.caJob||'')}</div></div>
-      <div class="ps-row"><div class="ps-lbl">Cloudattend operation</div><div class="ps-val">${esc(r.caOp||'')}</div></div>
-      <div class="ps-row"><div class="ps-lbl">Operation description</div><div class="ps-val" style="font-weight:600;">${esc(r.opDesc||'')}</div></div>
-      <div class="ps-row"><div class="ps-lbl">Reference drawings incl revision</div><div class="ps-val">${esc(r.drawings||'N/A')}</div></div>
-      <div class="ps-row"><div class="ps-lbl">Additional sheets</div><div class="ps-val">${esc(r.addSheets||'None')}</div></div>
-      <div class="ps-row-4">
-        <div class="ps-lbl">Cloudattend hours estimate (hrs)</div><div class="ps-val">${esc(r.hours||'')}</div>
-        <div class="ps-lbl2">Required finish date</div><div class="ps-val">${fmtDate(r.finishDate)}</div>
+
+    <!-- BODY ROWS -->
+    <div class="ps-rows">
+
+      <div class="ps-row2"><div class="ps-rl">Cloudattend job</div><div class="ps-rv">\${esc(r.caJob||'')}</div></div>
+      <div class="ps-row2"><div class="ps-rl">Cloudattend operation</div><div class="ps-rv">\${esc(r.caOp||'')}</div></div>
+      <div class="ps-row2"><div class="ps-rl">Operation description</div><div class="ps-rv bold">\${esc(r.opDesc||'')}</div></div>
+      <div class="ps-row2"><div class="ps-rl">Reference drawings incl revision</div><div class="ps-rv">\${esc(r.drawings||'')}</div></div>
+      <div class="ps-row2"><div class="ps-rl">Additional sheets</div><div class="ps-rv">\${esc(r.addSheets||'')}</div></div>
+
+      <div class="ps-row4">
+        <div class="ps-rl">Cloudattend hours estimate (hrs)</div><div class="ps-rv">\${esc(r.hours||'')}</div>
+        <div class="ps-rl2">Required finish date</div><div class="ps-rv">\${esc(r.finishDate||'—')}</div>
       </div>
-      <div class="ps-row-4">
-        <div class="ps-lbl">Task sheet author</div><div class="ps-val">${esc(r.author||'')}</div>
-        <div class="ps-lbl2">Task sheet approver</div><div class="ps-val">${esc(r.approver||'')}</div>
+      <div class="ps-row4">
+        <div class="ps-rl">Task sheet author</div><div class="ps-rv">\${esc(r.author||'')}</div>
+        <div class="ps-rl2">Task sheet approver</div><div class="ps-rv">\${esc(r.approver||'')}</div>
       </div>
-      <div class="ps-row-4">
-        <div class="ps-lbl">Relevant risk assessments</div><div class="ps-val">${esc(r.ra||'')}</div>
-        <div class="ps-lbl2">Relevant COSHH documents</div><div class="ps-val">${esc(r.coshh||'')}</div>
+      <div class="ps-row4">
+        <div class="ps-rl">Relevant risk assessments</div><div class="ps-rv">\${esc(r.ra||'')}</div>
+        <div class="ps-rl2">Relevant COSHH documents</div><div class="ps-rv">\${esc(r.coshh||'')}</div>
       </div>
-      <div class="ps-row-4">
-        <div class="ps-lbl">Relevant SOPs</div><div class="ps-val">${esc(r.sop||'')}</div>
-        <div class="ps-lbl2">Task sheets to complete before starting</div><div class="ps-val">${esc(r.prereq||'')}</div>
+      <div class="ps-row4">
+        <div class="ps-rl">Relevant SOPs</div><div class="ps-rv">\${esc(r.sop||'')}</div>
+        <div class="ps-rl2">Task sheets to complete before starting</div><div class="ps-rv">\${esc(r.prereq||'')}</div>
       </div>
-      <div class="ps-row"><div class="ps-lbl">Required cure schedule</div><div class="ps-val">${esc(r.cure||'')}</div></div>
-      <div class="ps-briefing"><strong>IMPORTANT — Do not continue until you have signed the briefing log</strong><br>List all people working on the job and get them to sign back off this sheet after briefing</div>
-      <div class="ps-section-hdr">Special instructions</div>
-      <div class="ps-special">${esc(r.special||'')}</div>
-      <table class="ps-table"><thead><tr><th style="width:40%">QA / sign-off point</th><th>NDT required</th><th>Stage</th><th>Date</th><th>Results</th></tr></thead><tbody>${qaRows}</tbody></table>
-      <table class="ps-ops-table"><thead><tr><th style="width:57%">Operation description</th><th style="width:14%">Op init</th><th style="width:14%">QA init</th><th style="width:15%">Date</th></tr></thead><tbody>${opsRows}</tbody></table>
-      <div style="font-size:8pt;text-align:center;padding:4px;border-top:1px solid #ccc;color:#888;">See continuation sheet (delete this if not relevant)</div>
-      <div class="ps-weight-row">
-        <div class="ps-weight-cell"><div class="ps-weight-lbl">Target weight kg</div><div class="ps-weight-val">${esc(r.targetWt||'')}</div></div>
-        <div class="ps-weight-cell"><div class="ps-weight-lbl">Measured weight kg</div><div class="ps-weight-val">${esc(r.measuredWt||'')}</div></div>
+      <div class="ps-row2"><div class="ps-rl">Required cure schedule</div><div class="ps-rv">\${esc(r.cure||'')}</div></div>
+
+      <div class="ps-briefing">
+        <strong>IMPORTANT — Do not continue until you have signed the briefing log</strong><br>
+        List all people working on the job and get them to sign back off this sheet after briefing
       </div>
-      <div class="ps-weight-row">
-        <div class="ps-weight-cell"><div class="ps-weight-lbl">Resin trace number</div><div class="ps-weight-val">${esc(r.resinTrace||'')}</div></div>
-        <div class="ps-weight-cell"><div class="ps-weight-lbl">Hardener trace number</div><div class="ps-weight-val">${esc(r.hardTrace||'')}</div></div>
+
+      <div class="ps-sh">Special instructions</div>
+      <div class="ps-special">\${esc(r.special||'')}</div>
+
+      <!-- QA TABLE -->
+      <table class="ps-t" style="width:100%;">
+        <thead><tr>
+          <th style="width:42%">QA / sign-off point</th>
+          <th style="width:13%">NDT required</th>
+          <th style="width:22%">Stage</th>
+          <th style="width:10%">Date</th>
+          <th style="width:13%">Results</th>
+        </tr></thead>
+        <tbody>\${(()=>{const qa=r.qa&&r.qa.filter(q=>q.point).length?r.qa:[];const rows=[...qa,...Array(Math.max(0,5-qa.length)).fill({})];return rows.map(q=>'<tr><td class="ps-tc h28">'+(q&&q.point?esc(q.point):'')+'</td><td class="ps-tc h28">'+(q&&q.ndt?esc(q.ndt):'')+'</td><td class="ps-tc h28">'+(q&&q.stage?esc(q.stage):'')+'</td><td class="ps-tc h28">'+(q&&q.date?esc(q.date):'')+'</td><td class="ps-tc h28 sh">'+(q&&q.results?esc(q.results):'')+'</td></tr>').join('');})()} </tbody>
+      </table>
+
+      <!-- OPS TABLE — always 10 rows -->
+      <table class="ps-t" style="width:100%;">
+        <thead><tr>
+          <th style="width:57%">Operation description</th>
+          <th style="width:14%">Op init</th>
+          <th style="width:14%">QA init</th>
+          <th style="width:15%">Date</th>
+        </tr></thead>
+        <tbody>\${(()=>{const ops=r.ops||[];const rows=[...ops,...Array(Math.max(0,10-ops.length)).fill({})];return rows.map(o=>'<tr><td class="ps-tc h26">'+(o&&o.desc?esc(o.desc):'')+'</td><td class="ps-tc h26 sh"></td><td class="ps-tc h26 sh"></td><td class="ps-tc h26 sh"></td></tr>').join('');})()} </tbody>
+      </table>
+
+      <!-- WEIGHTS -->
+      <div class="ps-row4 ps-wt">
+        <div class="ps-rl">Target weight kg</div><div class="ps-rv"></div>
+        <div class="ps-rl2">Measured weight kg</div><div class="ps-rv"></div>
       </div>
-      <div class="ps-mat-wrap">${matHalf(r.matLeft,'Materials record')}${matHalf(r.matRight,'Materials record')}</div>
-      <div class="ps-section-hdr">Feedback, notes and comments</div>
-      <div class="ps-feedback">${esc(r.feedback||'')}<br><br><br></div>
-    </div>
+      <div class="ps-row4 ps-wt">
+        <div class="ps-rl">Resin trace number</div><div class="ps-rv"></div>
+        <div class="ps-rl2">Hardener trace number</div><div class="ps-rv"></div>
+      </div>
+
+      <!-- MATERIALS — two side by side -->
+      <div class="ps-mat-wrap">
+        \${(d=>{const rows=[...d,...Array(Math.max(0,6-d.length)).fill({})].map(m=>'<tr><td class="ps-tc h26">'+(m&&m.material?esc(m.material):'')+'</td><td class="ps-tc h26">'+(m&&m.trace?esc(m.trace):'')+'</td><td class="ps-tc h26">'+(m&&m.amount?esc(m.amount):'')+'</td></tr>').join('');return '<div class="ps-mat-half"><table class="ps-t" style="width:100%;table-layout:fixed;"><thead><tr><th style="width:55%">Materials record</th><th style="width:20%">Trace #</th><th style="width:25%">Amount used</th></tr></thead><tbody>'+rows+'</tbody></table></div>';})(r.matLeft||[])}
+        \${(d=>{const rows=[...d,...Array(Math.max(0,6-d.length)).fill({})].map(m=>'<tr><td class="ps-tc h26">'+(m&&m.material?esc(m.material):'')+'</td><td class="ps-tc h26">'+(m&&m.trace?esc(m.trace):'')+'</td><td class="ps-tc h26">'+(m&&m.amount?esc(m.amount):'')+'</td></tr>').join('');return '<div class="ps-mat-half"><table class="ps-t" style="width:100%;table-layout:fixed;"><thead><tr><th style="width:55%">Materials record</th><th style="width:20%">Trace #</th><th style="width:25%">Amount used</th></tr></thead><tbody>'+rows+'</tbody></table></div>';})(r.matRight||[])}
+      </div>
+
+      <div class="ps-sh">Feedback, notes and comments</div>
+      <div class="ps-feedback"></div>
+
+    </div><!-- end ps-rows -->
+
+    <!-- SIGN OFF pinned to bottom -->
     <div class="ps-signoff">
       <div class="ps-so-cell">
         <div class="ps-so-line"></div>
-        <div class="ps-so-lbl">Overall sign-off by operator: ${esc(r.opName||'')}</div>
-        <div style="margin-top:6px;font-size:8pt;color:#555;">Date: ${r.opDate?fmtDate(r.opDate):''}</div>
+        <div class="ps-so-lbl">Overall sign-off by operator: \${esc(r.opName||'')}</div>
+        <div class="ps-so-date">Date: \${r.opDate?fmtDate(r.opDate):''}</div>
       </div>
       <div class="ps-so-cell">
         <div class="ps-so-line"></div>
-        <div class="ps-so-lbl">Overall sign-off by task leader: ${esc(r.tlName||'')}</div>
-        <div style="margin-top:6px;font-size:8pt;color:#555;">Date: ${r.tlDate?fmtDate(r.tlDate):''}</div>
+        <div class="ps-so-lbl">Overall sign-off by task leader: \${esc(r.tlName||'')}</div>
+        <div class="ps-so-date">Date: \${r.tlDate?fmtDate(r.tlDate):''}</div>
       </div>
-
-
-  <div style="page-break-before:always;"></div>
-  <div class="ps" style="margin-top:0;min-height:277mm;">
-    <div class="ps-top" style="grid-template-columns:155px 80px 160px 170px 110px 60px;">
-      <div class="ps-logo"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">PROJECT NO</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc((r.projNo||'').replace(/^P/i,''))}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">PROJECT NAME</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc(r.projName||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">TASK SHEET DOCUMENT NUMBER</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc(r.docNum||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">TASK SHEET ISSUE DATE</div><div class="ps-hcell-val" style="font-weight:700;">${fmtDate(r.issueDate)}</div></div>
-      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val" style="font-size:18pt;font-weight:700;">2</div></div>
     </div>
-    <div class="ps-body">
-      <div class="ps-section-hdr">Briefing sign-off log — all personnel must sign before work commences</div>
-      <div style="padding:4px 7px 6px;font-size:7.5pt;color:#000;border-bottom:1px solid #999;">Confirm you have read this task sheet, attended the briefing and are aware of all relevant Risk Assessments, COSHH documents and SOPs listed on page 1.</div>
-      <table class="ps-table" style="width:100%;table-layout:fixed;"><thead><tr>
-        <th style="width:24%">Name (print)</th>
-        <th style="width:20%">Signature</th>
-        <th style="width:10%">Date</th>
-        <th style="width:18%">Role / trade</th>
-        <th style="width:14%">RA &amp; COSHH read</th>
-        <th style="width:14%">Briefed by TL</th>
-      </tr></thead>
-      <tbody>${Array(16).fill('').map(()=>'<tr><td style="height:26px;"></td><td></td><td></td><td></td><td></td><td></td></tr>').join('')}</tbody></table>
-      <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;margin-top:6px;">
-        <div style="padding:8px 10px;border-right:1px solid #999;">
-          <div style="font-size:7.5pt;font-weight:700;margin-bottom:4px;">Task leader confirmation:</div>
-          <div style="border-bottom:1px solid #000;margin:18px 0 3px;"></div>
-          <div style="font-size:7.5pt;">Signature &nbsp;&nbsp;&nbsp; Name: ${esc(r.tlName||'')} &nbsp;&nbsp;&nbsp; Date: ${r.tlDate?fmtDate(r.tlDate):''}</div>
+
+  </div><!-- end ps-page -->
+
+  <!-- PAGE 2 — BRIEFING SIGN-OFF -->
+  <div class="ps-page" style="page-break-before:always;">
+
+    <div class="ps-header">
+      <div class="ps-logo-cell">
+        <div class="ps-logo-main">FIBRE Mechanics</div>
+        <div class="ps-logo-sub">Task Record Sheet</div>
+      </div>
+      <div class="ps-header-fields">
+        <div class="ps-hf-row">
+          <div class="ps-hf"><div class="ps-hf-lbl">PROJECT NO</div><div class="ps-hf-val bold">\${esc((r.projNo||'').replace(/^P/i,''))}</div></div>
+          <div class="ps-hf"><div class="ps-hf-lbl">PROJECT NAME</div><div class="ps-hf-val bold">\${esc(r.projName||'')}</div></div>
+          <div class="ps-hf"><div class="ps-hf-lbl">TASK SHEET ISSUE DATE</div><div class="ps-hf-val bold">\${fmtDate(r.issueDate)}</div></div>
+          <div class="ps-hf ps-hf-docnum"><div class="ps-hf-lbl">TASK SHEET DOCUMENT NUMBER</div><div class="ps-hf-val bold large">\${esc(r.docNum||'')}</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ps-rows">
+      <div class="ps-sh">Briefing sign-off log — all personnel must sign before work commences</div>
+      <div style="padding:4px 6px 5px;font-size:7.5pt;border-bottom:1px solid #999;">Confirm you have read this task sheet, attended the briefing and are aware of all relevant Risk Assessments, COSHH documents and SOPs listed on page 1.</div>
+
+      <table class="ps-t" style="width:100%;table-layout:fixed;">
+        <thead><tr>
+          <th style="width:22%">Name (print)</th>
+          <th style="width:20%">Signature</th>
+          <th style="width:11%">Date</th>
+          <th style="width:18%">Role / trade</th>
+          <th style="width:15%">RA &amp; COSHH read</th>
+          <th style="width:14%">Briefed by TL</th>
+        </tr></thead>
+        <tbody>\${Array(16).fill('').map(()=>'<tr><td class="ps-tc h28"></td><td class="ps-tc h28"></td><td class="ps-tc h28"></td><td class="ps-tc h28"></td><td class="ps-tc h28"></td><td class="ps-tc h28"></td></tr>').join('')}</tbody>
+      </table>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #000;margin-top:4px;">
+        <div style="padding:8px 10px;border-right:1px solid #000;">
+          <div style="font-size:7.5pt;font-weight:700;margin-bottom:6px;">Task leader confirmation:</div>
+          <div style="border-bottom:1px solid #000;margin:16px 0 4px;"></div>
+          <div style="font-size:7.5pt;">Signature &nbsp;&nbsp;&nbsp; Name: \${esc(r.tlName||'')} &nbsp;&nbsp;&nbsp; Date: \${r.tlDate?fmtDate(r.tlDate):''}</div>
         </div>
         <div style="padding:8px 10px;">
           <div style="font-size:7.5pt;font-weight:700;margin-bottom:4px;">Documents confirmed in briefing:</div>
-          <div style="font-size:7.5pt;">Risk assessments: ${esc(r.ra||'—')}</div>
-          <div style="font-size:7.5pt;margin-top:3px;">COSHH: ${esc(r.coshh||'—')}</div>
-          <div style="font-size:7.5pt;margin-top:3px;">SOPs: ${esc(r.sop||'—')}</div>
+          <div style="font-size:7.5pt;">Risk assessments: \${esc(r.ra||'—')}</div>
+          <div style="font-size:7.5pt;margin-top:3px;">COSHH: \${esc(r.coshh||'—')}</div>
+          <div style="font-size:7.5pt;margin-top:3px;">SOPs: \${esc(r.sop||'—')}</div>
         </div>
       </div>
     </div>
-  </div>`;
+  </div><!-- end page 2 -->
+
+</div>`;
   // Open print in a new window with hardcoded PS CSS
-  var PRINT_CSS='.ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;min-height:277mm;display:flex;flex-direction:column;} .ps-body{flex:1;} .ps-signoff{margin-top:auto;} .ps-top{display:grid;grid-template-columns:155px 80px 160px 170px 110px 60px;border:1.5px solid #000;border-bottom:none;} .ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;} .ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;} .ps-logo-sub{font-size:7.5pt;margin-top:3px;} .ps-hcell{border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;} .ps-hcell-label{font-size:6.5pt;color:#444;text-transform:uppercase;} .ps-hcell-val{font-size:10pt;font-weight:700;color:#000;margin-top:1px;} .ps-hcell-val-sm{font-size:8.5pt;font-weight:700;color:#000;margin-top:1px;} .ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;} .ps-sheetnum-label{font-size:6.5pt;color:#444;} .ps-sheetnum-val{font-size:15pt;font-weight:700;line-height:1;color:#000;} .ps-body{border:1.5px solid #000;border-top:none;} .ps-row{display:grid;grid-template-columns:155px 1fr;border-top:1px solid #999;} .ps-row-split{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;} .ps-row-4{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;} .ps-lbl{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-right:1px solid #444;} .ps-val{padding:3px 6px;font-size:8.5pt;color:#000;} .ps-lbl2{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-left:1px solid #444;border-right:1px solid #444;} .ps-briefing{background:#eee!important;border-top:1.5px solid #000;border-bottom:1.5px solid #000;padding:5px;text-align:center;font-size:8.5pt;} .ps-briefing strong{font-size:9pt;} .ps-section-hdr{background:#555!important;color:#fff!important;padding:3px 7px;font-size:7.5pt;font-weight:700;border-top:1px solid #000;} .ps-special{min-height:28px;padding:4px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;font-style:italic;} .ps-table{width:100%;border-collapse:collapse;font-size:7.5pt;} .ps-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;} .ps-table td{padding:0 6px;border:1px solid #999;height:28px;min-height:28px;color:#000;vertical-align:middle;} .ps-table .sh{background:#ddd!important;} .ps-ops-table{width:100%;border-collapse:collapse;font-size:7.5pt;} .ps-ops-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;} .ps-ops-table td{padding:0 6px;border:1px solid #999;height:24px;min-height:24px;color:#000;vertical-align:middle;} .ps-ops-table .sh{background:#ddd!important;} .ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;} .ps-weight-cell{padding:4px 7px;border-right:1px solid #999;} .ps-weight-cell:last-child{border-right:none;} .ps-weight-lbl{font-size:7.5pt;font-weight:700;color:#000;} .ps-weight-val{font-size:8.5pt;min-height:14px;color:#000;} .ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;} .ps-mat-half{padding:5px 7px;} .ps-mat-half:first-child{border-right:1px solid #999;} .ps-feedback{min-height:40px;padding:5px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;} .ps-signoff{display:grid;grid-template-columns:50% 50%;border-top:1.5px solid #000;} .ps-so-cell{padding:8px 12px;border-right:1px solid #000;box-sizing:border-box;} .ps-so-cell:last-child{border-right:none;} .ps-so-line{border-bottom:1px solid #000;margin:12px 0 3px;} .ps-so-lbl{font-size:7.5pt;color:#333;} /* ── Issue control ── */ .issue-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap;} .issue-draft{background:#f0f0f0;color:#666;} .issue-issued{background:#fff3cd;color:#856404;} .issue-overdue{background:#ffe0e0;color:#a00;} .issue-returned{background:#e8f5e2;color:#2e6b1a;} .issue-superseded{background:#e8e8e8;color:#888;} .issue-log-row{background:#fafdf5;border-top:1px dashed #d0e0c0;} .issue-log-row td{padding:8px 13px;font-size:12px;} .issue-history-item{padding:5px 0;border-bottom:1px solid #f0f0f0;font-size:12px;display:grid;grid-template-columns:80px 140px 120px 1fr;gap:6px;align-items:center;} .issue-history-item:last-child{border-bottom:none;} .overdue-flag{color:#a00;font-size:11px;font-weight:600;}';
+  var PRINT_CSS='.ps-page{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;min-height:277mm;display:flex;flex-direction:column;border:1.5px solid #000;margin-bottom:0;} .ps-header{display:flex;border-bottom:1.5px solid #000;} .ps-logo-cell{background:#222;color:#fff;padding:6px 9px;min-width:165px;max-width:165px;display:flex;flex-direction:column;justify-content:center;border-right:1.5px solid #000;-webkit-print-color-adjust:exact;print-color-adjust:exact;} .ps-logo-main{font-size:11pt;font-weight:700;line-height:1.2;} .ps-logo-sub{font-size:7pt;margin-top:2px;} .ps-header-fields{flex:1;display:flex;flex-direction:column;} .ps-hf-row{display:flex;flex:1;} .ps-hf{flex:1;border-right:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:space-between;} .ps-hf:last-child{border-right:none;} .ps-hf-docnum{flex:1.2;} .ps-hf-lbl{font-size:6.5pt;color:#555;text-transform:uppercase;font-weight:600;} .ps-hf-val{font-size:9pt;} .ps-hf-val.bold{font-weight:700;font-size:12pt;} .ps-hf-val.large{font-size:14pt;} .ps-rows{flex:1;display:flex;flex-direction:column;} .ps-row2{display:grid;grid-template-columns:165px 1fr;border-bottom:1px solid #ccc;} .ps-row4{display:grid;grid-template-columns:165px 1fr 165px 1fr;border-bottom:1px solid #ccc;} .ps-rl{background:#555;color:#fff;padding:3px 6px;font-size:7.5pt;font-weight:600;display:flex;align-items:center;border-right:1px solid #999;-webkit-print-color-adjust:exact;print-color-adjust:exact;} .ps-rl2{background:#555;color:#fff;padding:3px 6px;font-size:7.5pt;font-weight:600;display:flex;align-items:center;border-right:1px solid #999;border-left:1px solid #999;-webkit-print-color-adjust:exact;print-color-adjust:exact;} .ps-rv{padding:3px 6px;font-size:8pt;display:flex;align-items:center;} .ps-rv.bold{font-weight:600;} .ps-briefing{text-align:center;padding:5px 10px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;font-size:8pt;background:#f5f5f5;-webkit-print-color-adjust:exact;print-color-adjust:exact;} .ps-sh{background:#555;color:#fff;padding:3px 6px;font-size:7.5pt;font-weight:600;-webkit-print-color-adjust:exact;print-color-adjust:exact;} .ps-special{padding:4px 6px;font-size:8pt;font-style:italic;border-bottom:1px solid #ccc;min-height:18px;} .ps-t{border-collapse:collapse;font-size:8pt;} .ps-t th{background:#555;color:#fff;padding:3px 6px;text-align:left;border:1px solid #999;font-size:7.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact;} .ps-t td{border:1px solid #ccc;padding:0 5px;vertical-align:middle;} .ps-tc{border:1px solid #ccc;padding:0 5px;vertical-align:middle;} .h28{height:28px;} .h26{height:26px;} .sh{background:#e8e8e8;-webkit-print-color-adjust:exact;print-color-adjust:exact;} .ps-wt{border-bottom:1px solid #ccc;} .ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;} .ps-mat-half{border-right:1px solid #ccc;} .ps-mat-half:last-child{border-right:none;} .ps-feedback{flex:1;min-height:55px;border-bottom:1px solid #ccc;padding:4px 6px;} .ps-signoff{display:grid;grid-template-columns:50% 50%;border-top:1.5px solid #000;} .ps-so-cell{padding:8px 12px;border-right:1px solid #000;box-sizing:border-box;} .ps-so-cell:last-child{border-right:none;} .ps-so-line{border-bottom:1px solid #000;margin:14px 0 3px;} .ps-so-lbl{font-size:7.5pt;color:#333;} .ps-so-sig{border-bottom:1px solid #000;margin:10px 0 3px;width:80%;} .ps-so-name{font-size:7.5pt;color:#333;margin-top:3px;} .ps-so-date{font-size:7.5pt;color:#555;margin-top:3px;} /* ── Issue control ── */ .issue-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap;} .issue-draft{background:#f0f0f0;color:#666;} .issue-issued{background:#fff3cd;color:#856404;} .issue-overdue{background:#ffe0e0;color:#a00;} .issue-returned{background:#e8f5e2;color:#2e6b1a;} .issue-superseded{background:#e8e8e8;color:#888;} .issue-log-row{background:#fafdf5;border-top:1px dashed #d0e0c0;} .issue-log-row td{padding:8px 13px;font-size:12px;} .issue-history-item{padding:5px 0;border-bottom:1px solid #f0f0f0;font-size:12px;display:grid;grid-template-columns:80px 140px 120px 1fr;gap:6px;align-items:center;} .issue-history-item:last-child{border-bottom:none;} .overdue-flag{color:#a00;font-size:11px;font-weight:600;}';
   var printHtml=document.getElementById('print-sheet').innerHTML;
   var pw=window.open('','_blank','width=900,height=700,resizable=yes');
   if(!pw){ alert('Please allow popups for this site to print.'); return; }
