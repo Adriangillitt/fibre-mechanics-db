@@ -240,7 +240,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="header-sub" id="header-sub">Task Record Database</div>
   </div>
   <div style="flex:1;"></div>
-  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.1.1</div><div>28 Jul 2026</div></div>
+  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.1.2</div><div>28 Jul 2026</div></div>
   <div class="header-right">
     <div class="sync-wrap" id="sync-wrap"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Synced</span></div>
     <button class="project-crumb" id="project-crumb" onclick="goHome()">&#8592; All projects</button>
@@ -558,7 +558,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 <div id="print-sheet"></div>
 
 <script>
-const APP_VERSION = '1.1.1';
+const APP_VERSION = '1.1.2';
 const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL';
 const SHARED_INDEX_ID   = '1G4hRf6LlYqDh_fpTgYKuK2OexpByRQ1z';
 const BUILD_DATE = '28 Jul 2026';
@@ -1360,10 +1360,17 @@ function printSheet(){
       </div>
     </div>
   </div>`;
-  // Don't close modal before print — @media print hides it automatically.
-  // Close it after the print dialog is dismissed.
-  window.onafterprint = function(){ closeModal('modal-detail'); window.onafterprint = null; };
-  setTimeout(function(){ window.print(); }, 150);
+  // Open print in a new window — avoids modal/CSS conflicts
+  const styleEl=document.querySelector('style');
+  const allCss=styleEl?styleEl.textContent:'';
+  const psStart=allCss.indexOf('.ps{font-family');
+  const psCss=psStart>=0?allCss.substring(psStart):'';
+  const printHtml=document.getElementById('print-sheet').innerHTML;
+  const pw=window.open('','_blank','width=900,height=700,resizable=yes');
+  if(!pw){ alert('Please allow popups for this site to print.'); return; }
+  pw.document.open();
+  pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+esc(r.docNum||'Task sheet')+'</title><style>*{box-sizing:border-box;margin:0;padding:0;} @page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:Arial,sans-serif;}'+psCss+'</style></head><body>'+printHtml+'<scr'+'ipt>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<'+'/scr'+'ipt></body></html>');
+  pw.document.close();
 }
 
 /* ── Export ── */
