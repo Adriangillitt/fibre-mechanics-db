@@ -172,7 +172,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
   #print-sheet{display:block!important;width:100%;margin:0;padding:0;}
 }
 .ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;}
-.ps-top{display:grid;grid-template-columns:170px 75px 165px 145px 90px 55px;border:1.5px solid #000;border-bottom:none;}
+.ps-top{display:grid;grid-template-columns:155px 80px 160px 170px 110px 60px;border:1.5px solid #000;border-bottom:none;}
 .ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;}
 .ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;}
 .ps-logo-sub{font-size:7.5pt;margin-top:3px;}
@@ -240,7 +240,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="header-sub" id="header-sub">Task Record Database</div>
   </div>
   <div style="flex:1;"></div>
-  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.1.4</div><div>28 Jul 2026</div></div>
+  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.1.5</div><div>28 Jul 2026</div></div>
   <div class="header-right">
     <div class="sync-wrap" id="sync-wrap"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Synced</span></div>
     <button class="project-crumb" id="project-crumb" onclick="goHome()">&#8592; All projects</button>
@@ -558,7 +558,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 <div id="print-sheet"></div>
 
 <script>
-const APP_VERSION = '1.1.4';
+const APP_VERSION = '1.1.5';
 const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL';
 const SHARED_INDEX_ID   = '1G4hRf6LlYqDh_fpTgYKuK2OexpByRQ1z';
 const BUILD_DATE = '28 Jul 2026';
@@ -1295,16 +1295,16 @@ function printSheet(){
   const opsRows=(r.ops&&r.ops.length?r.ops:Array(10).fill({})).map(o=>`<tr><td>${esc(o&&o.desc||'')}</td><td class="sh">${esc(o&&o.opInit||'')}</td><td class="sh">${esc(o&&o.qaInit||'')}</td><td class="sh">${esc(o&&o.date||'')}</td></tr>`).join('');
   const matHalf=(data,title)=>{
     const rows=(data&&data.length?data:Array(5).fill({})).map(m=>`<tr><td style="height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.material||'')}</td><td style="height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.trace||'')}</td><td style="height:26px;padding:0 6px;vertical-align:middle;">${esc(m&&m.amount||'')}</td></tr>`).join('');
-    return `<div class="ps-mat-half"><table class="ps-table" style="width:100%;table-layout:fixed;"><thead><tr><th style="width:50%">Material</th><th style="width:25%">Trace #</th><th style="width:25%">Amount used</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    return `<div class="ps-mat-half"><table class="ps-table" style="width:100%;table-layout:fixed;"><thead><tr><th style="width:50%">Materials record</th><th style="width:15%">Trace #</th><th style="width:20%">Amount used</th></tr></thead><tbody>${rows}</tbody></table></div>`;
   };
   document.getElementById('print-sheet').innerHTML=`<div class="ps">
     <div class="ps-top">
       <div class="ps-logo" style="grid-row:1/3;"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Project No</div><div class="ps-hcell-val">${esc(r.projNo||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Project Name</div><div class="ps-hcell-val">${esc(r.projName||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Task sheet document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Task sheet issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
-      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sht</div><div class="ps-sheetnum-val">${esc(r.sheetOf||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">PROJECT NO</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc((r.projNo||'').replace(/^P/i,''))}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">PROJECT NAME</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc(r.projName||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">TASK SHEET DOCUMENT NUMBER</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc(r.docNum||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">TASK SHEET ISSUE DATE</div><div class="ps-hcell-val" style="font-weight:700;">${fmtDate(r.issueDate)}</div></div>
+      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val" style="font-size:18pt;font-weight:700;">${esc(r.sheetOf||'1')}</div></div>
     </div>
     <div class="ps-body">
       <div class="ps-row"><div class="ps-lbl">Cloudattend job</div><div class="ps-val">${esc(r.caJob||'')}</div></div>
@@ -1343,7 +1343,7 @@ function printSheet(){
         <div class="ps-weight-cell"><div class="ps-weight-lbl">Resin trace number</div><div class="ps-weight-val">${esc(r.resinTrace||'')}</div></div>
         <div class="ps-weight-cell"><div class="ps-weight-lbl">Hardener trace number</div><div class="ps-weight-val">${esc(r.hardTrace||'')}</div></div>
       </div>
-      <div class="ps-mat-wrap">${matHalf(r.matLeft,'Left')}${matHalf(r.matRight,'Right')}</div>
+      <div class="ps-mat-wrap">${matHalf(r.matLeft,'Materials record')}${matHalf(r.matRight,'Materials record')}</div>
       <div class="ps-section-hdr">Feedback, notes and comments</div>
       <div class="ps-feedback">${esc(r.feedback||'')}<br><br><br></div>
     </div>
@@ -1364,11 +1364,11 @@ function printSheet(){
   <div class="ps" style="margin-top:0;">
     <div class="ps-top">
       <div class="ps-logo" style="grid-row:1/3;"><div class="ps-logo-main">FIBRE Mechanics</div><div class="ps-logo-sub">Task Record Sheet</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Project No</div><div class="ps-hcell-val">${esc(r.projNo||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Project Name</div><div class="ps-hcell-val">${esc(r.projName||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Document number</div><div class="ps-hcell-val">${esc(r.docNum||'')}</div></div>
-      <div class="ps-hcell"><div class="ps-hcell-label">Issue date</div><div class="ps-hcell-val-sm">${fmtDate(r.issueDate)}</div></div>
-      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sht</div><div class="ps-sheetnum-val">2</div><div style="font-size:6pt;color:#444;">of 2</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">PROJECT NO</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc((r.projNo||'').replace(/^P/i,''))}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">PROJECT NAME</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc(r.projName||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">TASK SHEET DOCUMENT NUMBER</div><div class="ps-hcell-val" style="font-weight:700;font-size:10pt;">${esc(r.docNum||'')}</div></div>
+      <div class="ps-hcell"><div class="ps-hcell-label">TASK SHEET ISSUE DATE</div><div class="ps-hcell-val" style="font-weight:700;">${fmtDate(r.issueDate)}</div></div>
+      <div class="ps-sheetnum"><div class="ps-sheetnum-label">Sheet</div><div class="ps-sheetnum-val" style="font-size:18pt;font-weight:700;">2</div></div>
     </div>
     <div class="ps-body">
       <div class="ps-section-hdr">Briefing sign-off log — all personnel must sign before work commences</div>
