@@ -240,7 +240,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="header-sub" id="header-sub">Task Record Database</div>
   </div>
   <div style="flex:1;"></div>
-  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.1.5</div><div>28 Jul 2026</div></div>
+  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.1.6</div><div>28 Jul 2026</div></div>
   <div class="header-right">
     <div class="sync-wrap" id="sync-wrap"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Synced</span></div>
     <button class="project-crumb" id="project-crumb" onclick="goHome()">&#8592; All projects</button>
@@ -558,7 +558,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 <div id="print-sheet"></div>
 
 <script>
-const APP_VERSION = '1.1.5';
+const APP_VERSION = '1.1.6';
 const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL';
 const SHARED_INDEX_ID   = '1G4hRf6LlYqDh_fpTgYKuK2OexpByRQ1z';
 const BUILD_DATE = '28 Jul 2026';
@@ -1397,18 +1397,18 @@ function printSheet(){
       </div>
     </div>
   </div>`;
-  // Open print in a new window — avoids modal/CSS conflicts
-  // Find the style tag that contains .ps CSS
-  const allStyles=Array.from(document.querySelectorAll('style'));
-  const psStyleEl=allStyles.find(s=>s.textContent.includes('.ps{font-family'));
-  const allCss=psStyleEl?psStyleEl.textContent:'';
-  const psStart=allCss.indexOf('.ps{font-family');
-  const psCss=psStart>=0?allCss.substring(psStart):'';
-  const printHtml=document.getElementById('print-sheet').innerHTML;
-  const pw=window.open('','_blank','width=900,height=700,resizable=yes');
+  // Open print in a new window with hardcoded PS CSS
+  var PRINT_CSS='.ps{font-family:Arial,sans-serif;font-size:8.5pt;color:#000;width:100%;} .ps-top{display:grid;grid-template-columns:155px 80px 160px 170px 110px 60px;border:1.5px solid #000;border-bottom:none;} .ps-logo{background:#222!important;color:#fff!important;padding:5px 9px;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;} .ps-logo-main{font-size:12pt;font-weight:700;line-height:1.1;} .ps-logo-sub{font-size:7.5pt;margin-top:3px;} .ps-hcell{border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;} .ps-hcell-label{font-size:6.5pt;color:#444;text-transform:uppercase;} .ps-hcell-val{font-size:10pt;font-weight:700;color:#000;margin-top:1px;} .ps-hcell-val-sm{font-size:8.5pt;font-weight:700;color:#000;margin-top:1px;} .ps-sheetnum{background:#ddd!important;border-left:1px solid #000;padding:3px 5px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;} .ps-sheetnum-label{font-size:6.5pt;color:#444;} .ps-sheetnum-val{font-size:15pt;font-weight:700;line-height:1;color:#000;} .ps-body{border:1.5px solid #000;border-top:none;} .ps-row{display:grid;grid-template-columns:155px 1fr;border-top:1px solid #999;} .ps-row-split{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;} .ps-row-4{display:grid;grid-template-columns:155px 1fr 125px 1fr;border-top:1px solid #999;} .ps-lbl{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-right:1px solid #444;} .ps-val{padding:3px 6px;font-size:8.5pt;color:#000;} .ps-lbl2{background:#555!important;color:#fff!important;padding:3px 6px;font-size:7.5pt;font-weight:700;border-left:1px solid #444;border-right:1px solid #444;} .ps-briefing{background:#eee!important;border-top:1.5px solid #000;border-bottom:1.5px solid #000;padding:5px;text-align:center;font-size:8.5pt;} .ps-briefing strong{font-size:9pt;} .ps-section-hdr{background:#555!important;color:#fff!important;padding:3px 7px;font-size:7.5pt;font-weight:700;border-top:1px solid #000;} .ps-special{min-height:28px;padding:4px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;font-style:italic;} .ps-table{width:100%;border-collapse:collapse;font-size:7.5pt;} .ps-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;} .ps-table td{padding:0 6px;border:1px solid #999;height:28px;min-height:28px;color:#000;vertical-align:middle;} .ps-table .sh{background:#ddd!important;} .ps-ops-table{width:100%;border-collapse:collapse;font-size:7.5pt;} .ps-ops-table th{background:#555!important;color:#fff!important;padding:3px 6px;text-align:left;border:1px solid #444;font-size:7pt;} .ps-ops-table td{padding:0 6px;border:1px solid #999;height:24px;min-height:24px;color:#000;vertical-align:middle;} .ps-ops-table .sh{background:#ddd!important;} .ps-weight-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;} .ps-weight-cell{padding:4px 7px;border-right:1px solid #999;} .ps-weight-cell:last-child{border-right:none;} .ps-weight-lbl{font-size:7.5pt;font-weight:700;color:#000;} .ps-weight-val{font-size:8.5pt;min-height:14px;color:#000;} .ps-mat-wrap{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #999;} .ps-mat-half{padding:5px 7px;} .ps-mat-half:first-child{border-right:1px solid #999;} .ps-feedback{min-height:40px;padding:5px 7px;font-size:8.5pt;border-top:1px solid #999;color:#000;} .ps-signoff{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid #000;} .ps-so-cell{padding:8px 10px;border-right:1px solid #999;} .ps-so-cell:last-child{border-right:none;} .ps-so-line{border-bottom:1px solid #000;margin:14px 0 3px;} .ps-so-lbl{font-size:7.5pt;color:#333;} /* ── Issue control ── */ .issue-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap;} .issue-draft{background:#f0f0f0;color:#666;} .issue-issued{background:#fff3cd;color:#856404;} .issue-overdue{background:#ffe0e0;color:#a00;} .issue-returned{background:#e8f5e2;color:#2e6b1a;} .issue-superseded{background:#e8e8e8;color:#888;} .issue-log-row{background:#fafdf5;border-top:1px dashed #d0e0c0;} .issue-log-row td{padding:8px 13px;font-size:12px;} .issue-history-item{padding:5px 0;border-bottom:1px solid #f0f0f0;font-size:12px;display:grid;grid-template-columns:80px 140px 120px 1fr;gap:6px;align-items:center;} .issue-history-item:last-child{border-bottom:none;} .overdue-flag{color:#a00;font-size:11px;font-weight:600;}';
+  var printHtml=document.getElementById('print-sheet').innerHTML;
+  var pw=window.open('','_blank','width=900,height=700,resizable=yes');
   if(!pw){ alert('Please allow popups for this site to print.'); return; }
   pw.document.open();
-  pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+esc(r.docNum||'Task sheet')+'</title></head><body>'+printHtml+'<scr'+'ipt>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<'+'/scr'+'ipt></body></html>');
+  pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+esc(r.docNum||'Task sheet')+'</title>'
+    +'<style>*{box-sizing:border-box;margin:0;padding:0;} @page{size:A4 portrait;margin:8mm 10mm 12mm 10mm;} body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:Arial,sans-serif;}</style>'
+    +'<style>'+PRINT_CSS+'</style>'
+    +'</head><body>'+printHtml
+    +'<scr'+'ipt>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<'+'/scr'+'ipt>'
+    +'</body></html>');
   pw.document.close();
 }
 
