@@ -239,7 +239,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="header-sub" id="header-sub">Task Record Database</div>
   </div>
   <div style="flex:1;"></div>
-  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.2.4</div><div>28 Jul 2026</div></div>
+  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.2.5</div><div>28 Jul 2026</div></div>
   <div class="header-right">
     <div class="sync-wrap" id="sync-wrap"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Synced</span></div>
     <button class="project-crumb" id="project-crumb" onclick="goHome()">&#8592; All projects</button>
@@ -557,7 +557,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 <div id="print-sheet"></div>
 
 <script>
-const APP_VERSION = '1.2.4';
+const APP_VERSION = '1.2.5';
 const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL';
 const SHARED_INDEX_ID   = '1G4hRf6LlYqDh_fpTgYKuK2OexpByRQ1z';
 const BUILD_DATE = '28 Jul 2026';
@@ -1173,13 +1173,13 @@ function viewSheet(id){
   const r=records[idx];
   document.getElementById('detail-title').textContent=r.docNum||'Task sheet';
   const qaRows=r.qa&&r.qa.some(q=>q.point)?r.qa.filter(q=>q.point).map(q=>`<tr><td>${esc(q.point)}</td><td>${esc(q.ndt)}</td><td>${esc(q.stage)}</td><td>${esc(q.date)}</td><td>${esc(q.results)}</td></tr>`).join(''):'<tr><td colspan="5" style="color:#aaa;">None</td></tr>';
+  const opsRows=r.ops&&r.ops.length?r.ops.map(o=>`<tr><td>${esc(o.desc||'')}</td><td>${esc(o.opInit||'')}</td><td>${esc(o.qaInit||'')}</td><td>${esc(o.date||'')}</td></tr>`).join(''):'<tr><td colspan="4" style="color:#aaa;">None</td></tr>';
   const matRow=(m)=>`<tr><td>${esc(m.material)}</td><td>${esc(m.trace)}</td><td>${esc(m.amount)}</td></tr>`;
   const matLeftRows=r.matLeft&&r.matLeft.length?r.matLeft.map(matRow).join(''):'<tr><td colspan="3" style="color:#aaa;">None</td></tr>';
   const matRightRows=r.matRight&&r.matRight.length?r.matRight.map(matRow).join(''):'<tr><td colspan="3" style="color:#aaa;">None</td></tr>';
   document.getElementById('detail-body').innerHTML=`
     <div class="dr"><span class="dk">Document number</span><span>${esc(r.docNum||'—')}</span></div>
     <div class="dr"><span class="dk">Project</span><span>${esc(r.projNo||'')} ${esc(r.projName||'')}</span></div>
-    <div class="dr"><span class="dk">Revision</span><span>${esc(r.revision||'—')}</span></div>
     <div class="dr"><span class="dk">Issue date</span><span>${fmtDate(r.issueDate)}</span></div>
     <div class="dr"><span class="dk">Sheet</span><span>${esc(r.sheetOf||'—')}</span></div>
     <div class="dr"><span class="dk">Cloudattend job</span><span>${esc(r.caJob||'—')}</span></div>
