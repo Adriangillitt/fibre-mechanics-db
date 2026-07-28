@@ -240,7 +240,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
     <div class="header-sub" id="header-sub">Task Record Database</div>
   </div>
   <div style="flex:1;"></div>
-  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.0.7</div><div>28 Jul 2026</div></div>
+  <div style="text-align:right;font-size:10px;opacity:.7;color:#fff;line-height:1.4;padding-right:10px;"><div>v1.0.8</div><div>28 Jul 2026</div></div>
   <div class="header-right">
     <div class="sync-wrap" id="sync-wrap"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Synced</span></div>
     <button class="project-crumb" id="project-crumb" onclick="goHome()">&#8592; All projects</button>
@@ -551,10 +551,14 @@ body{font-family:system-ui,sans-serif;font-size:14px;color:#1a1a1a;background:#f
 </div>
 
 <div class="toast" id="toast"></div>
+<div id="reauth-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#c85810;color:#fff;padding:12px 20px;text-align:center;z-index:9999;font-size:14px;">
+  Session expired — <button onclick="reAuthAndRetry()" style="background:#fff;color:#c85810;border:none;padding:6px 14px;border-radius:6px;font-weight:600;cursor:pointer;margin-left:10px;">Sign in again</button>
+  <button onclick="document.getElementById('reauth-banner').style.display='none'" style="background:none;border:none;color:#fff;margin-left:10px;cursor:pointer;font-size:18px;">&times;</button>
+</div>
 <div id="print-sheet"></div>
 
 <script>
-const APP_VERSION = '1.0.7';
+const APP_VERSION = '1.0.8';
 const SHARED_FOLDER_ID  = '1MoCgykHoxvkCT-PNgoxxqtkAz6Q-ovTL';
 const SHARED_INDEX_ID   = '1G4hRf6LlYqDh_fpTgYKuK2OexpByRQ1z';
 const BUILD_DATE = '28 Jul 2026';
@@ -608,8 +612,25 @@ function handleAuthExpiry(){
   sessionStorage.removeItem('fm_tok');
   gapi.client.setToken(null);
   if(window._refreshTimer){ clearTimeout(window._refreshTimer); window._refreshTimer=null; }
-  toast('Session expired — please sign in again');
-  setTimeout(()=>{ show('screen-auth'); },1500);
+  window._pendingRetry=null;
+  document.getElementById('reauth-banner').style.display='block';
+}
+
+function reAuthAndRetry(){
+  document.getElementById('reauth-banner').style.display='none';
+  if(!tokenClient){ show('screen-auth'); return; }
+  const orig=tokenClient.callback;
+  tokenClient.callback=async r=>{
+    tokenClient.callback=orig;
+    if(r.error){ toast('Sign-in failed: '+r.error); return; }
+    sessionStorage.setItem('fm_tok',JSON.stringify(gapi.client.getToken()));
+    window._tokenExpiry=Date.now()+(50*60*1000);
+    window._refreshTimer=setTimeout(proactiveRefresh,50*60*1000);
+    await fetchUser();
+    toast('Signed in – please try again');
+    if(window._pendingRetry){ window._pendingRetry(); window._pendingRetry=null; }
+  };
+  tokenClient.requestAccessToken({prompt:'select_account'});
 }
 
 function proactiveRefresh(){
@@ -1210,9 +1231,19 @@ async function deleteSheet(){
   const idx=rid?records.findIndex(r=>r.id==rid):(viewIdx!==null?viewIdx:-1);
   if(idx<0){ toast('No record selected'); return; }
   if(!confirm('Delete this record for all users?')) return;
-  records.splice(idx,1); closeModal('modal-detail'); setSyncing('syncing');
-  try{ await saveProjectFile(); renderRecords(); toast('Record deleted'); }
-  catch(e){ setSyncing('error'); toast('Delete failed: '+e.message); }
+  const deleted=records.splice(idx,1)[0];
+  closeModal('modal-detail'); setSyncing('syncing');
+  try{
+    await saveProjectFile(); renderRecords(); toast('Record deleted');
+  } catch(e){
+    records.splice(idx,0,deleted); // restore on failure
+    setSyncing('error');
+    if(e.message&&e.message.includes('expired')){
+      window._pendingRetry=()=>deleteSheet();
+    } else {
+      toast('Delete failed: '+e.message);
+    }
+  }
 }
 
 
